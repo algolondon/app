@@ -3,8 +3,12 @@
 import Image from "next/image";
 import Link from "next/link";
 import { Mail } from "lucide-react";
+import { usePathname } from "next/navigation";
 
 export function Footer() {
+  const pathname = usePathname();
+  if (pathname?.startsWith("/admin")) return null;
+
   return (
     <footer className="relative z-10 w-full bg-[#030914] pt-20 pb-10 overflow-hidden">
       {/* Top Gradient Border */}
