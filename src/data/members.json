@@ -1,0 +1,23 @@
+[
+  {
+    "id": "1",
+    "email": "member@email.com",
+    "password": "$2a$10$3nL6n5v8a8r9z2x3c4v5b.E5.h.I.J.K.L.M.N.O.P.Q.R.S.T.U",
+    "name": "John Doe",
+    "tier": "tier1",
+    "tradingviewUsername": "",
+    "joinedAt": "2024-01-01",
+    "active": true
+  },
+  {
+    "id": "7e5eb138-f236-4dcd-aa82-4dd7bf77fae0",
+    "name": "Shah",
+    "email": "shahbawaztablet@gmail.com",
+    "password": "$2b$10$oKc9vCvn/qcALipfBvUin.Cw.iwIbwqJDm.ctmH/XrrV9RnS/JCqS",
+    "tier": "tier2",
+    "status": "pending_payment",
+    "tradingviewUsername": "",
+    "joinedAt": "2026-08-05T10:29:05.898Z",
+    "active": false
+  }
+]

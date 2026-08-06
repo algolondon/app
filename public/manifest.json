@@ -1,0 +1,17 @@
+{
+  "name": "16 London Algo",
+  "short_name": "16LA",
+  "description": "Premium trading community and algorithm.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#050B14",
+  "theme_color": "#050B14",
+  "icons": [
+    {
+      "src": "/logo.svg",
+      "sizes": "192x192 512x512",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
