@@ -48,14 +48,15 @@ export function Navbar() {
 
   return (
     <>
-      <nav 
-        className={`sticky top-0 w-full z-50 transition-all duration-500 border-b ${
-          isScrolled 
-            ? "bg-[#030914]/80 backdrop-blur-2xl border-[#00D4FF]/20 shadow-[0_4px_30px_rgba(0,212,255,0.05)] py-1" 
-            : "bg-[#030914]/40 backdrop-blur-md border-transparent py-3"
-        }`}
-      >
-        <div className="max-w-[1280px] mx-auto px-6 flex items-center justify-between transition-all duration-300">
+      <div className="fixed top-0 left-0 right-0 z-50 flex justify-center w-full px-4 sm:px-6 pt-4 transition-all duration-500 pointer-events-none">
+        <nav 
+          className={`pointer-events-auto w-full max-w-[1280px] transition-all duration-500 rounded-2xl border ${
+            isScrolled 
+              ? "bg-[#030914]/85 backdrop-blur-xl border-[#00D4FF]/20 shadow-[0_8px_32px_rgba(0,212,255,0.1)] py-2 px-4 sm:px-6" 
+              : "bg-[#030914]/40 backdrop-blur-sm border-transparent py-3 px-2 sm:px-4"
+          }`}
+        >
+          <div className="w-full flex items-center justify-between transition-all duration-300">
           
           {/* LEFT: Logo */}
           <Link href="/" className="shrink-0 flex items-center gap-2">
