@@ -87,11 +87,11 @@ export default async function MembersPortal() {
           className="max-w-5xl mx-auto px-6 lg:px-8 space-y-8"
           initial="hidden"
           animate="visible"
-          variants={staggerContainer}
+          variants={staggerContainer as any}
         >
           
           {/* Gradient Hero Bar */}
-          <MotionDiv variants={fadeInUp} className="relative overflow-hidden glass-panel rounded-2xl p-10">
+          <MotionDiv variants={fadeInUp as any} className="relative overflow-hidden glass-panel rounded-2xl p-10">
             <div className="relative z-10">
               <h1 className="text-4xl md:text-5xl font-display font-bold mb-3 text-foreground">
                 Welcome back, {user.name?.split(" ")[0] ?? "Member"}
@@ -108,7 +108,7 @@ export default async function MembersPortal() {
           </MotionDiv>
 
           {/* Stats Row */}
-          <MotionDiv variants={fadeInUp} className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <MotionDiv variants={fadeInUp as any} className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <div className="glass-panel rounded-xl p-5 flex items-center justify-between">
               <div>
                 <p className="text-xs text-muted-foreground uppercase tracking-wider mb-1">Current Tier</p>
@@ -136,7 +136,7 @@ export default async function MembersPortal() {
             </div>
           </MotionDiv>
 
-          <MotionDiv variants={fadeInUp} className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+          <MotionDiv variants={fadeInUp as any} className="grid grid-cols-1 lg:grid-cols-3 gap-8">
             
             {/* Left Column (Main Content) */}
             <div className="lg:col-span-2 space-y-8">
