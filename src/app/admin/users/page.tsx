@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Search, Edit2, CheckCircle2, XCircle, AlertCircle } from "lucide-react";
+import { Search, Edit2, CheckCircle2, XCircle, AlertCircle, Trash2 } from "lucide-react";
 
 export default function AdminUsers() {
   const [users, setUsers] = useState<any[]>([]);
@@ -32,6 +32,25 @@ export default function AdminUsers() {
     u.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
     (u.tradingviewUsername && u.tradingviewUsername.toLowerCase().includes(searchTerm.toLowerCase()))
   );
+
+  async function handleDeleteUser(userId: string) {
+    if (!window.confirm("Are you sure you want to delete this user? This action cannot be undone.")) return;
+    
+    try {
+      const res = await fetch(`/api/admin/users?userId=${userId}`, {
+        method: "DELETE"
+      });
+      if (res.ok) {
+        fetchUsers();
+      } else {
+        const data = await res.json();
+        alert(data.error || "Failed to delete user");
+      }
+    } catch (err) {
+      console.error(err);
+      alert("An error occurred while deleting the user.");
+    }
+  }
 
   return (
     <div className="space-y-6">
@@ -119,12 +138,22 @@ export default function AdminUsers() {
                       </span>
                     </td>
                     <td className="px-6 py-4 text-right">
-                      <button 
-                        onClick={() => setEditingUser(user)}
-                        className="p-2 bg-white/5 hover:bg-[#00D4FF]/20 hover:text-[#00D4FF] rounded-lg transition-colors inline-flex"
-                      >
-                        <Edit2 className="w-4 h-4" />
-                      </button>
+                      <div className="flex items-center justify-end gap-2">
+                        <button 
+                          onClick={() => setEditingUser(user)}
+                          className="p-2 bg-white/5 hover:bg-[#00D4FF]/20 hover:text-[#00D4FF] rounded-lg transition-colors inline-flex"
+                          title="Edit User"
+                        >
+                          <Edit2 className="w-4 h-4" />
+                        </button>
+                        <button 
+                          onClick={() => handleDeleteUser(user._id)}
+                          className="p-2 bg-white/5 hover:bg-red-500/20 hover:text-red-400 rounded-lg transition-colors inline-flex"
+                          title="Delete User"
+                        >
+                          <Trash2 className="w-4 h-4" />
+                        </button>
+                      </div>
                     </td>
                   </tr>
                 ))

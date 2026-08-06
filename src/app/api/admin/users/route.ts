@@ -66,3 +66,41 @@ export async function PATCH(req: Request) {
     return NextResponse.json({ error: "Internal server error" }, { status: 500 });
   }
 }
+
+export async function DELETE(req: Request) {
+  try {
+    const session = await getServerSession(authOptions);
+    if (!session || !session.user?.email || (session.user as any).role !== "admin") {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    }
+
+    const { searchParams } = new URL(req.url);
+    const userId = searchParams.get('userId');
+
+    if (!userId) {
+      return NextResponse.json({ error: "Missing userId" }, { status: 400 });
+    }
+
+    if (process.env.MOCK_ENV === 'true') {
+      return NextResponse.json({ message: "Mock user deleted successfully" });
+    }
+
+    await connectToDatabase();
+    
+    // Prevent admin from deleting themselves
+    if ((session.user as any).id === userId) {
+        return NextResponse.json({ error: "Cannot delete your own account" }, { status: 400 });
+    }
+
+    const deletedUser = await User.findByIdAndDelete(userId);
+
+    if (!deletedUser) {
+      return NextResponse.json({ error: "User not found" }, { status: 404 });
+    }
+
+    return NextResponse.json({ message: "User deleted successfully" });
+  } catch (error: any) {
+    console.error("Admin Users DELETE Error:", error);
+    return NextResponse.json({ error: "Internal server error" }, { status: 500 });
+  }
+}
