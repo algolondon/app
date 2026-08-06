@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { LayoutDashboard, Users, Settings, LogOut, ShieldAlert, Video, Mail, Menu, X, ChevronLeft, ChevronRight } from "lucide-react";
+import { LayoutDashboard, Users, Settings, LogOut, ShieldAlert, Video, Mail, Menu, X, ChevronLeft, ChevronRight, Database } from "lucide-react";
 import { signOut } from "next-auth/react";
 import { useState } from "react";
 
@@ -16,6 +16,7 @@ export function Sidebar() {
     { name: "Users", href: "/admin/users", icon: Users },
     { name: "Course Library", href: "/admin/courses", icon: Video },
     { name: "Broadcast", href: "/admin/broadcast", icon: Mail },
+    { name: "Content CMS", href: "/studio", icon: Database },
     { name: "Settings", href: "/admin/settings", icon: Settings },
   ];
 
