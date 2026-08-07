@@ -60,13 +60,14 @@ export function Navbar() {
           
           {/* LEFT: Logo */}
           <Link href="/" className="shrink-0 flex items-center gap-2">
-            <div className="relative h-[56px] w-auto flex items-center">
+            <div className="relative h-[80px] w-auto flex items-center py-2">
               <Image 
                 src="/images/new_assets/Trasparent Logo.png" 
                 alt="16London Algo" 
-                width={196} 
-                height={56} 
-                className="h-[56px] w-auto hidden sm:block" 
+                width={280} 
+                height={80} 
+                className="h-full w-auto object-contain"
+                priority
               />
               {/* Fallback for smaller screens if SVG fails or just to meet requirements */}
               <div className="sm:hidden flex items-center gap-1.5 font-bold text-foreground text-[15px] tracking-wider">

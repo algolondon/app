@@ -23,13 +23,13 @@ export function Footer() {
           {/* Brand & Newsletter Column */}
           <div className="md:col-span-2 lg:col-span-6 pr-0 md:pr-12 flex flex-col">
             <Link href="/" className="mb-6">
-              <div className="relative h-[56px] w-auto flex items-center">
+              <div className="relative h-[80px] w-auto flex items-center py-2">
                 <Image 
                   src="/images/new_assets/Trasparent Logo.png" 
                   alt="16London & Co" 
-                  width={224} 
-                  height={56} 
-                  className="h-[56px] w-auto hidden sm:block" 
+                  width={320} 
+                  height={80} 
+                  className="h-full w-auto hidden sm:block object-contain" 
                 />
                 <div className="sm:hidden flex items-center gap-1.5 font-bold text-foreground text-[18px] tracking-wider">
                   <span className="bg-[#00D4FF] text-background px-2 py-0.5 rounded-[4px] leading-none">16</span>
