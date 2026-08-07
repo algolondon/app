@@ -40,7 +40,7 @@ export async function POST(request: Request) {
           <ol style="color: #E2E8F0; font-size: 16px; line-height: 1.5;">
             <li style="margin-bottom: 10px;">Log in to the <a href="https://16londonalgo.com/login" style="color: #00D4FF;">Members Portal</a> using the credentials above.</li>
             <li style="margin-bottom: 10px;">Submit your TradingView username inside the portal.</li>
-            <li style="margin-bottom: 10px;">Carl will manually grant you indicator access within 24 hours.</li>
+            <li style="margin-bottom: 10px;">Kazi will manually grant you indicator access within 24 hours.</li>
           </ol>
           
           <div style="text-align: center; margin: 40px 0;">

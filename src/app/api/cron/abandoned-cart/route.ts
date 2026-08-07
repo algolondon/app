@@ -33,7 +33,7 @@ export async function GET(req: Request) {
           from: 'support@16londonalgo.com', // Replace with verified domain
           to: user.email,
           subject: "Complete your 16London Algo setup",
-          html: `<p>Hi ${user.name},</p><p>We noticed you started setting up your 16London Algo account but didn't complete the payment. The markets are moving, and we'd love to have you on board.</p><p><a href="${process.env.NEXT_PUBLIC_APP_URL}/checkout">Click here to complete your checkout and get instant access.</a></p><p>Best,<br>Carl</p>`,
+          html: `<p>Hi ${user.name},</p><p>We noticed you started setting up your 16London Algo account but didn't complete the payment. The markets are moving, and we'd love to have you on board.</p><p><a href="${process.env.NEXT_PUBLIC_APP_URL}/checkout">Click here to complete your checkout and get instant access.</a></p><p>Best,<br>Kazi</p>`,
         });
       }
       

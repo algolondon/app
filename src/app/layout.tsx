@@ -22,7 +22,7 @@ export const metadata: Metadata = {
   title: "16London Algo — Institutional Trading Indicators",
   description: "Institutional grade trading algorithms built for serious traders. 8 years of live market experience distilled into proprietary TradingView tools plus complete masterclass.",
   keywords: ["trading indicators", "tradingview algorithms", "forex trading", "crypto trading", "16london", "trend algo", "london breakout strategy"],
-  authors: [{ name: "Carl @ 16London & Co" }],
+  authors: [{ name: "Kazi @ 16London & Co" }],
   openGraph: {
     type: "website",
     locale: "en_US",
@@ -98,7 +98,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       className={`${poppins.variable} h-full antialiased`}
       suppressHydrationWarning
     >
-      <body className="min-h-full flex flex-col font-sans bg-background text-foreground transition-colors duration-300">
+      <body className="min-h-full flex flex-col font-sans bg-background text-foreground transition-colors duration-300 overflow-x-hidden">
         <Script
           id="structured-data"
           type="application/ld+json"

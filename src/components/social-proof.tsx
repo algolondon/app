@@ -4,12 +4,12 @@ import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
 const NAMES_ARRAY = [
-  { initials: "MK", name: "Marcus K.", country: "Germany", tier: "All Indicators + Course" },
-  { initials: "JT", name: "James T.", country: "United States", tier: "Trend Algo + London X" },
-  { initials: "RP", name: "Raj P.", country: "United Kingdom", tier: "Trend Algo" },
-  { initials: "AL", name: "Andre L.", country: "Canada", tier: "All Indicators + Course" },
-  { initials: "SM", name: "Sarah M.", country: "Australia", tier: "Trend Algo + London X" },
-  { initials: "DK", name: "David K.", country: "South Africa", tier: "All Indicators + Course" }
+  { initials: "MK", name: "Marcus K.", country: "Germany", tier: "Full 16London Access" },
+  { initials: "JT", name: "James T.", country: "United States", tier: "16London ATM & London X" },
+  { initials: "RP", name: "Raj P.", country: "United Kingdom", tier: "16London Trend Algo" },
+  { initials: "AL", name: "Andre L.", country: "Canada", tier: "Full 16London Access" },
+  { initials: "SM", name: "Sarah M.", country: "Australia", tier: "16London ATM & London X" },
+  { initials: "DK", name: "David K.", country: "South Africa", tier: "Full 16London Access" }
 ];
 
 export function SocialProof() {

@@ -164,7 +164,7 @@ export default async function MembersPortal() {
                   <div className="bg-background border border-foreground/10 rounded-xl p-6 relative overflow-hidden">
                     <div className="relative z-10">
                       <h3 className="font-bold text-lg mb-2">Connect Your TradingView</h3>
-                      <p className="text-sm text-muted-foreground mb-6 max-w-md leading-relaxed">To get access to the proprietary indicators, please submit your TradingView username. Carl will manually grant access within 24 hours.</p>
+                      <p className="text-sm text-muted-foreground mb-6 max-w-md leading-relaxed">To get access to the proprietary indicators, please submit your TradingView username. Kazi will manually grant access within 24 hours.</p>
                       <TVUsernameForm />
                     </div>
                   </div>
@@ -197,7 +197,7 @@ export default async function MembersPortal() {
                     <div className="absolute right-[-20%] bottom-[-20%] w-32 h-32 bg-[#00D4FF]/5 rounded-full blur-2xl group-hover:bg-[#00D4FF]/20 transition-colors"></div>
                   </a>
 
-                  <a href={settingsObj.telegramLink || "#"} target="_blank" rel="noopener noreferrer" className="group glass-panel rounded-xl p-6 hover:border-[#00D4FF]/50 transition-all duration-300 hover:shadow-lg hover:-translate-y-1 flex flex-col items-start gap-4 relative overflow-hidden sm:col-span-2 md:col-span-1">
+                  <a href={settingsObj.telegramLink || "https://t.me/+_JqY7DXwWpAxOGUx"} target="_blank" rel="noopener noreferrer" className="group glass-panel rounded-xl p-6 hover:border-[#00D4FF]/50 transition-all duration-300 hover:shadow-lg hover:-translate-y-1 flex flex-col items-start gap-4 relative overflow-hidden sm:col-span-2 md:col-span-1">
                     <div className="bg-[#00D4FF]/10 p-4 rounded-xl text-[#00D4FF] group-hover:bg-[#00D4FF] group-hover:text-background transition-colors relative z-10">
                       <Send className="w-7 h-7" />
                     </div>
@@ -246,15 +246,15 @@ export default async function MembersPortal() {
                 
                 <div className="mb-8">
                   <div className="text-2xl font-display font-bold text-[#00D4FF] mb-2 leading-tight">
-                    {user.tier === "tier1" && "Trend Algo"}
+                    {user.tier === "tier1" && "16London Trend Algo"}
                     {user.tier === "tier2" && "Trend Algo + London X"}
-                    {user.tier === "tier3" && "All Indicators + Course"}
+                    {user.tier === "tier3" && "16London Complete System"}
                   </div>
                   <div className="text-sm text-muted-foreground flex items-center gap-2">
                     <span className="font-mono bg-foreground/5 px-2 py-0.5 rounded">
-                      {user.tier === "tier1" && "$89.99 / mo"}
-                      {user.tier === "tier2" && "$129.99 / mo"}
-                      {user.tier === "tier3" && "$169.99 / mo"}
+                      {user.tier === "tier1" && "$59.99 / mo"}
+                      {user.tier === "tier2" && "$89.99 / mo"}
+                      {user.tier === "tier3" && "$119.99 / mo"}
                     </span>
                   </div>
                 </div>

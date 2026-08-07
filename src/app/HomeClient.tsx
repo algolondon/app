@@ -23,6 +23,7 @@ import { useSession } from "next-auth/react";
 import { SocialProof } from "@/components/social-proof";
 import { AlgoInAction } from "@/components/algo-in-action";
 import { Navbar } from "@/components/navbar";
+import { MockupFrame } from "@/components/mockup-frame";
 
 // Fade in up animation variant
 const fadeInUp = {
@@ -55,7 +56,7 @@ export default function HomeClient({ sanityData }: { sanityData?: any }) {
     },
     {
       q: "How do I get access after payment?",
-      a: "After checkout, you'll be asked for your TradingView username. Carl will manually grant access within 24 hours."
+      a: "After checkout, you'll be asked for your TradingView username. Kazi will manually grant access within 24 hours."
     },
     {
       q: "Can I cancel anytime?",
@@ -72,7 +73,7 @@ export default function HomeClient({ sanityData }: { sanityData?: any }) {
     : defaultFaqs;
 
   return (
-    <main className="flex flex-col min-h-screen overflow-x-hidden selection:bg-primary selection:text-foreground">
+    <main className="flex flex-col min-h-screen selection:bg-primary selection:text-foreground relative">
       {/* Background Grid Pattern */}
       <div className="fixed inset-0 z-0 opacity-20 pointer-events-none" style={{ backgroundImage: 'radial-gradient(#00D4FF 1px, transparent 1px)', backgroundSize: '40px 40px' }}></div>
 
@@ -133,7 +134,7 @@ export default function HomeClient({ sanityData }: { sanityData?: any }) {
                   </Link>
                 ) : (
                   <Link href="#pricing" className="bg-[#00D4FF] hover:bg-[#00B3D6] text-background px-8 py-4 rounded-lg font-bold text-center transition-all duration-300 shadow-[0_0_20px_rgba(0,212,255,0.4)]">
-                    Get Access Now (From $89.99/mo)
+                    Get Access Now (From $59.99/mo)
                   </Link>
                 )}
                 <Link href="#indicator-suite" className="border border-[#00D4FF] text-[#00D4FF] hover:bg-[#00D4FF]/10 px-8 py-4 rounded-lg font-bold text-center transition-all duration-300">
@@ -198,9 +199,11 @@ export default function HomeClient({ sanityData }: { sanityData?: any }) {
                     <div className="flex flex-col"><span className="text-gray-500">SCALP</span><span className="text-[#00D4FF]">INTRADAY</span></div>
                   </div>
 
-                  <div className="rounded-lg overflow-hidden border border-foreground/5 bg-muted mb-4">
-                    <Image src="/chart-screenshot-1.svg" alt="Chart Preview" width={600} height={300} className="w-full opacity-80" />
-                  </div>
+                  <MockupFrame title="16LONDON TREND ALGO V1 · CHART PREVIEW" className="w-full">
+                    <div className="relative w-full h-full">
+                      <Image src="/images/new_assets/Trend Algo Rules  Image.png" alt="Chart Preview" width={600} height={300} className="w-full opacity-80" />
+                    </div>
+                  </MockupFrame>
 
                   <div className="text-center font-mono text-[10px] text-muted-foreground uppercase tracking-widest mt-4">
                     MULTI TIME FRAME COMBINATION <br/>
@@ -235,7 +238,9 @@ export default function HomeClient({ sanityData }: { sanityData?: any }) {
                 <p className="text-muted-foreground text-lg leading-relaxed">Our flagship indicator. Visually maps the market trend so you never trade against momentum. Multi-timeframe dashboard built in.</p>
               </div>
               <div className="w-full lg:w-1/2">
-                <Image src="/chart-screenshot-2.svg" alt="Trend ALGO" width={600} height={400} className="rounded-xl border border-foreground/10" />
+                <MockupFrame title="16LONDON TREND ALGO V1">
+                  <Image src="/images/new_assets/Trend Algo image 1.png" alt="Trend ALGO" width={600} height={400} className="w-full" />
+                </MockupFrame>
               </div>
             </motion.div>
 
@@ -246,7 +251,9 @@ export default function HomeClient({ sanityData }: { sanityData?: any }) {
                 <p className="text-muted-foreground text-lg leading-relaxed">Designed specifically for the London session breakout. Captures explosive moves with pinpoint accuracy. Perfect for early morning traders.</p>
               </div>
               <div className="w-full lg:w-1/2">
-                <Image src="/rules-infographic.svg" alt="London X" width={600} height={400} className="rounded-xl border border-foreground/10" />
+                <MockupFrame title="LONDON X BREAKOUT">
+                  <Image src="/images/new_assets/London X image 1.png" alt="London X" width={600} height={400} className="w-full" />
+                </MockupFrame>
               </div>
             </motion.div>
 
@@ -257,7 +264,9 @@ export default function HomeClient({ sanityData }: { sanityData?: any }) {
                 <p className="text-muted-foreground text-lg leading-relaxed">ATM stands for Accumulation, Trap, Manipulation. Identifies institutional footprints before the big move. Advanced entries only.</p>
               </div>
               <div className="w-full lg:w-1/2">
-                <Image src="/chart-screenshot-1.svg" alt="ATM System" width={600} height={400} className="rounded-xl border border-foreground/10" />
+                <MockupFrame title="16LONDON ATM SYSTEM">
+                  <Image src="/images/new_assets/ATM System Image 1.png" alt="ATM System" width={600} height={400} className="w-full" />
+                </MockupFrame>
               </div>
             </motion.div>
           </div>
@@ -316,7 +325,7 @@ export default function HomeClient({ sanityData }: { sanityData?: any }) {
               { icon: LineChart, title: "Live Trade Examples", desc: "Real chart breakdowns" },
               { icon: BookOpen, title: "Full System Rules", desc: "No guessing, ever" },
               { icon: MessageSquare, title: "Telegram VIP Access", desc: "Community + signals" },
-              { icon: Headset, title: "One-on-One Support", desc: "Direct access to Carl" }
+              { icon: Headset, title: "One-on-One Support", desc: "Direct access to Kazi" }
             ].map((item, i) => (
               <motion.div key={i} initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeInUp} transition={{ delay: i * 0.1 }} className="bg-card border border-[#00D4FF]/20 rounded-xl p-8 hover:-translate-y-2 hover:border-[#00D4FF]/60 hover:shadow-[0_10px_30px_rgba(0,212,255,0.15)] transition-all duration-300">
                 <item.icon className="w-8 h-8 text-[#00D4FF] mb-6" />
@@ -351,7 +360,7 @@ export default function HomeClient({ sanityData }: { sanityData?: any }) {
                 ))}
               </div>
 
-              <motion.div variants={fadeInUp} id="about-carl" className="border-t border-gray-200 dark:border-foreground/10 pt-10">
+              <motion.div variants={fadeInUp} id="about-Kazi" className="border-t border-gray-200 dark:border-foreground/10 pt-10">
                 <h3 className="text-2xl font-bold mb-4">8 Years in the Trenches.</h3>
                 <p className="text-muted-foreground leading-relaxed mb-6">I didn't build this for fun. I built it because I was tired of losing. These rules saved my account. They'll save yours too.</p>
                 <div className="flex items-center gap-4 text-sm font-bold text-foreground">
@@ -364,7 +373,9 @@ export default function HomeClient({ sanityData }: { sanityData?: any }) {
 
             <motion.div initial={{ opacity: 0, x: 50 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ duration: 0.8 }} className="w-full lg:w-[45%] relative">
               <div className="absolute inset-0 bg-[#00D4FF] blur-[80px] opacity-20 rounded-full"></div>
-              <Image src="/chart-screenshot-2.svg" alt="Phone Mockup" width={600} height={800} className="relative z-10 rounded-[2rem] border-4 border-[#0D1F3C] shadow-2xl" />
+              <MockupFrame title="16LONDON TREND ALGO V1 · RULES & SETTINGS" className="relative z-10 shadow-2xl">
+                <Image src="/images/new_assets/Trend Algo Rules  Image.png" alt="Rules Mockup" width={600} height={800} className="w-full" />
+              </MockupFrame>
             </motion.div>
 
           </div>
@@ -384,15 +395,15 @@ export default function HomeClient({ sanityData }: { sanityData?: any }) {
             
             {/* Tier 1 */}
             <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeInUp} transition={{ delay: 0.1 }} className="bg-card border border-[#00D4FF]/20 rounded-3xl p-8 hover:border-[#00D4FF]/50 transition-colors flex flex-col h-[600px]">
-              <h3 className="text-2xl font-display font-bold text-muted-foreground mb-2">Trend Algo</h3>
+              <h3 className="text-2xl font-display font-bold text-muted-foreground mb-2">16London Trend Algo</h3>
               <div className="mb-8">
-                <span className="text-4xl font-display font-bold text-foreground">$89.99</span>
+                <span className="text-4xl font-display font-bold text-foreground">$59.99</span>
                 <span className="text-gray-500">/mo</span>
               </div>
               <ul className="space-y-4 mb-8 flex-grow">
-                <li className="flex items-start gap-3"><Check className="text-[#00D4FF] w-5 h-5 shrink-0 mt-0.5" /><span className="text-muted-foreground">16London Trend Algo Indicator</span></li>
-                <li className="flex items-start gap-3"><Check className="text-[#00D4FF] w-5 h-5 shrink-0 mt-0.5" /><span className="text-muted-foreground">Telegram Access</span></li>
-                <li className="flex items-start gap-3"><Check className="text-[#00D4FF] w-5 h-5 shrink-0 mt-0.5" /><span className="text-muted-foreground">Full System Rules PDF</span></li>
+                <li className="flex items-start gap-3"><Check className="text-[#00D4FF] w-5 h-5 shrink-0 mt-0.5" /><span className="text-muted-foreground">16London Trend Algo V1</span></li>
+                <li className="flex items-start gap-3"><Check className="text-[#00D4FF] w-5 h-5 shrink-0 mt-0.5" /><span className="text-muted-foreground">Members Portal Access</span></li>
+                <li className="flex items-start gap-3"><Check className="text-[#00D4FF] w-5 h-5 shrink-0 mt-0.5" /><span className="text-muted-foreground">Full Video Course</span></li>
               </ul>
               <div className="mt-auto w-full pt-4">
                 <Link href="/checkout?tier=1" className="flex items-center justify-center w-full bg-[#FFC439] hover:bg-[#F4BB33] text-[#003087] font-bold py-3.5 rounded-xl transition-colors shadow-lg">
@@ -405,18 +416,15 @@ export default function HomeClient({ sanityData }: { sanityData?: any }) {
             </motion.div>
 
             {/* Tier 2 */}
-            <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeInUp} transition={{ delay: 0.2 }} className="bg-card border-2 border-[#00D4FF] rounded-3xl p-8 shadow-[0_0_30px_rgba(0,212,255,0.2)] transform md:-translate-y-4 flex flex-col h-[640px] relative">
-              <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-[#00D4FF] text-background px-4 py-1 rounded-full text-sm font-bold uppercase tracking-wider">MOST POPULAR</div>
-              <h3 className="text-2xl font-display font-bold text-[#00D4FF] mb-2">Trend Algo + London X</h3>
+            <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeInUp} transition={{ delay: 0.2 }} className="bg-card border border-[#00D4FF]/20 rounded-3xl p-8 hover:border-[#00D4FF]/50 transition-colors flex flex-col h-[600px]">
+              <h3 className="text-2xl font-display font-bold text-muted-foreground mb-2">Trend Algo + London X</h3>
               <div className="mb-8">
-                <span className="text-5xl font-display font-bold text-foreground">$129.99</span>
-                <span className="text-muted-foreground">/mo</span>
+                <span className="text-4xl font-display font-bold text-foreground">$89.99</span>
+                <span className="text-gray-500">/mo</span>
               </div>
               <ul className="space-y-4 mb-8 flex-grow">
                 <li className="flex items-start gap-3"><Check className="text-[#00D4FF] w-5 h-5 shrink-0 mt-0.5" /><span className="text-muted-foreground">Everything in Tier 1</span></li>
-                <li className="flex items-start gap-3"><Check className="text-[#00D4FF] w-5 h-5 shrink-0 mt-0.5" /><span className="text-foreground font-bold">London X Indicator</span></li>
-                <li className="flex items-start gap-3"><Check className="text-[#00D4FF] w-5 h-5 shrink-0 mt-0.5" /><span className="text-foreground font-bold">Video Course Library</span></li>
-                <li className="flex items-start gap-3"><Check className="text-[#00D4FF] w-5 h-5 shrink-0 mt-0.5" /><span className="text-muted-foreground">Live Trade Examples</span></li>
+                <li className="flex items-start gap-3"><Check className="text-[#00D4FF] w-5 h-5 shrink-0 mt-0.5" /><span className="text-foreground font-bold">London X System</span></li>
               </ul>
               <div className="mt-auto w-full pt-4">
                 <Link href="/checkout?tier=2" className="flex items-center justify-center w-full bg-[#FFC439] hover:bg-[#F4BB33] text-[#003087] font-bold py-3.5 rounded-xl transition-colors shadow-lg">
@@ -429,22 +437,22 @@ export default function HomeClient({ sanityData }: { sanityData?: any }) {
             </motion.div>
 
             {/* Tier 3 */}
-            <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeInUp} transition={{ delay: 0.3 }} className="bg-card border border-[#00D4FF]/20 rounded-3xl p-8 hover:border-[#00D4FF]/50 transition-colors flex flex-col h-[600px]">
-              <h3 className="text-2xl font-display font-bold text-muted-foreground mb-2">All Indicators + Course</h3>
+            <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeInUp} transition={{ delay: 0.3 }} className="bg-card border-2 border-[#00D4FF] rounded-3xl p-8 shadow-[0_0_30px_rgba(0,212,255,0.2)] transform md:-translate-y-4 flex flex-col h-[640px] relative">
+              <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-[#00D4FF] text-background px-4 py-1 rounded-full text-sm font-bold uppercase tracking-wider whitespace-nowrap">BEST VALUE</div>
+              <h3 className="text-2xl font-display font-bold text-[#00D4FF] mb-2">16London Complete System</h3>
               <div className="mb-8">
-                <span className="text-4xl font-display font-bold text-foreground">$169.99</span>
-                <span className="text-gray-500">/mo</span>
+                <span className="text-5xl font-display font-bold text-foreground">$119.99</span>
+                <span className="text-muted-foreground">/mo</span>
               </div>
               <ul className="space-y-4 mb-8 flex-grow">
                 <li className="flex items-start gap-3"><Check className="text-[#00D4FF] w-5 h-5 shrink-0 mt-0.5" /><span className="text-muted-foreground">Everything in Tier 2</span></li>
-                <li className="flex items-start gap-3"><Check className="text-[#00D4FF] w-5 h-5 shrink-0 mt-0.5" /><span className="text-foreground font-bold">16London ATM Indicator</span></li>
-                <li className="flex items-start gap-3"><Check className="text-[#00D4FF] w-5 h-5 shrink-0 mt-0.5" /><span className="text-muted-foreground">VIP Telegram Channel</span></li>
-                <li className="flex items-start gap-3"><Check className="text-[#00D4FF] w-5 h-5 shrink-0 mt-0.5" /><span className="text-muted-foreground">Full Course Library</span></li>
-                <li className="flex items-start gap-3"><Check className="text-[#00D4FF] w-5 h-5 shrink-0 mt-0.5" /><span className="text-muted-foreground">Priority Support</span></li>
+                <li className="flex items-start gap-3"><Check className="text-[#00D4FF] w-5 h-5 shrink-0 mt-0.5" /><span className="text-foreground font-bold">16London ATM System</span></li>
+                <li className="flex items-start gap-3"><Check className="text-[#00D4FF] w-5 h-5 shrink-0 mt-0.5" /><span className="text-muted-foreground">Complete Video Masterclass</span></li>
+                <li className="flex items-start gap-3"><Check className="text-[#00D4FF] w-5 h-5 shrink-0 mt-0.5" /><span className="text-muted-foreground">Future System Updates</span></li>
               </ul>
               <div className="mt-auto w-full pt-4">
                 <Link href="/checkout?tier=3" className="flex items-center justify-center w-full bg-[#FFC439] hover:bg-[#F4BB33] text-[#003087] font-bold py-3.5 rounded-xl transition-colors shadow-lg">
-                  <span className="italic mr-1 text-[#003087] font-bold">PayPal</span> Subscribe
+                  <span className="italic mr-1 text-[#003087] font-bold">PayPal</span> GET COMPLETE ACCESS
                 </Link>
                 <div className="flex items-center justify-center gap-1.5 mt-3 text-[11px] text-gray-500 font-medium">
                   <Lock className="w-3 h-3 text-green-500" /> Secure 256-bit Encrypted Checkout

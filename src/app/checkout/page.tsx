@@ -17,38 +17,34 @@ const paypalPlanIds = {
 
 const tierDetails = {
   "1": {
-    name: "Trend Algo",
-    price: "$89.99/mo",
+    name: "16London Trend Algo",
+    price: "$59.99/mo",
     features: [
-      "16London Trend Algo (TradingView)",
-      "Automated Buy/Sell Signals",
-      "Dynamic Take Profit & Stop Loss",
-      "Members-Only Telegram Group"
+      "16London Trend Algo V1",
+      "Members Portal Access",
+      "Full Video Course"
     ]
   },
   "2": {
     name: "Trend Algo + London X",
-    price: "$129.99/mo",
+    price: "$89.99/mo",
     features: [
-      "16London Trend Algo (TradingView)",
-      "16London X Indicator (Momentum)",
-      "Automated Buy/Sell Signals",
-      "Dynamic Take Profit & Stop Loss",
-      "Members-Only Telegram Group",
-      "Priority Email Support"
+      "16London Trend Algo V1",
+      "London X System",
+      "Members Portal Access",
+      "Full Video Course"
     ]
   },
   "3": {
-    name: "All Indicators + Course",
-    price: "$169.99/mo",
+    name: "16London Complete System",
+    price: "$119.99/mo",
     features: [
-      "16London Trend Algo (TradingView)",
-      "16London X Indicator (Momentum)",
-      "16London Oscillator (Volume)",
-      "Full Trading Strategy Course",
-      "Members-Only Telegram Group",
-      "1-on-1 Onboarding Call",
-      "Priority Support"
+      "16London Trend Algo V1",
+      "London X System",
+      "16London ATM System",
+      "Members Portal Access",
+      "Complete Video Masterclass",
+      "Future System Updates"
     ]
   }
 };
@@ -323,7 +319,7 @@ function CheckoutContent() {
                           const res = await fetch("/api/stripe/create-checkout-session", {
                             method: "POST",
                             headers: { "Content-Type": "application/json" },
-                            body: JSON.stringify({ email: formData.email, planId })
+                            body: JSON.stringify({ email: formData.email, tier })
                           });
                           const data = await res.json();
                           if (data.url) {

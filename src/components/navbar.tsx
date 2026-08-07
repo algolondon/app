@@ -13,7 +13,7 @@ const navLinks = [
   { name: "How It Works", href: "/#how-it-works" },
   { name: "What Members Get", href: "/#what-members-get" },
   { name: "4 Golden Rules", href: "/#golden-rules" },
-  { name: "About Carl", href: "/#about-carl" },
+  { name: "About Kazi", href: "/#about-kazi" },
   { name: "Pricing", href: "/#pricing" },
   { name: "FAQ", href: "/#faq" },
 ];
@@ -50,23 +50,23 @@ export function Navbar() {
     <>
       <div className="sticky top-0 z-50 flex justify-center w-full px-4 sm:px-6 pt-4 transition-all duration-500 pointer-events-none">
         <nav 
-          className={`pointer-events-auto w-full max-w-[1280px] transition-all duration-500 rounded-2xl border ${
+          className={`pointer-events-auto w-full max-w-[1280px] transition-all duration-500 rounded-full border ${
             isScrolled 
-              ? "bg-[#030914]/85 backdrop-blur-xl border-[#00D4FF]/20 shadow-[0_8px_32px_rgba(0,212,255,0.1)] py-2 px-4 sm:px-6" 
-              : "bg-[#030914]/40 backdrop-blur-sm border-transparent py-3 px-2 sm:px-4"
+              ? "bg-[#030914]/85 backdrop-blur-xl border-[#00D4FF]/20 shadow-[0_8px_32px_rgba(0,212,255,0.1)] py-2 px-6 sm:px-8" 
+              : "bg-[#030914]/80 backdrop-blur-md border-[#00D4FF]/10 py-3 px-6 sm:px-8"
           }`}
         >
           <div className="w-full flex items-center justify-between transition-all duration-300">
           
           {/* LEFT: Logo */}
           <Link href="/" className="shrink-0 flex items-center gap-2">
-            <div className="relative h-[40px] w-auto flex items-center">
+            <div className="relative h-[56px] w-auto flex items-center">
               <Image 
-                src="/logo.svg" 
-                alt="16London & Co" 
-                width={140} 
-                height={40} 
-                className="h-[40px] w-auto hidden sm:block" 
+                src="/images/new_assets/Trasparent Logo.png" 
+                alt="16London Algo" 
+                width={196} 
+                height={56} 
+                className="h-[56px] w-auto hidden sm:block" 
               />
               {/* Fallback for smaller screens if SVG fails or just to meet requirements */}
               <div className="sm:hidden flex items-center gap-1.5 font-bold text-foreground text-[15px] tracking-wider">

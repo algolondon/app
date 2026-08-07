@@ -20,16 +20,16 @@ export function Footer() {
       <div className="max-w-7xl mx-auto px-6 lg:px-8 relative z-10">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-12 lg:gap-8 mb-16">
           
-          {/* Brand Column */}
-          <div className="lg:col-span-4 flex flex-col items-start">
+          {/* Brand & Newsletter Column */}
+          <div className="md:col-span-2 lg:col-span-6 pr-0 md:pr-12 flex flex-col">
             <Link href="/" className="mb-6">
-              <div className="relative h-[40px] w-auto flex items-center">
+              <div className="relative h-[56px] w-auto flex items-center">
                 <Image 
-                  src="/logo.svg" 
+                  src="/images/new_assets/Trasparent Logo.png" 
                   alt="16London & Co" 
-                  width={160} 
-                  height={45} 
-                  className="h-[40px] w-auto hidden sm:block" 
+                  width={224} 
+                  height={56} 
+                  className="h-[56px] w-auto hidden sm:block" 
                 />
                 <div className="sm:hidden flex items-center gap-1.5 font-bold text-foreground text-[18px] tracking-wider">
                   <span className="bg-[#00D4FF] text-background px-2 py-0.5 rounded-[4px] leading-none">16</span>
@@ -40,21 +40,44 @@ export function Footer() {
             <p className="text-muted-foreground text-sm leading-relaxed max-w-xs mb-8">
               Built for Legacy. Designed for Wealth. Institutional-grade trading algorithms and education for the serious trader.
             </p>
-            <div className="flex items-center gap-4">
-              <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full bg-foreground/5 flex items-center justify-center text-foreground hover:bg-[#00D4FF] hover:text-background transition-all duration-300">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z"/></svg>
+            <div className="flex items-center gap-4 mb-12">
+              <a href="https://t.me/+QJ-dznDcXGFmODJh" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full bg-foreground/5 flex items-center justify-center text-foreground hover:bg-[#00D4FF] hover:text-background transition-all duration-300">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
               </a>
-              <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full bg-foreground/5 flex items-center justify-center text-foreground hover:bg-[#00D4FF] hover:text-background transition-all duration-300">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+              <a href="https://www.tiktok.com/@16londonalgo" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full bg-foreground/5 flex items-center justify-center text-foreground hover:bg-[#00D4FF] hover:text-background transition-all duration-300">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5"></path></svg>
               </a>
-              <a href="https://youtube.com" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full bg-foreground/5 flex items-center justify-center text-foreground hover:bg-[#00D4FF] hover:text-background transition-all duration-300">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33 2.78 2.78 0 0 0 1.94 2c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.33 29 29 0 0 0-.46-5.33z"/><polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02"/></svg>
+              <a href="https://tradingview.com" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full bg-foreground/5 flex items-center justify-center text-foreground hover:bg-[#00D4FF] hover:text-background transition-all duration-300">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 3H3v18h18V3zM3 13.5h7.5V21H3v-7.5zM13.5 13.5H21V21h-7.5v-7.5zM13.5 3H21v7.5h-7.5V3zM3 3h7.5v7.5H3V3z"/></svg>
               </a>
+            </div>
+
+            {/* Newsletter */}
+            <div>
+              <h3 className="font-bold text-foreground mb-6 uppercase tracking-wider text-sm">Stay Updated</h3>
+              <p className="text-muted-foreground text-sm mb-4 max-w-sm">
+                Get the latest market insights and algorithm updates straight to your inbox.
+              </p>
+              <form className="flex items-center gap-2 max-w-md" onSubmit={(e) => e.preventDefault()}>
+                <div className="relative flex-1">
+                  <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+                  <input 
+                    type="email" 
+                    name="email"
+                    id="newsletter-email"
+                    placeholder="Enter your email" 
+                    className="w-full bg-foreground/5 border border-foreground/10 rounded-lg py-2.5 pl-10 pr-4 text-sm text-foreground focus:outline-none focus:border-[#00D4FF] transition-colors"
+                  />
+                </div>
+                <button className="bg-[#00D4FF] hover:bg-[#00B3D6] text-background font-bold py-2.5 px-6 rounded-lg text-sm transition-colors whitespace-nowrap">
+                  Subscribe
+                </button>
+              </form>
             </div>
           </div>
 
           {/* Quick Links */}
-          <div className="lg:col-span-2">
+          <div className="lg:col-span-3 lg:pl-12">
             <h3 className="font-bold text-foreground mb-6 uppercase tracking-wider text-sm">Platform</h3>
             <ul className="flex flex-col gap-4">
               <li><Link href="/#indicator-suite" className="text-muted-foreground hover:text-[#00D4FF] transition-colors text-sm">Indicator Suite</Link></li>
@@ -65,36 +88,13 @@ export function Footer() {
           </div>
 
           {/* Company */}
-          <div className="lg:col-span-2">
+          <div className="lg:col-span-3">
             <h3 className="font-bold text-foreground mb-6 uppercase tracking-wider text-sm">Company</h3>
             <ul className="flex flex-col gap-4">
-              <li><Link href="/#about-carl" className="text-muted-foreground hover:text-[#00D4FF] transition-colors text-sm">About Carl</Link></li>
+              <li><Link href="/#about-kazi" className="text-muted-foreground hover:text-[#00D4FF] transition-colors text-sm">About Kazi</Link></li>
               <li><Link href="/#faq" className="text-muted-foreground hover:text-[#00D4FF] transition-colors text-sm">FAQ</Link></li>
               <li><Link href="mailto:support@16londonalgo.com" className="text-muted-foreground hover:text-[#00D4FF] transition-colors text-sm">Contact Support</Link></li>
             </ul>
-          </div>
-
-          {/* Newsletter */}
-          <div className="lg:col-span-4">
-            <h3 className="font-bold text-foreground mb-6 uppercase tracking-wider text-sm">Stay Updated</h3>
-            <p className="text-muted-foreground text-sm mb-4">
-              Get the latest market insights and algorithm updates straight to your inbox.
-            </p>
-            <form className="flex items-center gap-2" onSubmit={(e) => e.preventDefault()}>
-              <div className="relative flex-1">
-                <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
-                <input 
-                  type="email" 
-                  name="email"
-                  id="newsletter-email"
-                  placeholder="Enter your email" 
-                  className="w-full bg-foreground/5 border border-foreground/10 rounded-lg py-2.5 pl-10 pr-4 text-sm text-foreground focus:outline-none focus:border-[#00D4FF] transition-colors"
-                />
-              </div>
-              <button className="bg-[#00D4FF] hover:bg-[#00B3D6] text-background font-bold py-2.5 px-6 rounded-lg text-sm transition-colors whitespace-nowrap">
-                Subscribe
-              </button>
-            </form>
           </div>
 
         </div>

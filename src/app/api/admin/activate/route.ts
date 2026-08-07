@@ -47,13 +47,13 @@ export async function POST(request: Request) {
           <h2 style="font-size: 24px; margin-bottom: 20px;">Welcome to the elite circle, ${member.name}! 🎉</h2>
           
           <p style="color: #E2E8F0; font-size: 16px; line-height: 1.5; mb-6">
-            Your payment was verified by Carl and your subscription for the <strong>${tierName}</strong> plan is now active.
+            Your payment was verified by Kazi and your subscription for the <strong>${tierName}</strong> plan is now active.
           </p>
           
           <h3 style="color: #00D4FF;">Your Next Steps</h3>
           <ol style="color: #E2E8F0; font-size: 16px; line-height: 1.5;">
             <li style="margin-bottom: 10px;">Log in to the <a href="https://16londonalgo.com/login" style="color: #00D4FF;">Members Portal</a>.</li>
-            <li style="margin-bottom: 10px;">Submit your TradingView username inside the portal so Carl can grant you indicator access.</li>
+            <li style="margin-bottom: 10px;">Submit your TradingView username inside the portal so Kazi can grant you indicator access.</li>
           </ol>
           
           <div style="text-align: center; margin: 40px 0;">

@@ -10,9 +10,9 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string, {
 export async function POST(req: Request) {
   try {
     const body = await req.json();
-    const { email, planId } = body;
+    const { email, tier } = body;
 
-    if (!email || !planId) {
+    if (!email || !tier) {
       return NextResponse.json({ error: "Missing required fields" }, { status: 400 });
     }
 
@@ -27,8 +27,16 @@ export async function POST(req: Request) {
       userId = user._id.toString();
     }
 
-    const priceAmount = planId === "P-2" ? 12999 : 5999;
-    const productName = planId === "P-2" ? "Trend Algo + London X" : "16London Trend Algo";
+    let priceAmount = 5999;
+    let productName = "16London Trend Algo";
+    
+    if (tier === "2") {
+      priceAmount = 8999;
+      productName = "Trend Algo + London X";
+    } else if (tier === "3") {
+      priceAmount = 11999;
+      productName = "16London Complete System";
+    }
 
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ["card"],
@@ -50,10 +58,10 @@ export async function POST(req: Request) {
         },
       ],
       success_url: `${process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'}/thank-you?session_id={CHECKOUT_SESSION_ID}`,
-      cancel_url: `${process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'}/checkout?tier=${planId === 'P-2' ? '2' : '1'}`,
+      cancel_url: `${process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'}/checkout?tier=${tier}`,
       metadata: {
         userId: userId,
-        planId: planId,
+        tier: tier,
       }
     });
 
