@@ -2,9 +2,37 @@ import { NextResponse } from "next/server";
 import connectToDatabase from "@/lib/db";
 import { User } from "@/models/User";
 
+// Helper to get PayPal Access Token
+async function getPayPalAccessToken() {
+  const clientId = process.env.NEXT_PUBLIC_PAYPAL_CLIENT_ID;
+  const clientSecret = process.env.PAYPAL_CLIENT_SECRET;
+  
+  // Use sandbox for development, live for production
+  const baseURL = process.env.NODE_ENV === 'production' 
+    ? "https://api-m.paypal.com" 
+    : "https://api-m.sandbox.paypal.com";
+
+  if (!clientId || !clientSecret) return null;
+
+  const auth = Buffer.from(`${clientId}:${clientSecret}`).toString('base64');
+  const response = await fetch(`${baseURL}/v1/oauth2/token`, {
+    method: "POST",
+    headers: {
+      "Authorization": `Basic ${auth}`,
+      "Content-Type": "application/x-www-form-urlencoded",
+    },
+    body: "grant_type=client_credentials",
+  });
+
+  const data = await response.json();
+  return data.access_token || null;
+}
+
 export async function POST(req: Request) {
   try {
-    const payload = await req.json();
+    const rawBody = await req.text();
+    const payload = JSON.parse(rawBody);
+    
     const eventType = payload.event_type;
     const resource = payload.resource;
 
@@ -12,6 +40,45 @@ export async function POST(req: Request) {
 
     if (!resource || !resource.id) {
       return NextResponse.json({ error: "Invalid webhook payload structure" }, { status: 400 });
+    }
+
+    // Verify Webhook Signature (Security Best Practice)
+    const webhookId = process.env.PAYPAL_WEBHOOK_ID;
+    if (webhookId) {
+      const accessToken = await getPayPalAccessToken();
+      if (accessToken) {
+        const baseURL = process.env.NODE_ENV === 'production' 
+          ? "https://api-m.paypal.com" 
+          : "https://api-m.sandbox.paypal.com";
+
+        const verifyResponse = await fetch(`${baseURL}/v1/notifications/verify-webhook-signature`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${accessToken}`,
+          },
+          body: JSON.stringify({
+            auth_algo: req.headers.get("paypal-auth-algo"),
+            cert_url: req.headers.get("paypal-cert-url"),
+            transmission_id: req.headers.get("paypal-transmission-id"),
+            transmission_sig: req.headers.get("paypal-transmission-sig"),
+            transmission_time: req.headers.get("paypal-transmission-time"),
+            webhook_id: webhookId,
+            webhook_event: payload,
+          }),
+        });
+
+        const verifyData = await verifyResponse.json();
+        if (verifyData.verification_status !== "SUCCESS") {
+          console.error(`[PayPal Webhook] Signature verification failed!`);
+          return NextResponse.json({ error: "Invalid signature" }, { status: 400 });
+        }
+        console.log(`[PayPal Webhook] Signature verified successfully.`);
+      } else {
+        console.warn(`[PayPal Webhook] Missing PayPal Client Credentials. Skipping signature verification.`);
+      }
+    } else {
+      console.warn(`[PayPal Webhook] PAYPAL_WEBHOOK_ID is not set. Skipping signature verification.`);
     }
 
     const subscriptionId = resource.id; // Starts with I-
@@ -22,7 +89,6 @@ export async function POST(req: Request) {
     if (eventType === "BILLING.SUBSCRIPTION.ACTIVATED") {
       console.log(`[PayPal Webhook] Activating subscription ${subscriptionId} for email: ${email}`);
       
-      // Update by email or subscription ID
       const query = email ? { $or: [{ email }, { paypalSubscriptionId: subscriptionId }] } : { paypalSubscriptionId: subscriptionId };
       const updatedUser = await User.findOneAndUpdate(
         query,
@@ -43,7 +109,6 @@ export async function POST(req: Request) {
     ) {
       console.log(`[PayPal Webhook] Deactivating subscription ${subscriptionId} (Event: ${eventType}) for email: ${email}`);
       
-      // Update by subscription ID or email
       const query = email ? { $or: [{ paypalSubscriptionId: subscriptionId }, { email }] } : { paypalSubscriptionId: subscriptionId };
       const updatedUser = await User.findOneAndUpdate(
         query,

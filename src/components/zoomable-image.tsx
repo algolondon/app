@@ -23,8 +23,13 @@ export function ZoomableImage({ src, alt, width = 800, height = 600, className =
     };
     if (isOpen) {
       window.addEventListener("keydown", handleKeyDown);
+      // Lock background scroll when modal is open
+      document.body.style.overflow = "hidden";
     }
-    return () => window.removeEventListener("keydown", handleKeyDown);
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+      document.body.style.overflow = "unset";
+    };
   }, [isOpen]);
 
   return (
@@ -61,7 +66,7 @@ export function ZoomableImage({ src, alt, width = 800, height = 600, className =
           >
             {/* Close Button */}
             <button 
-              className="absolute top-6 right-6 w-12 h-12 rounded-full bg-black/50 text-white flex items-center justify-center hover:bg-[#00D4FF]/20 hover:text-[#00D4FF] transition-colors border border-white/10 z-50 pointer-events-auto shadow-2xl"
+              className="absolute top-4 right-4 sm:top-6 sm:right-6 w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-black/50 text-white flex items-center justify-center hover:bg-[#00D4FF]/20 hover:text-[#00D4FF] transition-colors border border-white/10 z-50 pointer-events-auto shadow-2xl"
               onClick={() => setIsOpen(false)}
             >
               <X className="w-6 h-6" />
@@ -69,29 +74,27 @@ export function ZoomableImage({ src, alt, width = 800, height = 600, className =
 
             {/* Magnified Image */}
             <motion.div
-              initial={{ scale: 0.95, y: 20 }}
-              animate={{ scale: 1, y: 0 }}
-              exit={{ scale: 0.95, y: 20 }}
-              transition={{ type: "spring", damping: 25, stiffness: 300 }}
-              className="relative w-full max-w-5xl h-[80vh] flex items-center justify-center"
+              initial={{ scale: 0.98, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.98, opacity: 0 }}
+              transition={{ duration: 0.2, ease: "easeOut" }}
+              className="relative w-full max-w-6xl max-h-[90vh] flex flex-col items-center justify-center"
               onClick={(e) => e.stopPropagation()}
             >
-              <div className="relative w-full h-full bg-[#030914] border border-[#00D4FF]/30 rounded-2xl overflow-hidden shadow-2xl flex flex-col">
+              <div className="relative w-full h-full bg-[#030914] border border-[#00D4FF]/30 rounded-2xl overflow-hidden shadow-2xl flex flex-col max-h-[90vh]">
                 {/* Mac style header in lightbox for premium look */}
                 <div className="bg-[#061123] px-4 py-3 border-b border-[#00D4FF]/20 flex items-center gap-2 shrink-0">
                   <div className="w-3 h-3 rounded-full bg-[#FF5F56]"></div>
                   <div className="w-3 h-3 rounded-full bg-[#FFBD2E]"></div>
                   <div className="w-3 h-3 rounded-full bg-[#27C93F]"></div>
-                  <div className="ml-auto text-[10px] text-gray-500 font-mono uppercase tracking-widest">{alt || "16LONDON TREND ALGO"}</div>
+                  <div className="ml-auto text-[10px] text-gray-500 font-mono uppercase tracking-widest truncate">{alt || "16LONDON TREND ALGO"}</div>
                 </div>
-                {/* Image Container */}
-                <div className="w-full flex-1 relative p-4 bg-background/50">
-                  <Image 
+                {/* Image Container - Switched from relative fill to standard image tag for better aspect ratio fitting */}
+                <div className="w-full flex-1 relative bg-background/50 overflow-hidden flex items-center justify-center p-2 sm:p-4">
+                  <img 
                     src={src} 
                     alt={alt}
-                    fill
-                    className="object-contain"
-                    priority
+                    className="max-w-full max-h-full object-contain rounded-lg"
                   />
                 </div>
               </div>
