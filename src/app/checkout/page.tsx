@@ -7,7 +7,7 @@ import { motion } from 'framer-motion';
 import { Navbar } from '@/components/navbar';
 import Link from 'next/link';
 import { PayPalScriptProvider, PayPalButtons } from '@paypal/react-paypal-js';
-import { signIn } from 'next-auth/react';
+import { signIn, useSession } from 'next-auth/react';
 
 const paypalPlanIds = {
   "1": "P-5EX01767RJ348304XNJ3LHYA", 
@@ -74,6 +74,15 @@ function CheckoutContent() {
   const [serverError, setServerError] = useState("");
   const [isRegistered, setIsRegistered] = useState(false);
   const [registeredEmail, setRegisteredEmail] = useState("");
+  
+  const { data: session, status } = useSession();
+
+  useEffect(() => {
+    if (status === 'authenticated' && session?.user?.email) {
+      setIsRegistered(true);
+      setRegisteredEmail(session.user.email);
+    }
+  }, [status, session]);
 
   const validate = () => {
     const newErrors: { [key: string]: string } = {};
@@ -224,8 +233,8 @@ function CheckoutContent() {
                   <div className="mb-6 p-4 bg-red-500/10 border border-red-500/30 rounded-xl text-red-400 flex items-center justify-between">
                     <span>{serverError}</span>
                     {serverError.includes("Account exists") && (
-                      <Link href="/login" className="text-white underline font-semibold text-sm hover:text-[#00D4FF]">
-                        Login
+                      <Link href={`/login?callbackUrl=/checkout?tier=${tier}`} className="text-white underline font-semibold text-sm hover:text-[#00D4FF]">
+                        Login to Complete Purchase
                       </Link>
                     )}
                   </div>

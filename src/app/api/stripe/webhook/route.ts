@@ -145,7 +145,7 @@ export async function POST(req: Request) {
                     We noticed you started setting up your 16London Algo account but didn't complete the payment. The markets are moving, and we'd love to have you on board.
                   </p>
                   <div style="text-align: center; margin: 40px 0;">
-                    <a href="${process.env.NEXT_PUBLIC_APP_URL || 'https://16londonalgo.com'}/checkout?tier=${tier}" style="background-color: #00D4FF; color: #0A1628; padding: 15px 30px; text-decoration: none; font-weight: bold; border-radius: 5px; display: inline-block;">Complete Your Checkout</a>
+                    <a href="${process.env.NEXT_PUBLIC_APP_URL || 'https://16londonalgo.com'}/login?callbackUrl=/checkout?tier=${tier}" style="background-color: #00D4FF; color: #0A1628; padding: 15px 30px; text-decoration: none; font-weight: bold; border-radius: 5px; display: inline-block;">Complete Your Checkout</a>
                   </div>
                   <p style="color: #E2E8F0; font-size: 14px;">Best,<br>Kazi</p>
                 </div>
