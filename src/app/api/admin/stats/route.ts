@@ -25,6 +25,7 @@ export async function GET(req: Request) {
     const totalUsers = await User.countDocuments();
     const activeSubscribers = await User.countDocuments({ active: true });
     const tier1Count = await User.countDocuments({ active: true, tier: "tier1" });
+    const tier2Count = await User.countDocuments({ active: true, tier: "tier2" });
     const tier3Count = await User.countDocuments({ active: true, tier: "tier3" });
 
     return NextResponse.json({ 
