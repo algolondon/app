@@ -20,7 +20,7 @@ export function Footer() {
     setNewsletterStatus("success");
   };
 
-  if (pathname?.startsWith("/admin")) return null;
+  if (pathname?.startsWith("/admin") || pathname?.startsWith("/studio")) return null;
 
   return (
     <footer className="relative z-10 w-full bg-[#030914] pt-20 pb-10 overflow-hidden">
