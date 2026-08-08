@@ -24,6 +24,7 @@ import { SocialProof } from "@/components/social-proof";
 import { AlgoInAction } from "@/components/algo-in-action";
 import { Navbar } from "@/components/navbar";
 import { MockupFrame } from "@/components/mockup-frame";
+import { ZoomableImage } from "@/components/zoomable-image";
 
 // Fade in up animation variant
 const fadeInUp = {
@@ -205,12 +206,12 @@ export default function HomeClient({ sanityData }: { sanityData?: any }) {
 
                   {/* Middle Image Section */}
                   <div className="relative group border-b border-[#00D4FF]/20">
-                    <Image 
+                    <ZoomableImage 
                       src="/images/image7.png" 
-                      alt="16London Trend Algo Example" 
+                      alt="16LONDON TREND ALGO V1 · PREVIEW" 
                       width={800} 
                       height={600} 
-                      className="w-full h-auto object-cover transition-transform duration-700 group-hover:scale-105"
+                      className="w-full h-auto"
                       priority
                     />
                   </div>
@@ -260,7 +261,7 @@ export default function HomeClient({ sanityData }: { sanityData?: any }) {
               </div>
               <div className="w-full lg:w-1/2">
                 <MockupFrame title="16LONDON TREND ALGO V1">
-                  <Image src="/images/trend-algo-chart.png" alt="Trend ALGO" width={600} height={400} className="w-full" />
+                  <ZoomableImage src="/images/trend-algo-chart.png" alt="16LONDON TREND ALGO V1" width={600} height={400} className="w-full" />
                 </MockupFrame>
               </div>
             </motion.div>
@@ -273,7 +274,7 @@ export default function HomeClient({ sanityData }: { sanityData?: any }) {
               </div>
               <div className="w-full lg:w-1/2">
                 <MockupFrame title="LONDON X BREAKOUT">
-                  <Image src="/images/new_assets/London X image 1.png" alt="London X" width={600} height={400} className="w-full" />
+                  <ZoomableImage src="/images/new_assets/London X image 1.png" alt="LONDON X BREAKOUT" width={600} height={400} className="w-full" />
                 </MockupFrame>
               </div>
             </motion.div>
@@ -286,7 +287,7 @@ export default function HomeClient({ sanityData }: { sanityData?: any }) {
               </div>
               <div className="w-full lg:w-1/2">
                 <MockupFrame title="16LONDON ATM SYSTEM">
-                  <Image src="/images/new_assets/ATM System Image 1.png" alt="ATM System" width={600} height={400} className="w-full" />
+                  <ZoomableImage src="/images/new_assets/ATM System Image 1.png" alt="16LONDON ATM SYSTEM" width={600} height={400} className="w-full" />
                 </MockupFrame>
               </div>
             </motion.div>
@@ -401,15 +402,15 @@ export default function HomeClient({ sanityData }: { sanityData?: any }) {
               <div className="absolute inset-0 bg-[#00D4FF] blur-2xl opacity-20 rounded-full transform-gpu"></div>
               <div className="flex flex-col gap-6">
                 {/* Top Image (Cover Image) */}
-                <div className="relative z-10 rounded-2xl overflow-hidden border border-[#00D4FF]/20 shadow-[0_0_50px_rgba(0,212,255,0.15)] group">
-                  <Image 
+                <MockupFrame title="16LONDON TREND ALGO" className="z-10 shadow-[0_0_50px_rgba(0,212,255,0.15)]">
+                  <ZoomableImage 
                     src={sanityData?.rulesImage?.asset?.url || "/images/cover.jpg"} 
-                    alt="16London Trend Algo" 
+                    alt="16LONDON TREND ALGO" 
                     width={800} 
                     height={600} 
-                    className="w-full h-auto object-cover transition-transform duration-700 group-hover:scale-105"
+                    className="w-full h-auto"
                   />
-                </div>
+                </MockupFrame>
 
                 {/* Bottom Mac Window (Chart + Rules) */}
                 <div className="relative z-10">
