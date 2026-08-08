@@ -360,42 +360,19 @@ export default function HomeClient({ sanityData }: { sanityData?: any }) {
                 ))}
               </div>
 
-              <motion.div variants={fadeInUp} id="about-kazi" className="border-t border-gray-200 dark:border-foreground/10 pt-10">
+              <motion.div variants={fadeInUp} className="border-t border-gray-200 dark:border-foreground/10 pt-10">
                 <h3 className="text-3xl font-bold mb-2">Meet Kazi</h3>
                 <h4 className="text-lg text-[#00D4FF] font-medium mb-6">Founder of 16London Trend Algo</h4>
                 
-                <div className="text-muted-foreground leading-relaxed space-y-4 mb-8">
-                  <p>I&apos;m Kaziyel, born and raised in Miami, Florida, and I&apos;ve been trading and teaching the financial markets for over 8 years.</p>
-                  <p>When I first started trading, I spent countless hours studying charts, testing strategies, and learning from both my wins and my losses. Like most traders, I realized there wasn&apos;t a shortcut to consistency—it came from understanding how the market moves and following a proven process.</p>
-                  <p>Over the years, I&apos;ve taught traders from all experience levels and developed several profitable manual trading systems. Every system taught me something new, and each one helped shape the trading approach I use today.</p>
-                  <p>Eventually, I decided to combine everything I&apos;d learned into one complete system: <strong>16London Trend Algo.</strong></p>
-                  <p>This system wasn&apos;t built overnight. It&apos;s the result of years of chart time, testing, and refining. My goal wasn&apos;t to create another flashy indicator—it was to build something that gives traders clear direction, removes unnecessary guesswork, and helps them trade with confidence.</p>
-                  <p>As I begin focusing on other opportunities, I wanted to leave something valuable behind for my community. The 16London Trend Algo is my way of sharing the knowledge I&apos;ve gained over the years and giving traders a system they can rely on.</p>
-                  <p>I truly believe that trading doesn&apos;t have to be complicated. With the right structure, discipline, and tools, anyone willing to learn can become a consistently better trader.</p>
-                  <p>Welcome to 16London Trend Algo. I hope it becomes a part of your trading journey just as it has been a part of mine.</p>
-                </div>
-
-                <h3 className="text-2xl font-bold mb-4">Our Mission</h3>
                 <p className="text-muted-foreground leading-relaxed mb-8">
-                  To simplify professional trading by providing a structured system that helps traders make smarter decisions, build confidence, and achieve long-term consistency.
+                  I&apos;m Kaziyel, born and raised in Miami, Florida. After 8+ years in the trenches of the financial markets, I realized that consistency doesn&apos;t come from flashy indicators—it comes from structure, discipline, and a proven process. 
+                  <br/><br/>
+                  I built the 16London Trend Algo to remove the guesswork and help you trade with absolute confidence.
                 </p>
 
-                <h3 className="text-2xl font-bold mb-4">Why I Built 16London Trend Algo</h3>
-                <p className="text-muted-foreground leading-relaxed mb-6">
-                  After teaching trading for more than eight years, I noticed most traders struggled with the same problems—overcomplicated indicators, conflicting signals, and emotional decision-making. I created the 16London Trend Algo to solve those problems.
-                </p>
-                <p className="text-muted-foreground leading-relaxed mb-6">
-                  The system combines trend analysis, market structure, multi-timeframe confirmation, and clear buy and sell signals into one professional workflow. Instead of guessing, traders can follow a structured process built on objective market conditions.
-                </p>
-                <div className="bg-card border border-[#00D4FF]/20 rounded-xl p-6">
-                  <p className="font-bold mb-4">Whether you&apos;re a beginner or an experienced trader, the goal remains the same:</p>
-                  <ul className="space-y-2">
-                    <li className="flex items-center gap-3"><Check className="text-[#00D4FF] w-4 h-4" /> Trade with confidence</li>
-                    <li className="flex items-center gap-3"><Check className="text-[#00D4FF] w-4 h-4" /> Eliminate unnecessary noise</li>
-                    <li className="flex items-center gap-3"><Check className="text-[#00D4FF] w-4 h-4" /> Focus on high-probability setups</li>
-                    <li className="flex items-center gap-3"><Check className="text-[#00D4FF] w-4 h-4" /> Build long-term consistency</li>
-                  </ul>
-                </div>
+                <Link href="/about" className="inline-flex items-center gap-2 bg-card border border-[#00D4FF]/30 hover:border-[#00D4FF] text-foreground px-6 py-3 rounded-lg font-bold transition-all hover:bg-[#00D4FF]/5">
+                  Read My Full Story <span className="text-[#00D4FF]">→</span>
+                </Link>
               </motion.div>
             </motion.div>
 

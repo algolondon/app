@@ -13,7 +13,7 @@ const navLinks = [
   { name: "How It Works", href: "/#how-it-works" },
   { name: "What Members Get", href: "/#what-members-get" },
   { name: "4 Golden Rules", href: "/#golden-rules" },
-  { name: "About Kazi", href: "/#about-kazi" },
+  { name: "About Kazi", href: "/about" },
   { name: "Pricing", href: "/#pricing" },
   { name: "FAQ", href: "/#faq" },
 ];
