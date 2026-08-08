@@ -174,6 +174,17 @@ export default function HomeClient({ sanityData }: { sanityData?: any }) {
               <div className="absolute inset-0 bg-[#00D4FF] blur-3xl opacity-20 rounded-full transform-gpu"></div>
               
               <div className="flex flex-col gap-6">
+                <div className="relative rounded-2xl shadow-[0_0_50px_rgba(0,212,255,0.15)] overflow-hidden border border-[#00D4FF]/20 group">
+                  <Image 
+                    src="/images/cover.jpg" 
+                    alt="16London Trend Algo" 
+                    width={800} 
+                    height={600} 
+                    className="w-full h-auto object-cover transition-transform duration-700 group-hover:scale-105"
+                    priority
+                  />
+                </div>
+
                 <div className="relative bg-background/50 backdrop-blur-sm border border-[#00D4FF]/40 rounded-2xl shadow-[0_0_30px_rgba(0,212,255,0.1)] overflow-hidden">
                   {/* Mac-style header */}
                   <div className="bg-muted/50 px-4 py-3 border-b border-[#00D4FF]/20 flex items-center justify-between">
@@ -200,17 +211,6 @@ export default function HomeClient({ sanityData }: { sanityData?: any }) {
                       <div className="flex flex-col"><span className="text-gray-500">SCALP / INTRADAY</span><span className="text-[#00D4FF]">47</span></div>
                     </div>
                   </div>
-                </div>
-
-                <div className="relative rounded-2xl shadow-[0_0_50px_rgba(0,212,255,0.15)] overflow-hidden border border-[#00D4FF]/20 group mt-4">
-                  <Image 
-                    src="/images/cover.jpg" 
-                    alt="16London Trend Algo" 
-                    width={800} 
-                    height={600} 
-                    className="w-full h-auto object-cover transition-transform duration-700 group-hover:scale-105"
-                    priority
-                  />
                 </div>
               </div>
             </motion.div>
