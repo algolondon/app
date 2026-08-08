@@ -57,8 +57,8 @@ export async function POST(req: Request) {
           quantity: 1,
         },
       ],
-      success_url: `${process.env.NEXT_PUBLIC_APP_URL || ''}/thank-you?session_id={CHECKOUT_SESSION_ID}`,
-      cancel_url: `${process.env.NEXT_PUBLIC_APP_URL || ''}/checkout?tier=${tier}`,
+      success_url: `${process.env.NEXT_PUBLIC_APP_URL || 'https://16londonalgo.com'}/thank-you?session_id={CHECKOUT_SESSION_ID}`,
+      cancel_url: `${process.env.NEXT_PUBLIC_APP_URL || 'https://16londonalgo.com'}/checkout?tier=${tier}`,
       expires_at: Math.floor(Date.now() / 1000) + (35 * 60), // Expires in 35 minutes
       metadata: {
         userId: userId,
