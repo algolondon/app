@@ -10,9 +10,9 @@ import { PayPalScriptProvider, PayPalButtons } from '@paypal/react-paypal-js';
 import { signIn } from 'next-auth/react';
 
 const paypalPlanIds = {
-  "1": "TIER1_PLAN_ID", // Replace with actual PayPal Plan IDs
-  "2": "TIER2_PLAN_ID",
-  "3": "TIER3_PLAN_ID"
+  "1": "P-5EX01767RJ348304XNJ3LHYA", 
+  "2": "P-2TU154698S017735HNJ3LJQA",
+  "3": "P-1RM14190S6572145FNJ3LKIY"
 };
 
 const tierDetails = {
@@ -355,10 +355,10 @@ function CheckoutContent() {
                           });
                         }}
                         onApprove={async (data, actions) => {
-                          posthog?.capture('checkout_paypal_success', { planId });
+                          posthog?.capture('checkout_paypal_success', { planId, subscriptionId: data.subscriptionID });
                           await handlePayPalSuccess();
                         }}
-                        style={{ layout: "vertical", shape: "rect", color: "blue" }}
+                        style={{ layout: "vertical", shape: "pill", color: "gold", label: "subscribe" }}
                       />
                     </PayPalScriptProvider>
                   </div>
