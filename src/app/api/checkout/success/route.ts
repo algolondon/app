@@ -4,7 +4,7 @@ import { User } from '@/models/User';
 
 export async function POST(request: Request) {
   try {
-    const { email } = await request.json();
+    const { email, subscriptionId } = await request.json();
 
     if (!email) {
       return NextResponse.json({ error: 'Missing email' }, { status: 400 });
@@ -16,9 +16,14 @@ export async function POST(request: Request) {
 
     await connectToDatabase();
 
+    const updatePayload: any = { active: true, status: 'active' };
+    if (subscriptionId) {
+      updatePayload.paypalSubscriptionId = subscriptionId;
+    }
+
     const updatedUser = await User.findOneAndUpdate(
       { email },
-      { active: true, status: 'active' },
+      updatePayload,
       { new: true }
     );
 

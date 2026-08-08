@@ -196,12 +196,15 @@ function CheckoutContent() {
     }
   };
 
-  const handlePayPalSuccess = async () => {
+  const handlePayPalSuccess = async (subscriptionId?: string) => {
     try {
       await fetch('/api/checkout/success', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email: registeredEmail || formData.email })
+        body: JSON.stringify({ 
+          email: registeredEmail || formData.email,
+          subscriptionId
+        })
       });
       
       // Only attempt sign in for newly registered users (not existing logged-in users)
@@ -428,7 +431,7 @@ function CheckoutContent() {
                           }}
                           onApprove={async (data, actions) => {
                             posthog?.capture('checkout_paypal_success', { planId, subscriptionId: data.subscriptionID, mode: paypalConfig.mode });
-                            await handlePayPalSuccess();
+                            await handlePayPalSuccess(data.subscriptionID || undefined);
                           }}
                           style={{ layout: "vertical", shape: "pill", color: "gold", label: "subscribe" }}
                         />
