@@ -11,6 +11,14 @@ export const homePageType = defineType({
       type: 'string',
     }),
     defineField({
+      name: 'rulesImage',
+      title: 'Hero Rules & Settings Image',
+      type: 'image',
+      options: {
+        hotspot: true,
+      },
+    }),
+    defineField({
       name: 'yearsTrading',
       title: 'Years Trading',
       type: 'string',

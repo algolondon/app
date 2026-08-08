@@ -215,7 +215,7 @@ export default function HomeClient({ sanityData }: { sanityData?: any }) {
                   </div>
                   <div className="relative group">
                     <Image 
-                      src="/images/rules-image.png" 
+                      src={sanityData?.rulesImage?.asset?.url || "/images/rules-image.png"} 
                       alt="16London Trend Algo Chart" 
                       width={800} 
                       height={600} 

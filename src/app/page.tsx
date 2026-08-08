@@ -7,6 +7,7 @@ export default async function Page() {
   const query = `
     *[_type == "homePage"][0] {
       tagline,
+      rulesImage { asset->{url} },
       yearsTrading,
       revenue,
       numberOfAlgos,
