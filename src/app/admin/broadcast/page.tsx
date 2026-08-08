@@ -1,16 +1,32 @@
 "use client";
 
 import { useState } from "react";
-import { Mail, Send, AlertCircle, Users, Loader2, ShieldAlert } from "lucide-react";
+import { Mail, Send, AlertCircle, Users, Loader2, ShieldAlert, FileText } from "lucide-react";
 
 export default function BroadcastPage() {
   const [subject, setSubject] = useState("");
   const [content, setContent] = useState("");
+  const [targetAudience, setTargetAudience] = useState<"all" | "active" | "abandoned">("all");
+  const [selectedTemplate, setSelectedTemplate] = useState<"custom" | "abandoned_cart">("custom");
   const [isLoading, setIsLoading] = useState(false);
   const [message, setMessage] = useState<{ type: "success" | "error"; text: string } | null>(null);
   
   // Custom confirmation modal state
   const [showConfirmModal, setShowConfirmModal] = useState(false);
+
+  const handleTemplateChange = (template: "custom" | "abandoned_cart") => {
+    setSelectedTemplate(template);
+    if (template === "custom") {
+      setSubject("");
+      setContent("");
+    } else if (template === "abandoned_cart") {
+      setSubject("Complete your 16London Algo setup (15% Off Code Inside)");
+      setTargetAudience("abandoned"); // Auto-select checkout drop-offs
+      setContent(
+        `Hey there,<br/><br/>We noticed you started setting up your 16London Algo account but didn't complete your subscription.<br/><br/>Consistently profitable trading requires the right tools. To help you get started, we've created a special one-time discount code for you:<br/><br/><div style="background-color: #0c203b; border: 1px dashed #00D4FF; padding: 15px; border-radius: 8px; text-align: center; font-size: 20px; font-weight: bold; color: #00D4FF; margin: 20px 0;">LONDON15</div>Use this code at checkout to get 15% off your first month of any plan.<br/><br/><div style="text-align: center; margin: 25px 0;"><a href="https://16londonalgo.com/#pricing" style="background-color: #00D4FF; color: #0A1628; padding: 14px 28px; border-radius: 8px; text-decoration: none; font-weight: bold; display: inline-block;">Complete Your Checkout Now</a></div>If you have any questions, reply directly to this email.<br/><br/>Best regards,<br/>Kazi (Founder, 16London Algo)`
+      );
+    }
+  };
 
   const handleSend = async (isTest: boolean) => {
     if (!subject.trim() || !content.trim()) {
@@ -26,7 +42,7 @@ export default function BroadcastPage() {
       const res = await fetch("/api/admin/broadcast", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ subject, content, isTest }),
+        body: JSON.stringify({ subject, content, isTest, targetAudience }),
       });
 
       const data = await res.json();
@@ -39,6 +55,8 @@ export default function BroadcastPage() {
         if (!isTest) {
           setSubject("");
           setContent("");
+          setSelectedTemplate("custom");
+          setTargetAudience("all");
         }
       } else {
         setMessage({ type: "error", text: data.error || "Failed to send email." });
@@ -48,6 +66,14 @@ export default function BroadcastPage() {
       setMessage({ type: "error", text: "An unexpected error occurred." });
     } finally {
       setIsLoading(false);
+    }
+  };
+
+  const getAudienceLabel = (aud: typeof targetAudience) => {
+    switch (aud) {
+      case "all": return "All Registered Users";
+      case "active": return "Active Members Only";
+      case "abandoned": return "Checkout Drop-offs (Abandoned Cart)";
     }
   };
 
@@ -69,6 +95,45 @@ export default function BroadcastPage() {
             <p className="font-medium text-sm">{message.text}</p>
           </div>
         )}
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {/* Target Audience Dropdown */}
+          <div className="space-y-2">
+            <label htmlFor="target-audience" className="text-sm font-medium text-gray-400 flex items-center gap-2">
+              <Users className="w-4 h-4 text-[#00D4FF]" />
+              Target Audience
+            </label>
+            <select
+              id="target-audience"
+              value={targetAudience}
+              onChange={(e) => setTargetAudience(e.target.value as any)}
+              className="w-full bg-[#0A1628] border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-[#00D4FF]/50 transition-colors cursor-pointer"
+              disabled={isLoading}
+            >
+              <option value="all">All Registered Users</option>
+              <option value="active">Active Members Only</option>
+              <option value="abandoned">Checkout Drop-offs (Abandoned Cart)</option>
+            </select>
+          </div>
+
+          {/* Preset Templates Dropdown */}
+          <div className="space-y-2">
+            <label htmlFor="email-template" className="text-sm font-medium text-gray-400 flex items-center gap-2">
+              <FileText className="w-4 h-4 text-[#00D4FF]" />
+              Email Template
+            </label>
+            <select
+              id="email-template"
+              value={selectedTemplate}
+              onChange={(e) => handleTemplateChange(e.target.value as any)}
+              className="w-full bg-[#0A1628] border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-[#00D4FF]/50 transition-colors cursor-pointer"
+              disabled={isLoading}
+            >
+              <option value="custom">Custom / Blank Email</option>
+              <option value="abandoned_cart">Abandoned Checkout (15% Discount Code)</option>
+            </select>
+          </div>
+        </div>
 
         <div className="space-y-2">
           <label htmlFor="broadcast-subject" className="text-sm font-medium text-gray-400">Email Subject</label>
@@ -93,7 +158,7 @@ export default function BroadcastPage() {
             value={content}
             onChange={(e) => setContent(e.target.value)}
             placeholder="Hello,&#10;&#10;We have just released a massive update..."
-            rows={10}
+            rows={12}
             className="w-full bg-[#0A1628] border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-[#00D4FF]/50 transition-colors font-mono text-sm resize-y"
             disabled={isLoading}
           />
@@ -114,7 +179,7 @@ export default function BroadcastPage() {
             className="flex-1 flex items-center justify-center gap-2 bg-[#00D4FF] text-[#0A1628] px-6 py-3 rounded-xl font-bold hover:brightness-110 transition-all disabled:opacity-50 shadow-lg shadow-[#00D4FF]/25"
           >
             <Users className="w-5 h-5" />
-            Broadcast to All Users
+            Broadcast to {getAudienceLabel(targetAudience)}
           </button>
         </div>
       </div>
@@ -129,16 +194,21 @@ export default function BroadcastPage() {
               </div>
               <div>
                 <h2 className="text-lg font-bold text-white">Confirm Broadcast</h2>
-                <p className="text-gray-400 text-xs mt-0.5">This action will email all registered members.</p>
+                <p className="text-gray-400 text-xs mt-0.5">This action will send emails to your selected audience.</p>
               </div>
             </div>
 
             <div className="p-6 space-y-4">
               <p className="text-gray-300 text-sm leading-relaxed">
-                Are you sure you want to broadcast this email to <span className="text-[#00D4FF] font-semibold">ALL users</span> in the system? This action cannot be canceled or undone once started.
+                Are you sure you want to broadcast this email to <span className="text-[#00D4FF] font-semibold">{getAudienceLabel(targetAudience)}</span>? This action cannot be canceled or undone once started.
               </p>
-              <div className="bg-[#0A1628] p-3 rounded-xl border border-white/5 font-mono text-xs text-gray-400 line-clamp-2">
-                <strong>Subject:</strong> {subject}
+              <div className="space-y-2">
+                <div className="bg-[#0A1628] p-3 rounded-xl border border-white/5 font-mono text-xs text-gray-400 line-clamp-1">
+                  <strong>Audience:</strong> {getAudienceLabel(targetAudience)}
+                </div>
+                <div className="bg-[#0A1628] p-3 rounded-xl border border-white/5 font-mono text-xs text-gray-400 line-clamp-2">
+                  <strong>Subject:</strong> {subject}
+                </div>
               </div>
             </div>
 

@@ -16,7 +16,7 @@ export async function POST(req: Request) {
     }
 
     const body = await req.json();
-    const { subject, content, isTest } = body;
+    const { subject, content, isTest, targetAudience = "all" } = body;
 
     if (!subject || !content) {
       return NextResponse.json({ error: "Subject and content are required" }, { status: 400 });
@@ -24,12 +24,12 @@ export async function POST(req: Request) {
 
     // A nice HTML wrapper for the broadcast email
     const emailHtml = `
-      <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; background-color: #0A1628; color: #ffffff; padding: 40px; border-radius: 10px;">
+      <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; background-color: #0A1628; color: #ffffff; padding: 40px; border-radius: 10px; border: 1px solid rgba(0, 212, 255, 0.15);">
         <div style="text-align: center; margin-bottom: 30px;">
-          <h1 style="color: #00D4FF; margin: 0;">16London X Brands LLC</h1>
+          <h1 style="color: #00D4FF; margin: 0;">16London Algo</h1>
         </div>
         <div style="color: #E2E8F0; font-size: 16px; line-height: 1.6;">
-          ${content.replace(/\n/g, '<br/>')}
+          ${content}
         </div>
         <div style="text-align: center; margin-top: 40px; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.1); font-size: 12px; color: #64748B;">
           <p>You are receiving this email because you are registered at 16London Algo.</p>
@@ -54,11 +54,18 @@ export async function POST(req: Request) {
     } else {
       await connectDB();
       
-      // Fetch all users
-      const users = await User.find({}).select("email");
+      let queryCond = {};
+      if (targetAudience === "active") {
+        queryCond = { active: true };
+      } else if (targetAudience === "abandoned") {
+        queryCond = { tier: 'none', active: false, role: { $ne: 'admin' } };
+      }
+
+      // Fetch target users
+      const users = await User.find(queryCond).select("email");
       
       if (!users || users.length === 0) {
-        return NextResponse.json({ error: "No users found in database" }, { status: 404 });
+        return NextResponse.json({ error: `No users found matching target audience: ${targetAudience}` }, { status: 404 });
       }
 
       // We will send in batches using Resend's batch API to handle limits
