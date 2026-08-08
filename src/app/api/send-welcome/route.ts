@@ -1,10 +1,18 @@
 import { NextResponse } from 'next/server';
 import { Resend } from 'resend';
+import { getServerSession } from 'next-auth/next';
+import { authOptions } from '@/lib/auth';
 
 const resend = new Resend(process.env.RESEND_API_KEY || 're_placeholder_key_for_dev');
 
 export async function POST(request: Request) {
   try {
+    // Security: Only admins can trigger manual welcome emails
+    const session = await getServerSession(authOptions);
+    if (!session || (session.user as any).role !== 'admin') {
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    }
+
     const { name, email, tier, temporaryPassword } = await request.json();
 
     if (!name || !email || !tier) {

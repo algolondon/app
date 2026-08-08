@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import { useEffect, useState } from "react";
 import { Users, UserCheck, TrendingUp, DollarSign } from "lucide-react";
@@ -9,6 +9,7 @@ export default function AdminDashboard() {
     activeSubscribers: 0,
     tier1Count: 0,
     tier2Count: 0,
+    tier3Count: 0,
   });
   const [loading, setLoading] = useState(true);
 
@@ -29,7 +30,7 @@ export default function AdminDashboard() {
     fetchStats();
   }, []);
 
-  const estimatedRevenue = (stats.tier1Count * 59) + (stats.tier2Count * 129);
+  const estimatedRevenue = (stats.tier1Count * 59.99) + (stats.tier2Count * 89.99) + (stats.tier3Count * 119.99);
 
   return (
     <div className="space-y-8">
@@ -69,7 +70,7 @@ export default function AdminDashboard() {
           />
           <StatCard 
             title="Est. Monthly Revenue" 
-            value={`$${estimatedRevenue.toLocaleString()}`} 
+            value={`$${estimatedRevenue.toLocaleString('en-US', { minimumFractionDigits: 0, maximumFractionDigits: 0 })}`} 
             icon={DollarSign} 
             color="text-yellow-400"
             bg="bg-yellow-400/10"

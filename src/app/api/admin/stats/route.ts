@@ -16,7 +16,8 @@ export async function GET(req: Request) {
         totalUsers: 145, 
         activeSubscribers: 120, 
         tier1Count: 50, 
-        tier2Count: 70 
+        tier2Count: 70,
+        tier3Count: 25
       });
     }
 
@@ -24,13 +25,14 @@ export async function GET(req: Request) {
     const totalUsers = await User.countDocuments();
     const activeSubscribers = await User.countDocuments({ active: true });
     const tier1Count = await User.countDocuments({ active: true, tier: "tier1" });
-    const tier2Count = await User.countDocuments({ active: true, tier: "tier2" });
+    const tier3Count = await User.countDocuments({ active: true, tier: "tier3" });
 
     return NextResponse.json({ 
       totalUsers, 
       activeSubscribers, 
       tier1Count, 
-      tier2Count 
+      tier2Count,
+      tier3Count
     });
   } catch (error: any) {
     console.error("Admin Stats GET Error:", error);

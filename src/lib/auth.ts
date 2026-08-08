@@ -39,16 +39,7 @@ export const authOptions: NextAuthOptions = {
 
         // Check removed to allow inactive users to log in and be redirected to checkout
 
-        // For MVP compatibility, if it's our placeholder dummy hash from members.json, match against "password123"
-        // (We can keep this just in case they imported the old dummy data directly into MongoDB)
-        const isPlaceholderPassword = member.password.startsWith("$2a$10$3nL6n5v8");
-        
-        let isValid = false;
-        if (isPlaceholderPassword && credentials.password === "password123") {
-            isValid = true;
-        } else if (!isPlaceholderPassword) {
-            isValid = await bcrypt.compare(credentials.password, member.password);
-        }
+        const isValid = await bcrypt.compare(credentials.password, member.password);
 
         if (!isValid) {
           throw new Error("Invalid email or password");
