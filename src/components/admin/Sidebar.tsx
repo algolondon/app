@@ -73,6 +73,26 @@ export function Sidebar() {
         <nav className={`flex-1 py-6 space-y-2 overflow-y-auto overflow-x-hidden ${isCollapsed ? 'px-2' : 'px-4'}`}>
           {navItems.map((item) => {
             const isActive = pathname === item.href || (pathname?.startsWith(item.href) && item.href !== "/admin");
+            const isExternalOrStudio = item.href === "/studio";
+
+            if (isExternalOrStudio) {
+              return (
+                <a
+                  key={item.name}
+                  href={item.href}
+                  title={item.name}
+                  className={`flex items-center gap-3 py-3 rounded-xl transition-all ${isCollapsed ? 'justify-center px-0' : 'px-4'} ${
+                    isActive 
+                      ? "bg-[#00D4FF]/10 text-[#00D4FF] border border-[#00D4FF]/20 shadow-[0_0_15px_rgba(0,212,255,0.1)]" 
+                      : "text-gray-400 hover:text-white hover:bg-white/5 border border-transparent"
+                  }`}
+                >
+                  <item.icon className={`w-5 h-5 shrink-0 ${isActive ? "text-[#00D4FF]" : ""}`} />
+                  {!isCollapsed && <span className="font-medium whitespace-nowrap">{item.name}</span>}
+                </a>
+              );
+            }
+
             return (
               <Link
                 key={item.name}

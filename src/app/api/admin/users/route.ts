@@ -43,19 +43,39 @@ export async function PATCH(req: Request) {
     }
 
     const body = await req.json();
-    const { userId, updates } = body;
+    const { userId, userIds, updates } = body;
 
-    if (!userId || !updates) {
-      return NextResponse.json({ error: "Missing required fields" }, { status: 400 });
+    if (!updates) {
+      return NextResponse.json({ error: "Missing updates content" }, { status: 400 });
     }
 
     if (process.env.MOCK_ENV === 'true') {
-      return NextResponse.json({ message: "Mock user updated", user: { _id: userId, ...updates } });
+      return NextResponse.json({ message: "Mock updates applied successfully" });
     }
 
     await connectToDatabase();
-    const updatedUser = await User.findByIdAndUpdate(userId, updates, { new: true });
 
+    // Prevent changing current admin's role in bulk or single if it downgrades them
+    const currentAdminId = (session.user as any).id;
+    if (updates.role && updates.role !== "admin") {
+      if (userId && userId === currentAdminId) {
+        return NextResponse.json({ error: "Cannot downgrade your own admin role" }, { status: 400 });
+      }
+      if (userIds && userIds.includes(currentAdminId)) {
+        return NextResponse.json({ error: "Cannot downgrade your own admin role in bulk operation" }, { status: 400 });
+      }
+    }
+
+    if (userIds && Array.isArray(userIds)) {
+      const result = await User.updateMany({ _id: { $in: userIds } }, updates);
+      return NextResponse.json({ message: `${result.modifiedCount} users updated successfully` });
+    }
+
+    if (!userId) {
+      return NextResponse.json({ error: "Missing userId or userIds" }, { status: 400 });
+    }
+
+    const updatedUser = await User.findByIdAndUpdate(userId, updates, { new: true });
     if (!updatedUser) {
       return NextResponse.json({ error: "User not found" }, { status: 404 });
     }
@@ -76,24 +96,51 @@ export async function DELETE(req: Request) {
 
     const { searchParams } = new URL(req.url);
     const userId = searchParams.get('userId');
+    const userIdsParam = searchParams.get('userIds');
+
+    if (process.env.MOCK_ENV === 'true') {
+      return NextResponse.json({ message: "Mock deletion successful" });
+    }
+
+    await connectToDatabase();
+    const currentAdminId = (session.user as any).id;
+    const currentAdminEmail = session.user.email;
+
+    if (userIdsParam) {
+      // Bulk delete
+      let userIds = userIdsParam.split(',').filter(Boolean);
+      
+      // Filter out current admin from the delete list by ID or email
+      if (currentAdminId) {
+        userIds = userIds.filter(id => id !== currentAdminId);
+      }
+      
+      // If we don't have userIds left, or we want to double check against database email
+      const admins = await User.find({ _id: { $in: userIds }, role: "admin" });
+      const safeUserIds = userIds.filter(id => {
+        const adminObj = admins.find(a => a._id.toString() === id);
+        return !adminObj || adminObj.email !== currentAdminEmail;
+      });
+
+      if (safeUserIds.length === 0) {
+        return NextResponse.json({ error: "No valid users to delete (cannot delete yourself)" }, { status: 400 });
+      }
+
+      const result = await User.deleteMany({ _id: { $in: safeUserIds } });
+      return NextResponse.json({ message: `${result.deletedCount} users deleted successfully` });
+    }
 
     if (!userId) {
       return NextResponse.json({ error: "Missing userId" }, { status: 400 });
     }
 
-    if (process.env.MOCK_ENV === 'true') {
-      return NextResponse.json({ message: "Mock user deleted successfully" });
-    }
-
-    await connectToDatabase();
-    
-    // Prevent admin from deleting themselves
-    if ((session.user as any).id === userId) {
-        return NextResponse.json({ error: "Cannot delete your own account" }, { status: 400 });
+    // Double check email comparison to prevent admin self-deletion
+    const userToDelete = await User.findById(userId);
+    if (userToDelete && (userToDelete.email === currentAdminEmail || userToDelete._id.toString() === currentAdminId)) {
+      return NextResponse.json({ error: "Cannot delete your own account" }, { status: 400 });
     }
 
     const deletedUser = await User.findByIdAndDelete(userId);
-
     if (!deletedUser) {
       return NextResponse.json({ error: "User not found" }, { status: 404 });
     }
@@ -104,3 +151,4 @@ export async function DELETE(req: Request) {
     return NextResponse.json({ error: "Internal server error" }, { status: 500 });
   }
 }
+
