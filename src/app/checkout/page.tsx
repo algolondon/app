@@ -57,6 +57,7 @@ function CheckoutContent() {
     mode: string;
     clientId: string;
     planIds: Record<string, string>;
+    discountPlanIds?: Record<string, string>;
   } | null>(null);
 
   useEffect(() => {
@@ -70,15 +71,37 @@ function CheckoutContent() {
           "1": "P-5EX01767RJ348304XNJ3LHYA",
           "2": "P-2TU154698S017735HNJ3LJQA",
           "3": "P-1RM14190S6572145FNJ3LKIY",
+        },
+        discountPlanIds: {
+          "1": "P-5EX01767RJ348304XNJ3LHYA",
+          "2": "P-2TU154698S017735HNJ3LJQA",
+          "3": "P-1RM14190S6572145FNJ3LKIY",
         }
       }));
   }, []);
 
-  const planId = paypalConfig?.planIds?.[tier] || '';
-  
+  const coupon = searchParams.get('coupon')?.toUpperCase() || "";
+  const isDiscountApplied = coupon === "LONDON15";
+
+  const planId = isDiscountApplied
+    ? (paypalConfig?.discountPlanIds?.[tier] || paypalConfig?.planIds?.[tier] || '')
+    : (paypalConfig?.planIds?.[tier] || '');
+
+  const getPromoDetails = () => {
+    if (!isDiscountApplied) return null;
+    switch (tier) {
+      case "1": return { promoPrice: "$50.99", desc: "First month discounted by 15%" };
+      case "2": return { promoPrice: "$76.49", desc: "First month discounted by 15%" };
+      case "3": return { promoPrice: "$101.99", desc: "First month discounted by 15%" };
+      default: return null;
+    }
+  };
+
+  const promo = getPromoDetails();
+
   useEffect(() => {
-    posthog?.capture('checkout_started', { tier, planId });
-  }, [posthog, tier, planId]);
+    posthog?.capture('checkout_started', { tier, planId, coupon });
+  }, [posthog, tier, planId, coupon]);
 
   const [formData, setFormData] = useState({
     name: '',
@@ -208,7 +231,25 @@ function CheckoutContent() {
         >
           <div>
             <h2 className="text-3xl font-display font-bold text-[#00D4FF] mb-2">You Selected:</h2>
-            <p className="text-2xl font-semibold">{selectedTier.name} — {selectedTier.price}</p>
+            <div className="text-2xl font-semibold">
+              {selectedTier.name} —{" "}
+              {promo ? (
+                <span className="inline-block">
+                  <span className="line-through text-muted-foreground mr-2">{selectedTier.price}</span>
+                  <span className="text-[#00D4FF]">{promo.promoPrice} for 1st month</span>
+                  <span className="text-xs text-muted-foreground block mt-1 font-normal">Then standard {selectedTier.price} applies automatically.</span>
+                </span>
+              ) : (
+                selectedTier.price
+              )}
+            </div>
+            
+            {promo && (
+              <div className="mt-4 p-3 bg-green-500/10 border border-green-500/20 text-green-400 rounded-xl text-xs font-semibold flex items-center gap-2 max-w-md">
+                <span className="bg-green-500 text-black px-1.5 py-0.5 rounded-[4px] font-extrabold text-[9px] tracking-wide shrink-0">COUPON APPLIED</span>
+                <span>Code "{coupon}" has successfully locked in your 15% first-month discount!</span>
+              </div>
+            )}
           </div>
           
           <div className="glass-panel rounded-2xl p-8 border border-[#00D4FF]/20 shadow-[0_0_30px_rgba(0,212,255,0.05)]">

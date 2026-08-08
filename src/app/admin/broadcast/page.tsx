@@ -25,7 +25,7 @@ export default function BroadcastPage() {
       setSubject("Complete your 16London Algo setup (15% Off Code Inside)");
       setTargetAudience("abandoned"); // Auto-select checkout drop-offs
       setCouponCode("LONDON15");
-      setButtonUrl("https://16londonalgo.com/#pricing");
+      setButtonUrl("https://16londonalgo.com/checkout?tier=1&coupon=LONDON15");
       setContent(
         `Hey there,\n\nWe noticed you started setting up your 16London Algo account but didn't complete your subscription.\n\nConsistently profitable trading requires the right tools. To help you get started, we've created a special one-time discount code for you.\n\nUse this code at checkout to get 15% off your first month of any plan.\n\nIf you have any questions, reply directly to this email.\n\nBest regards,\nKazi (Founder, 16London Algo)`
       );
