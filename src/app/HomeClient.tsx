@@ -214,6 +214,18 @@ export default function HomeClient({ sanityData }: { sanityData?: any }) {
                     </div>
                   </div>
                 </div>
+
+                {/* Additional Rules Image */}
+                <div className="relative rounded-2xl shadow-[0_0_50px_rgba(0,212,255,0.15)] overflow-hidden border border-[#00D4FF]/20 group mt-2">
+                  <Image 
+                    src="/images/rules-image.png" 
+                    alt="16London Trend Algo Confirmations" 
+                    width={800} 
+                    height={600} 
+                    className="w-full h-auto object-cover transition-transform duration-700 group-hover:scale-105"
+                    priority
+                  />
+                </div>
               </div>
             </motion.div>
           </div>
