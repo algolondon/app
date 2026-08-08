@@ -21,7 +21,7 @@ const SLIDES = [
   { image: "/images/new_assets/Testimonal 4.png" }
 ];
 
-export function AlgoInAction() {
+export function AlgoInAction({ sanityData }: { sanityData?: any }) {
   const [emblaRef, emblaApi] = useEmblaCarousel(
     { loop: true, align: "center", skipSnaps: false },
     [Autoplay({ delay: 5000, stopOnInteraction: false, stopOnMouseEnter: true })]
@@ -70,10 +70,14 @@ export function AlgoInAction() {
     <section id="testimonials-carousel" className="py-24 relative z-10 border-t border-[#00D4FF]/10 bg-background/50 backdrop-blur-sm overflow-hidden">
       <div className="max-w-7xl mx-auto px-6 lg:px-8 mb-16 text-center">
         <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-100px" }} variants={fadeInUp}>
-          <div className="text-[#00D4FF] font-bold tracking-[0.2em] text-xs uppercase mb-4">MEMBER SUCCESS</div>
-          <h2 className="text-4xl lg:text-5xl font-display font-bold mb-6">Real Traders. Real Results.</h2>
+          <div className="text-[#00D4FF] font-bold tracking-[0.2em] text-xs uppercase mb-4">
+            {sanityData?.testimonialsLabel || "MEMBER SUCCESS"}
+          </div>
+          <h2 className="text-4xl lg:text-5xl font-display font-bold mb-6">
+            {sanityData?.testimonialsTitle || "Real Traders. Real Results."}
+          </h2>
           <p className="text-muted-foreground dark:text-muted-foreground text-lg mx-auto max-w-[600px] leading-relaxed">
-            Don't just take our word for it. See what our community is achieving. Click to view clearly.
+            {sanityData?.testimonialsSubtitle || "Don't just take our word for it. See what our community is achieving. Click to view clearly."}
           </p>
         </motion.div>
       </div>

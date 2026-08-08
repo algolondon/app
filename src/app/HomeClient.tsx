@@ -295,7 +295,7 @@ export default function HomeClient({ sanityData }: { sanityData?: any }) {
       </section>
 
       {/* 2.5 ALGO IN ACTION */}
-      <AlgoInAction />
+      <AlgoInAction sanityData={sanityData} />
 
       {/* 3. HOW ACCESS WORKS */}
       <section id="how-it-works" className="py-24 relative z-10 border-t border-[#00D4FF]/10">

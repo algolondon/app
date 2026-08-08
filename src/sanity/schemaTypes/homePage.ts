@@ -21,6 +21,21 @@ export const homePageType = defineType({
       type: 'string',
     }),
     defineField({
+      name: 'testimonialsLabel',
+      title: 'Testimonials Section Label',
+      type: 'string',
+    }),
+    defineField({
+      name: 'testimonialsTitle',
+      title: 'Testimonials Section Title',
+      type: 'string',
+    }),
+    defineField({
+      name: 'testimonialsSubtitle',
+      title: 'Testimonials Section Subtitle',
+      type: 'text',
+    }),
+    defineField({
       name: 'rulesImage',
       title: 'Hero Rules & Settings Image',
       type: 'image',
