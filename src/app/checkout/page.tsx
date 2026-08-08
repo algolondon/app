@@ -317,45 +317,9 @@ function CheckoutContent() {
             ) : (
               <>
                 <h2 className="text-3xl font-display font-bold mb-2">Complete Payment</h2>
-                <p className="text-muted-foreground mb-8">Subscribe securely using PayPal or Card.</p>
+                <p className="text-muted-foreground mb-8">Subscribe securely with PayPal.</p>
                 <div className="space-y-6">
                   
-                  {/* Stripe Payment Button */}
-                  <div className="bg-white/5 border border-foreground/10 p-6 rounded-xl flex flex-col items-center">
-                    <h3 className="text-lg font-semibold mb-4">Credit / Debit Card</h3>
-                    <button
-                      onClick={async () => {
-                        posthog?.capture('checkout_stripe_clicked', { planId });
-                        try {
-                          const res = await fetch("/api/stripe/create-checkout-session", {
-                            method: "POST",
-                            headers: { "Content-Type": "application/json" },
-                            body: JSON.stringify({ email: registeredEmail || formData.email, tier })
-                          });
-                          const data = await res.json();
-                          if (data.url) {
-                            window.location.href = data.url;
-                          } else {
-                            alert(data.error || "Failed to initiate Stripe checkout");
-                          }
-                        } catch (err) {
-                          console.error(err);
-                          alert("Failed to connect to Stripe.");
-                        }
-                      }}
-                      className="w-full bg-[#635BFF] hover:bg-[#5249ea] text-white font-bold py-4 rounded-xl transition-all shadow-lg flex items-center justify-center gap-3"
-                    >
-                      <svg viewBox="0 0 40 40" className="w-6 h-6 fill-current" xmlns="http://www.w3.org/2000/svg"><path d="M20 0c11.046 0 20 8.954 20 20s-8.954 20-20 20S0 31.046 0 20 8.954 0 20 0zm0 2c-9.941 0-18 8.059-18 18s8.059 18 18 18 18-8.059 18-18S29.941 2 20 2zm8.745 13.922c0-1.637-1.32-2.91-3.08-2.91-1.748 0-3.111 1.258-3.111 2.91 0 1.638 1.348 2.872 3.097 2.872 1.66 0 3.094-1.233 3.094-2.872zM14.62 14.86c-.958 0-1.688.756-1.688 1.83 0 1.055.73 1.808 1.688 1.808.97 0 1.69-.753 1.69-1.808 0-1.074-.72-1.83-1.69-1.83zm-2.072 6.837h4.143V31H12.55V21.7z" fillRule="evenodd" clipRule="evenodd"/></svg>
-                      Pay with Stripe
-                    </button>
-                  </div>
-
-                  <div className="relative flex items-center py-2">
-                    <div className="flex-grow border-t border-foreground/10"></div>
-                    <span className="flex-shrink-0 mx-4 text-muted-foreground text-sm">or pay with</span>
-                    <div className="flex-grow border-t border-foreground/10"></div>
-                  </div>
-
                   {/* PayPal Container */}
                   <div className="bg-white p-4 rounded-xl">
                     <PayPalScriptProvider options={{ clientId: process.env.NEXT_PUBLIC_PAYPAL_CLIENT_ID || "test", vault: true }}>
