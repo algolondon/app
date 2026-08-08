@@ -198,6 +198,18 @@ export default function HomeClient({ sanityData }: { sanityData?: any }) {
                     />
                   </div>
 
+                  {/* Middle Image Section */}
+                  <div className="relative group border-b border-[#00D4FF]/20">
+                    <Image 
+                      src="/images/image7.png" 
+                      alt="16London Trend Algo Example" 
+                      width={800} 
+                      height={600} 
+                      className="w-full h-auto object-cover transition-transform duration-700 group-hover:scale-105"
+                      priority
+                    />
+                  </div>
+
                   {/* Rules & Settings Section */}
                   <div className="p-4 sm:p-6 bg-background/80">
                     <div className="space-y-4 mb-6 font-mono text-xs sm:text-sm">
@@ -213,18 +225,6 @@ export default function HomeClient({ sanityData }: { sanityData?: any }) {
                       <div className="flex flex-col"><span className="text-gray-500">SCALP / INTRADAY</span><span className="text-[#00D4FF]">47</span></div>
                     </div>
                   </div>
-                </div>
-
-                {/* Additional Rules Image */}
-                <div className="relative rounded-2xl shadow-[0_0_50px_rgba(0,212,255,0.15)] overflow-hidden border border-[#00D4FF]/20 group mt-2">
-                  <Image 
-                    src="/images/rules-image.png" 
-                    alt="16London Trend Algo Confirmations" 
-                    width={800} 
-                    height={600} 
-                    className="w-full h-auto object-cover transition-transform duration-700 group-hover:scale-105"
-                    priority
-                  />
                 </div>
               </div>
             </motion.div>
