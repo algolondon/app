@@ -118,6 +118,46 @@ export async function POST(req: Request) {
           }
         }
       }
+    } else if (event.type === "checkout.session.expired") {
+      const session = event.data.object as Stripe.Checkout.Session;
+      const userId = session.metadata?.userId;
+      const tier = session.metadata?.tier || "1";
+
+      if (userId) {
+        const user = await User.findById(userId);
+        if (user && user.status === "pending_payment" && !user.abandonedEmailSent) {
+          console.log(`Sending abandoned cart email to user ${userId}`);
+          const { Resend } = await import('resend');
+          const resend = new Resend(process.env.RESEND_API_KEY || 're_placeholder_key_for_dev');
+          
+          try {
+            await resend.emails.send({
+              from: 'support@16londonalgo.com',
+              to: [user.email],
+              subject: "Complete your 16London Algo setup",
+              html: `
+                <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; background-color: #0A1628; color: #ffffff; padding: 40px; border-radius: 10px;">
+                  <div style="text-align: center; margin-bottom: 30px;">
+                    <h1 style="color: #00D4FF; margin: 0;">16London X Brands LLC</h1>
+                  </div>
+                  <h2 style="font-size: 24px; margin-bottom: 20px;">Hi ${user.name},</h2>
+                  <p style="color: #E2E8F0; font-size: 16px; line-height: 1.5; margin-bottom: 24px;">
+                    We noticed you started setting up your 16London Algo account but didn't complete the payment. The markets are moving, and we'd love to have you on board.
+                  </p>
+                  <div style="text-align: center; margin: 40px 0;">
+                    <a href="${process.env.NEXT_PUBLIC_APP_URL || 'https://16londonalgo.com'}/checkout?tier=${tier}" style="background-color: #00D4FF; color: #0A1628; padding: 15px 30px; text-decoration: none; font-weight: bold; border-radius: 5px; display: inline-block;">Complete Your Checkout</a>
+                  </div>
+                  <p style="color: #E2E8F0; font-size: 14px;">Best,<br>Kazi</p>
+                </div>
+              `
+            });
+            user.abandonedEmailSent = true;
+            await user.save();
+          } catch (e) {
+            console.error("Abandoned cart email send failed:", e);
+          }
+        }
+      }
     }
 
     return NextResponse.json({ received: true });
