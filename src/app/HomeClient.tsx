@@ -202,27 +202,15 @@ export default function HomeClient({ sanityData }: { sanityData?: any }) {
                   </div>
                 </div>
 
-                <div className="relative bg-background/50 backdrop-blur-sm border border-[#00D4FF]/40 rounded-2xl shadow-[0_0_30px_rgba(0,212,255,0.1)] overflow-hidden">
-                  {/* Mac-style header */}
-                  <div className="bg-muted/50 px-4 py-3 border-b border-[#00D4FF]/20 flex items-center justify-between">
-                    <div className="flex gap-2">
-                      <div className="w-3 h-3 rounded-full bg-red-500"></div>
-                      <div className="w-3 h-3 rounded-full bg-yellow-500"></div>
-                      <div className="w-3 h-3 rounded-full bg-green-500"></div>
-                    </div>
-                    <div className="text-[#00D4FF] text-[10px] sm:text-xs font-mono tracking-widest uppercase truncate max-w-[200px] sm:max-w-none">16LONDON TREND ALGO V1 · CHART PREVIEW</div>
-                    <Settings className="w-4 h-4 text-gray-500 shrink-0" />
-                  </div>
-                  <div className="relative group">
-                    <Image 
-                      src={sanityData?.rulesImage?.asset?.url || "/images/rules-image.png"} 
-                      alt="16London Trend Algo Chart" 
-                      width={800} 
-                      height={600} 
-                      className="w-full h-auto object-cover transition-transform duration-700 group-hover:scale-105"
-                      priority
-                    />
-                  </div>
+                <div className="relative rounded-2xl shadow-[0_0_50px_rgba(0,212,255,0.15)] overflow-hidden border border-[#00D4FF]/20 group mt-4">
+                  <Image 
+                    src="/images/cover.jpg" 
+                    alt="16London Trend Algo" 
+                    width={800} 
+                    height={600} 
+                    className="w-full h-auto object-cover transition-transform duration-700 group-hover:scale-105"
+                    priority
+                  />
                 </div>
               </div>
             </motion.div>
