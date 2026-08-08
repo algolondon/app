@@ -171,7 +171,7 @@ export default function HomeClient({ sanityData }: { sanityData?: any }) {
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.8, ease: "easeOut" as any, delay: 0.4 }}
             >
-              <div className="absolute inset-0 bg-[#00D4FF] blur-[120px] opacity-20 rounded-full"></div>
+              <div className="absolute inset-0 bg-[#00D4FF] blur-3xl opacity-20 rounded-full transform-gpu"></div>
               
               <div className="relative bg-background border border-[#00D4FF]/40 rounded-2xl shadow-[0_0_50px_rgba(0,212,255,0.15)] overflow-hidden">
                 {/* Mac-style header */}
@@ -219,7 +219,7 @@ export default function HomeClient({ sanityData }: { sanityData?: any }) {
       </section>
 
       {/* 2. THREE SYSTEMS */}
-      <section id="indicator-suite" className="py-24 relative z-10 border-t border-[#00D4FF]/10 bg-background/50 backdrop-blur-sm">
+      <section id="indicator-suite" className="py-24 relative z-10 border-t border-[#00D4FF]/10 bg-background/50 backdrop-blur-sm transform-gpu">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <motion.div 
             initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-100px" }} variants={fadeInUp}
@@ -311,7 +311,7 @@ export default function HomeClient({ sanityData }: { sanityData?: any }) {
       </section>
 
       {/* 4. WHAT MEMBERS GET */}
-      <section id="what-members-get" className="py-24 relative z-10 border-t border-[#00D4FF]/10 bg-background/50 backdrop-blur-sm">
+      <section id="what-members-get" className="py-24 relative z-10 border-t border-[#00D4FF]/10 bg-background/50 backdrop-blur-sm transform-gpu">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeInUp} className="text-center mb-20">
             <h2 className="text-4xl lg:text-5xl font-display font-bold mb-6">What Members Get</h2>
@@ -360,19 +360,47 @@ export default function HomeClient({ sanityData }: { sanityData?: any }) {
                 ))}
               </div>
 
-              <motion.div variants={fadeInUp} id="about-Kazi" className="border-t border-gray-200 dark:border-foreground/10 pt-10">
-                <h3 className="text-2xl font-bold mb-4">8 Years in the Trenches.</h3>
-                <p className="text-muted-foreground leading-relaxed mb-6">I didn't build this for fun. I built it because I was tired of losing. These rules saved my account. They'll save yours too.</p>
-                <div className="flex items-center gap-4 text-sm font-bold text-foreground">
-                  <span className="bg-card border border-[#00D4FF]/30 px-4 py-2 rounded-lg">8 Years Trading</span>
-                  <span className="text-[#00D4FF]">+</span>
-                  <span className="bg-card border border-[#00D4FF]/30 px-4 py-2 rounded-lg">$X Funded Accounts</span>
+              <motion.div variants={fadeInUp} id="about-kazi" className="border-t border-gray-200 dark:border-foreground/10 pt-10">
+                <h3 className="text-3xl font-bold mb-2">Meet Kazi</h3>
+                <h4 className="text-lg text-[#00D4FF] font-medium mb-6">Founder of 16London Trend Algo</h4>
+                
+                <div className="text-muted-foreground leading-relaxed space-y-4 mb-8">
+                  <p>I&apos;m Kaziyel, born and raised in Miami, Florida, and I&apos;ve been trading and teaching the financial markets for over 8 years.</p>
+                  <p>When I first started trading, I spent countless hours studying charts, testing strategies, and learning from both my wins and my losses. Like most traders, I realized there wasn&apos;t a shortcut to consistency—it came from understanding how the market moves and following a proven process.</p>
+                  <p>Over the years, I&apos;ve taught traders from all experience levels and developed several profitable manual trading systems. Every system taught me something new, and each one helped shape the trading approach I use today.</p>
+                  <p>Eventually, I decided to combine everything I&apos;d learned into one complete system: <strong>16London Trend Algo.</strong></p>
+                  <p>This system wasn&apos;t built overnight. It&apos;s the result of years of chart time, testing, and refining. My goal wasn&apos;t to create another flashy indicator—it was to build something that gives traders clear direction, removes unnecessary guesswork, and helps them trade with confidence.</p>
+                  <p>As I begin focusing on other opportunities, I wanted to leave something valuable behind for my community. The 16London Trend Algo is my way of sharing the knowledge I&apos;ve gained over the years and giving traders a system they can rely on.</p>
+                  <p>I truly believe that trading doesn&apos;t have to be complicated. With the right structure, discipline, and tools, anyone willing to learn can become a consistently better trader.</p>
+                  <p>Welcome to 16London Trend Algo. I hope it becomes a part of your trading journey just as it has been a part of mine.</p>
+                </div>
+
+                <h3 className="text-2xl font-bold mb-4">Our Mission</h3>
+                <p className="text-muted-foreground leading-relaxed mb-8">
+                  To simplify professional trading by providing a structured system that helps traders make smarter decisions, build confidence, and achieve long-term consistency.
+                </p>
+
+                <h3 className="text-2xl font-bold mb-4">Why I Built 16London Trend Algo</h3>
+                <p className="text-muted-foreground leading-relaxed mb-6">
+                  After teaching trading for more than eight years, I noticed most traders struggled with the same problems—overcomplicated indicators, conflicting signals, and emotional decision-making. I created the 16London Trend Algo to solve those problems.
+                </p>
+                <p className="text-muted-foreground leading-relaxed mb-6">
+                  The system combines trend analysis, market structure, multi-timeframe confirmation, and clear buy and sell signals into one professional workflow. Instead of guessing, traders can follow a structured process built on objective market conditions.
+                </p>
+                <div className="bg-card border border-[#00D4FF]/20 rounded-xl p-6">
+                  <p className="font-bold mb-4">Whether you&apos;re a beginner or an experienced trader, the goal remains the same:</p>
+                  <ul className="space-y-2">
+                    <li className="flex items-center gap-3"><Check className="text-[#00D4FF] w-4 h-4" /> Trade with confidence</li>
+                    <li className="flex items-center gap-3"><Check className="text-[#00D4FF] w-4 h-4" /> Eliminate unnecessary noise</li>
+                    <li className="flex items-center gap-3"><Check className="text-[#00D4FF] w-4 h-4" /> Focus on high-probability setups</li>
+                    <li className="flex items-center gap-3"><Check className="text-[#00D4FF] w-4 h-4" /> Build long-term consistency</li>
+                  </ul>
                 </div>
               </motion.div>
             </motion.div>
 
             <motion.div initial={{ opacity: 0, x: 50 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ duration: 0.8 }} className="w-full lg:w-[45%] relative">
-              <div className="absolute inset-0 bg-[#00D4FF] blur-[80px] opacity-20 rounded-full"></div>
+              <div className="absolute inset-0 bg-[#00D4FF] blur-2xl opacity-20 rounded-full transform-gpu"></div>
               <MockupFrame title="16LONDON TREND ALGO V1 · RULES & SETTINGS" className="relative z-10 shadow-2xl">
                 <Image src="/images/new_assets/Trend Algo Rules  Image.png" alt="Rules Mockup" width={600} height={800} className="w-full" />
               </MockupFrame>
@@ -383,7 +411,7 @@ export default function HomeClient({ sanityData }: { sanityData?: any }) {
       </section>
 
       {/* 6. PRICING */}
-      <section id="pricing" className="py-24 relative z-10 border-t border-[#00D4FF]/10 bg-background/50 backdrop-blur-sm">
+      <section id="pricing" className="py-24 relative z-10 border-t border-[#00D4FF]/10 bg-background/50 backdrop-blur-sm transform-gpu">
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom,_rgba(0,212,255,0.1),transparent_70%)] -z-10"></div>
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeInUp} className="text-center mb-20">
