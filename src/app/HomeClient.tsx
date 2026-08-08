@@ -189,7 +189,7 @@ export default function HomeClient({ sanityData }: { sanityData?: any }) {
                   {/* Image Section */}
                   <div className="relative group border-b border-[#00D4FF]/20">
                     <Image 
-                      src="/images/cover.jpg" 
+                      src={sanityData?.rulesImage?.asset?.url || "/images/cover.jpg"} 
                       alt="16London Trend Algo" 
                       width={800} 
                       height={600} 
