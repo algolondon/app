@@ -137,7 +137,7 @@ export function Navbar() {
                       )}
                       <div className="h-px bg-foreground/10 my-1"></div>
                       <button
-                        onClick={() => { signOut({ callbackUrl: window.location.origin }); setIsProfileMenuOpen(false); }}
+                        onClick={() => { signOut({ callbackUrl: "/" }); setIsProfileMenuOpen(false); }}
                         className="block w-full text-left px-4 py-2 text-sm text-red-500 hover:bg-red-500/10 font-bold"
                       >
                         Logout
@@ -182,7 +182,7 @@ export function Navbar() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
             transition={{ duration: 0.2 }}
-            className="fixed inset-x-0 top-[64px] z-40 bg-background border-b border-[#00D4FF]/20 shadow-2xl lg:hidden flex flex-col"
+            className="fixed inset-x-0 top-[100px] pb-6 z-40 bg-background border-b border-[#00D4FF]/20 shadow-2xl lg:hidden flex flex-col"
           >
             <div className="flex flex-col p-6 gap-4">
               {navLinks.map((link) => (
@@ -209,16 +209,16 @@ export function Navbar() {
                       Admin Panel
                     </Link>
                   )}
-                  <button onClick={() => { signOut({ callbackUrl: window.location.origin }); setIsMobileMenuOpen(false); }} className="text-lg font-bold text-red-500 py-2 text-left">
+                  <button onClick={() => { signOut({ callbackUrl: "/" }); setIsMobileMenuOpen(false); }} className="text-lg font-bold text-red-500 py-2 text-left">
                     Logout
                   </button>
                 </>
               ) : (
                 <>
-                  <Link href="/login" onClick={() => setIsMobileMenuOpen(false)} className="mt-2 w-full text-center border border-[#00D4FF] text-[#00D4FF] font-bold rounded-[8px] px-6 py-4">
+                  <Link href="/login" onClick={() => setIsMobileMenuOpen(false)} className="mt-2 w-full text-center border border-[#00D4FF] text-[#00D4FF] font-bold rounded-[8px] px-4 py-3">
                     Login
                   </Link>
-                  <Link href="/#pricing" onClick={() => setIsMobileMenuOpen(false)} className="mt-2 w-full text-center bg-[#00D4FF] text-background font-bold rounded-[8px] px-6 py-4">
+                  <Link href="/#pricing" onClick={() => setIsMobileMenuOpen(false)} className="mt-2 w-full text-center bg-[#00D4FF] text-background font-bold rounded-[8px] px-4 py-3">
                     Get Access Now
                   </Link>
                 </>

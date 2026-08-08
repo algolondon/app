@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useEffect, useState } from "react";
 import { Users, UserCheck, TrendingUp, DollarSign } from "lucide-react";
@@ -78,7 +78,7 @@ export default function AdminDashboard() {
       )}
 
       {/* PostHog Embedded Dashboard */}
-      <div className="bg-[#12223A] border border-white/5 rounded-2xl p-6 h-[800px] flex flex-col">
+      <div className="bg-[#12223A] border border-white/5 rounded-2xl p-6 h-[500px] md:h-[800px] flex flex-col">
         <div className="flex items-center justify-between mb-4">
           <h2 className="text-xl font-bold">Website Analytics & Activity</h2>
           <span className="text-xs text-blue-400 bg-blue-400/10 px-2 py-1 rounded-full border border-blue-400/20">Live from PostHog</span>

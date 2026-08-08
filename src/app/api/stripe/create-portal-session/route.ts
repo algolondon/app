@@ -28,7 +28,7 @@ export async function POST(req: Request) {
       stripeCustomerId = user.stripeCustomerId;
     }
 
-    const returnUrl = `${process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'}/members-portal`;
+    const returnUrl = `${process.env.NEXT_PUBLIC_APP_URL || ''}/members-portal`;
 
     const portalSession = await stripe.billingPortal.sessions.create({
       customer: stripeCustomerId,

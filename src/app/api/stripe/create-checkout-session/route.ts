@@ -57,8 +57,8 @@ export async function POST(req: Request) {
           quantity: 1,
         },
       ],
-      success_url: `${process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'}/thank-you?session_id={CHECKOUT_SESSION_ID}`,
-      cancel_url: `${process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'}/checkout?tier=${tier}`,
+      success_url: `${process.env.NEXT_PUBLIC_APP_URL || ''}/thank-you?session_id={CHECKOUT_SESSION_ID}`,
+      cancel_url: `${process.env.NEXT_PUBLIC_APP_URL || ''}/checkout?tier=${tier}`,
       metadata: {
         userId: userId,
         tier: tier,

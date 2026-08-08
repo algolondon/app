@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { Suspense, useState } from "react";
 import { signIn } from "next-auth/react";
@@ -64,7 +64,7 @@ function LoginContent() {
       >
         <div className="flex flex-col items-center">
           <Link href="/">
-            <Image src="/logo.svg" alt="16London X Brands LLC" width={200} height={50} className="h-12 w-auto mb-6" />
+            <Image src="/logo.png" alt="16London X Brands LLC" width={200} height={50} className="h-12 w-auto mb-6" />
           </Link>
           <h2 className="mt-2 text-center text-3xl font-display font-bold text-foreground">
             Member Login
