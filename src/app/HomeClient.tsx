@@ -174,17 +174,6 @@ export default function HomeClient({ sanityData }: { sanityData?: any }) {
               <div className="absolute inset-0 bg-[#00D4FF] blur-3xl opacity-20 rounded-full transform-gpu"></div>
               
               <div className="flex flex-col gap-6">
-                <div className="relative rounded-2xl shadow-[0_0_50px_rgba(0,212,255,0.15)] overflow-hidden border border-[#00D4FF]/20 group">
-                  <Image 
-                    src="/images/cover.jpg" 
-                    alt="16London Trend Algo" 
-                    width={800} 
-                    height={600} 
-                    className="w-full h-auto object-cover transition-transform duration-700 group-hover:scale-105"
-                    priority
-                  />
-                </div>
-
                 <div className="relative bg-background/50 backdrop-blur-sm border border-[#00D4FF]/40 rounded-2xl shadow-[0_0_30px_rgba(0,212,255,0.1)] overflow-hidden">
                   {/* Mac-style header */}
                   <div className="bg-muted/50 px-4 py-3 border-b border-[#00D4FF]/20 flex items-center justify-between">
@@ -193,11 +182,24 @@ export default function HomeClient({ sanityData }: { sanityData?: any }) {
                       <div className="w-3 h-3 rounded-full bg-yellow-500"></div>
                       <div className="w-3 h-3 rounded-full bg-green-500"></div>
                     </div>
-                    <div className="text-[#00D4FF] text-[10px] sm:text-xs font-mono tracking-widest uppercase truncate max-w-[200px] sm:max-w-none">16LONDON TREND ALGO V1 · Rules & Settings</div>
+                    <div className="text-[#00D4FF] text-[10px] sm:text-xs font-mono tracking-widest uppercase truncate max-w-[200px] sm:max-w-none">16LONDON TREND ALGO V1 · PREVIEW & SETTINGS</div>
                     <Settings className="w-4 h-4 text-gray-500 shrink-0" />
                   </div>
                   
-                  <div className="p-4 sm:p-6">
+                  {/* Image Section */}
+                  <div className="relative group border-b border-[#00D4FF]/20">
+                    <Image 
+                      src="/images/cover.jpg" 
+                      alt="16London Trend Algo" 
+                      width={800} 
+                      height={600} 
+                      className="w-full h-auto object-cover transition-transform duration-700 group-hover:scale-105"
+                      priority
+                    />
+                  </div>
+
+                  {/* Rules & Settings Section */}
+                  <div className="p-4 sm:p-6 bg-background/80">
                     <div className="space-y-4 mb-6 font-mono text-xs sm:text-sm">
                       <div className="text-muted-foreground uppercase leading-relaxed">1. MAKE SURE TO CONFIRM 3-5 TIMEFRAME IN AGREEMENT</div>
                       <div className="text-muted-foreground uppercase leading-relaxed">2. WAIT FOR A CLEAR BUY OR SELL SIGNAL</div>
