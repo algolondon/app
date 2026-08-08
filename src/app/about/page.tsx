@@ -47,6 +47,10 @@ export default function AboutPage() {
               Founder of 16London Trend Algo
             </motion.div>
 
+            <motion.div variants={fadeInUp} className="w-full mb-10 rounded-2xl overflow-hidden border border-[#00D4FF]/20 shadow-[0_0_50px_rgba(0,212,255,0.15)] relative">
+              <Image src="/images/xauusd-chart.png" alt="XAUUSD 15 Min Example" width={1000} height={600} className="w-full h-auto object-cover" />
+            </motion.div>
+
             <motion.div variants={fadeInUp} className="prose prose-invert prose-lg max-w-none text-muted-foreground space-y-6">
               <p className="text-xl text-foreground font-medium">
                 I'm Kaziyel, born and raised in Miami, Florida, and I've been trading and teaching the financial markets for over 8 years.

@@ -172,15 +172,46 @@ export default function HomeClient({ sanityData }: { sanityData?: any }) {
               transition={{ duration: 0.8, ease: "easeOut" as any, delay: 0.4 }}
             >
               <div className="absolute inset-0 bg-[#00D4FF] blur-3xl opacity-20 rounded-full transform-gpu"></div>
-              <div className="relative rounded-2xl shadow-[0_0_50px_rgba(0,212,255,0.15)] overflow-hidden border border-[#00D4FF]/20 group">
-                <Image 
-                  src="/images/cover.jpg" 
-                  alt="16London Trend Algo" 
-                  width={800} 
-                  height={600} 
-                  className="w-full h-auto object-cover transition-transform duration-700 group-hover:scale-105"
-                  priority
-                />
+              
+              <div className="flex flex-col gap-6">
+                <div className="relative rounded-2xl shadow-[0_0_50px_rgba(0,212,255,0.15)] overflow-hidden border border-[#00D4FF]/20 group">
+                  <Image 
+                    src="/images/cover.jpg" 
+                    alt="16London Trend Algo" 
+                    width={800} 
+                    height={600} 
+                    className="w-full h-auto object-cover transition-transform duration-700 group-hover:scale-105"
+                    priority
+                  />
+                </div>
+                
+                <div className="relative bg-background/50 backdrop-blur-sm border border-[#00D4FF]/40 rounded-2xl shadow-[0_0_30px_rgba(0,212,255,0.1)] overflow-hidden">
+                  {/* Mac-style header */}
+                  <div className="bg-muted/50 px-4 py-3 border-b border-[#00D4FF]/20 flex items-center justify-between">
+                    <div className="flex gap-2">
+                      <div className="w-3 h-3 rounded-full bg-red-500"></div>
+                      <div className="w-3 h-3 rounded-full bg-yellow-500"></div>
+                      <div className="w-3 h-3 rounded-full bg-green-500"></div>
+                    </div>
+                    <div className="text-[#00D4FF] text-xs font-mono tracking-widest uppercase truncate max-w-[200px] sm:max-w-none">16LONDON TREND ALGO V1 · Rules &amp; Settings</div>
+                    <Settings className="w-4 h-4 text-gray-500" />
+                  </div>
+                  
+                  <div className="p-6">
+                    <div className="space-y-3 mb-6 font-mono text-xs sm:text-sm">
+                      <div className="text-muted-foreground">1. MAKE SURE TO CONFIRM 3-5 TIMEFRAME IN AGREEMENT</div>
+                      <div className="text-muted-foreground">2. WAIT FOR A CLEAR BUY OR SELL SIGNAL</div>
+                      <div className="text-muted-foreground">3. WAIT FOR STRONG BUY OR STRONG SELL FOR ENTRY</div>
+                      <div className="text-muted-foreground">4. USE THE ZONES FOR STOP LOSS AND PULLBACK ENTRIES</div>
+                    </div>
+
+                    <div className="flex justify-between items-center bg-muted/50 p-4 rounded-lg border border-[#00D4FF]/10 text-[10px] sm:text-xs font-mono">
+                      <div className="flex flex-col"><span className="text-gray-500">SWING TRADING</span><span className="text-[#00D4FF]">112</span></div>
+                      <div className="flex flex-col"><span className="text-gray-500">INTRA DAY</span><span className="text-[#00D4FF]">87</span></div>
+                      <div className="flex flex-col"><span className="text-gray-500">SCALP</span><span className="text-[#00D4FF]">INTRADAY</span></div>
+                    </div>
+                  </div>
+                </div>
               </div>
             </motion.div>
           </div>
@@ -210,7 +241,7 @@ export default function HomeClient({ sanityData }: { sanityData?: any }) {
               </div>
               <div className="w-full lg:w-1/2">
                 <MockupFrame title="16LONDON TREND ALGO V1">
-                  <Image src="/images/new_assets/Trend Algo image 1.png" alt="Trend ALGO" width={600} height={400} className="w-full" />
+                  <Image src="/images/trend-algo-chart.png" alt="Trend ALGO" width={600} height={400} className="w-full" />
                 </MockupFrame>
               </div>
             </motion.div>
@@ -349,9 +380,9 @@ export default function HomeClient({ sanityData }: { sanityData?: any }) {
 
             <motion.div initial={{ opacity: 0, x: 50 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ duration: 0.8 }} className="w-full lg:w-[45%] relative">
               <div className="absolute inset-0 bg-[#00D4FF] blur-2xl opacity-20 rounded-full transform-gpu"></div>
-              <MockupFrame title="16LONDON TREND ALGO V1 · RULES & SETTINGS" className="relative z-10 shadow-2xl">
-                <Image src="/images/new_assets/Trend Algo Rules  Image.png" alt="Rules Mockup" width={600} height={800} className="w-full" />
-              </MockupFrame>
+              <div className="relative z-10 rounded-2xl overflow-hidden border border-[#00D4FF]/20 shadow-[0_0_50px_rgba(0,212,255,0.15)] group">
+                <Image src="/images/hero-graphic.png" alt="16London Trend Algo Graphic" width={800} height={800} className="w-full h-auto object-cover transition-transform duration-700 group-hover:scale-105" />
+              </div>
             </motion.div>
 
           </div>
@@ -399,8 +430,10 @@ export default function HomeClient({ sanityData }: { sanityData?: any }) {
                 <span className="text-gray-500">/mo</span>
               </div>
               <ul className="space-y-4 mb-8 flex-grow">
-                <li className="flex items-start gap-3"><Check className="text-[#00D4FF] w-5 h-5 shrink-0 mt-0.5" /><span className="text-muted-foreground">Everything in Tier 1</span></li>
+                <li className="flex items-start gap-3"><Check className="text-[#00D4FF] w-5 h-5 shrink-0 mt-0.5" /><span className="text-muted-foreground">16London Trend Algo V1</span></li>
                 <li className="flex items-start gap-3"><Check className="text-[#00D4FF] w-5 h-5 shrink-0 mt-0.5" /><span className="text-foreground font-bold">London X System</span></li>
+                <li className="flex items-start gap-3"><Check className="text-[#00D4FF] w-5 h-5 shrink-0 mt-0.5" /><span className="text-muted-foreground">Members Portal Access</span></li>
+                <li className="flex items-start gap-3"><Check className="text-[#00D4FF] w-5 h-5 shrink-0 mt-0.5" /><span className="text-muted-foreground">Full Video Course</span></li>
               </ul>
               <div className="mt-auto w-full pt-4">
                 <Link href="/checkout?tier=2" className="flex items-center justify-center w-full bg-[#FFC439] hover:bg-[#F4BB33] text-[#003087] font-bold py-3.5 rounded-xl transition-colors shadow-lg">
@@ -421,8 +454,10 @@ export default function HomeClient({ sanityData }: { sanityData?: any }) {
                 <span className="text-muted-foreground">/mo</span>
               </div>
               <ul className="space-y-4 mb-8 flex-grow">
-                <li className="flex items-start gap-3"><Check className="text-[#00D4FF] w-5 h-5 shrink-0 mt-0.5" /><span className="text-muted-foreground">Everything in Tier 2</span></li>
+                <li className="flex items-start gap-3"><Check className="text-[#00D4FF] w-5 h-5 shrink-0 mt-0.5" /><span className="text-muted-foreground">16London Trend Algo V1</span></li>
+                <li className="flex items-start gap-3"><Check className="text-[#00D4FF] w-5 h-5 shrink-0 mt-0.5" /><span className="text-foreground font-bold">London X System</span></li>
                 <li className="flex items-start gap-3"><Check className="text-[#00D4FF] w-5 h-5 shrink-0 mt-0.5" /><span className="text-foreground font-bold">16London ATM System</span></li>
+                <li className="flex items-start gap-3"><Check className="text-[#00D4FF] w-5 h-5 shrink-0 mt-0.5" /><span className="text-muted-foreground">Members Portal Access</span></li>
                 <li className="flex items-start gap-3"><Check className="text-[#00D4FF] w-5 h-5 shrink-0 mt-0.5" /><span className="text-muted-foreground">Complete Video Masterclass</span></li>
                 <li className="flex items-start gap-3"><Check className="text-[#00D4FF] w-5 h-5 shrink-0 mt-0.5" /><span className="text-muted-foreground">Future System Updates</span></li>
               </ul>
