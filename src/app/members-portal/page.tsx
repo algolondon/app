@@ -45,7 +45,12 @@ export default async function MembersPortal() {
   if (!user && process.env.MOCK_ENV !== 'true') {
     redirect("/login");
   } else if (!user) {
-    user = { _id: "mock-fallback", completedModules: [], tier: "tier1" };
+    user = { _id: "mock-fallback", completedModules: [], tier: "tier1", active: true };
+  }
+
+  if (!user.active && user.role !== 'admin') {
+    const defaultTier = user.tier ? user.tier.replace('tier', '') : '1';
+    redirect(`/checkout?tier=${defaultTier}`);
   }
 
   let totalCourses = 0;

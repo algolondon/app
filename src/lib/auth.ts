@@ -37,9 +37,7 @@ export const authOptions: NextAuthOptions = {
           throw new Error("Invalid email or password");
         }
 
-        if (!member.active) {
-          throw new Error("Account is inactive");
-        }
+        // Check removed to allow inactive users to log in and be redirected to checkout
 
         // For MVP compatibility, if it's our placeholder dummy hash from members.json, match against "password123"
         // (We can keep this just in case they imported the old dummy data directly into MongoDB)

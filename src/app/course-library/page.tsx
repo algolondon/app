@@ -38,8 +38,19 @@ export default async function CourseLibrary() {
       await connectDB();
       const dbUser = await User.findOne({ email: session.user.email }).lean();
       completedModules = dbUser?.completedModules || [];
+      if (!dbUser?.active && dbUser?.role !== 'admin') {
+        const defaultTier = dbUser?.tier ? dbUser.tier.replace('tier', '') : '1';
+        redirect(`/checkout?tier=${defaultTier}`);
+      }
     } catch (e) {
       console.error("Failed to fetch user progress:", e);
+    }
+  } else {
+    // In mock env, allow mock user to access
+    const mockUser = session.user as any;
+    if (!mockUser.active && mockUser.role !== 'admin') {
+      const defaultTier = mockUser.tier ? mockUser.tier.replace('tier', '') : '1';
+      redirect(`/checkout?tier=${defaultTier}`);
     }
   }
 
