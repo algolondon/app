@@ -6,6 +6,16 @@ export const homePageType = defineType({
   type: 'document',
   fields: [
     defineField({
+      name: 'heroTitle',
+      title: 'Hero Title (Plain Text)',
+      type: 'string',
+    }),
+    defineField({
+      name: 'heroTitleGradient',
+      title: 'Hero Title (Gradient Text)',
+      type: 'string',
+    }),
+    defineField({
       name: 'tagline',
       title: 'Hero Tagline',
       type: 'string',

@@ -123,9 +123,9 @@ export default function HomeClient({ sanityData }: { sanityData?: any }) {
               <motion.div variants={fadeInUp} className="text-[#00D4FF] text-xs font-bold mb-6 border border-[#00D4FF] px-4 py-1.5 rounded-full flex items-center gap-2 bg-[#00D4FF]/5">
                 ● {sanityData?.tagline || "8 YEAR PROVEN TRADING SYSTEMS"}
               </motion.div>
-              <motion.h1 variants={fadeInUp} className="text-5xl lg:text-7xl font-bold leading-tight tracking-tight mb-6">
-                Haris.<br/>
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#00D4FF] to-[#1B6FD8]">Designed for Wealth.</span>
+              <motion.h1 variants={fadeInUp} className="text-5xl lg:text-7xl font-bold leading-tight tracking-tight mb-6 font-display">
+                {sanityData?.heroTitle || "Haris."}<br/>
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#00D4FF] to-[#1B6FD8]">{sanityData?.heroTitleGradient || "Designed for Wealth."}</span>
               </motion.h1>
               <motion.p variants={fadeInUp} className="text-lg text-muted-foreground max-w-xl mb-10 leading-relaxed">
                 Institutional grade trading algorithms built for serious traders. 8 years of live market experience distilled into proprietary TradingView tools plus complete masterclass.

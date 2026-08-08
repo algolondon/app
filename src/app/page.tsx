@@ -6,6 +6,8 @@ export const revalidate = 60
 export default async function Page() {
   const query = `
     *[_type == "homePage"][0] {
+      heroTitle,
+      heroTitleGradient,
       tagline,
       rulesImage { asset->{url} },
       yearsTrading,
