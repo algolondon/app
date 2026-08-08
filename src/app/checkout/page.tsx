@@ -9,11 +9,7 @@ import Link from 'next/link';
 import { PayPalScriptProvider, PayPalButtons } from '@paypal/react-paypal-js';
 import { signIn, useSession } from 'next-auth/react';
 
-const paypalPlanIds = {
-  "1": "P-5EX01767RJ348304XNJ3LHYA", 
-  "2": "P-2TU154698S017735HNJ3LJQA",
-  "3": "P-1RM14190S6572145FNJ3LKIY"
-};
+// Plan IDs are fetched dynamically from /api/paypal-config based on live/sandbox mode
 
 const tierDetails = {
   "1": {
@@ -56,7 +52,29 @@ function CheckoutContent() {
   const tier = searchParams.get('tier') || "1";
   
   const selectedTier = tierDetails[tier as keyof typeof tierDetails] || tierDetails["1"];
-  const planId = paypalPlanIds[tier as keyof typeof paypalPlanIds] || paypalPlanIds["1"];
+
+  const [paypalConfig, setPaypalConfig] = useState<{
+    mode: string;
+    clientId: string;
+    planIds: Record<string, string>;
+  } | null>(null);
+
+  useEffect(() => {
+    fetch('/api/paypal-config')
+      .then(r => r.json())
+      .then(data => setPaypalConfig(data))
+      .catch(() => setPaypalConfig({
+        mode: 'live',
+        clientId: process.env.NEXT_PUBLIC_PAYPAL_CLIENT_ID || '',
+        planIds: {
+          "1": "P-5EX01767RJ348304XNJ3LHYA",
+          "2": "P-2TU154698S017735HNJ3LJQA",
+          "3": "P-1RM14190S6572145FNJ3LKIY",
+        }
+      }));
+  }, []);
+
+  const planId = paypalConfig?.planIds?.[tier] || '';
   
   useEffect(() => {
     posthog?.capture('checkout_started', { tier, planId });
@@ -317,25 +335,45 @@ function CheckoutContent() {
             ) : (
               <>
                 <h2 className="text-3xl font-display font-bold mb-2">Complete Payment</h2>
-                <p className="text-muted-foreground mb-8">Subscribe securely with PayPal.</p>
+                <div className="flex items-center gap-3 mb-8">
+                  <p className="text-muted-foreground">Subscribe securely with PayPal.</p>
+                  {paypalConfig?.mode === 'sandbox' && (
+                    <span className="text-xs bg-yellow-500/20 text-yellow-400 border border-yellow-500/30 px-2 py-0.5 rounded-full font-medium">
+                      🧪 SANDBOX — Test Mode
+                    </span>
+                  )}
+                </div>
                 <div className="space-y-6">
                   
                   {/* PayPal Container */}
                   <div className="bg-white p-4 rounded-xl">
-                    <PayPalScriptProvider options={{ clientId: process.env.NEXT_PUBLIC_PAYPAL_CLIENT_ID || "test", vault: true }}>
-                      <PayPalButtons 
-                        createSubscription={(data, actions) => {
-                          return actions.subscription.create({
-                            plan_id: planId
-                          });
+                    {!paypalConfig ? (
+                      <div className="flex justify-center py-6">
+                        <div className="w-8 h-8 border-4 border-[#00D4FF] border-t-transparent rounded-full animate-spin"></div>
+                      </div>
+                    ) : (
+                      <PayPalScriptProvider 
+                        key={paypalConfig.clientId}
+                        options={{ 
+                          clientId: paypalConfig.clientId || 'test', 
+                          vault: true,
+                          intent: 'subscription'
                         }}
-                        onApprove={async (data, actions) => {
-                          posthog?.capture('checkout_paypal_success', { planId, subscriptionId: data.subscriptionID });
-                          await handlePayPalSuccess();
-                        }}
-                        style={{ layout: "vertical", shape: "pill", color: "gold", label: "subscribe" }}
-                      />
-                    </PayPalScriptProvider>
+                      >
+                        <PayPalButtons 
+                          createSubscription={(data, actions) => {
+                            return actions.subscription.create({
+                              plan_id: planId
+                            });
+                          }}
+                          onApprove={async (data, actions) => {
+                            posthog?.capture('checkout_paypal_success', { planId, subscriptionId: data.subscriptionID, mode: paypalConfig.mode });
+                            await handlePayPalSuccess();
+                          }}
+                          style={{ layout: "vertical", shape: "pill", color: "gold", label: "subscribe" }}
+                        />
+                      </PayPalScriptProvider>
+                    )}
                   </div>
                 </div>
               </>
