@@ -214,7 +214,7 @@ export default function HomeClient({ sanityData }: { sanityData?: any }) {
                   {/* Rules & Settings Section */}
                   <div className="p-4 sm:p-6 bg-background/80">
                     <div className="space-y-4 mb-6 font-mono text-xs sm:text-sm">
-                      <div className="text-muted-foreground uppercase leading-relaxed">1. MAKE SURE TO CONFIRM 3-5 TIMEFRAME IN AGREEMENT</div>
+                      <div className="text-muted-foreground uppercase leading-relaxed">1. MAKE SURE TO CONFIRM 3-5 TIMEFRAMES ARE IN AGREEMENT</div>
                       <div className="text-muted-foreground uppercase leading-relaxed">2. WAIT FOR A CLEAR BUY OR SELL SIGNAL</div>
                       <div className="text-muted-foreground uppercase leading-relaxed">3. WAIT FOR STRONG BUY OR STRONG SELL FOR ENTRY</div>
                       <div className="text-muted-foreground uppercase leading-relaxed">4. USE THE ZONES FOR STOP LOSS AND PULLBACK ENTRIES</div>
@@ -435,7 +435,7 @@ export default function HomeClient({ sanityData }: { sanityData?: any }) {
                     {/* Rules & Settings Section */}
                     <div className="p-4 sm:p-6 bg-background/80">
                       <div className="space-y-4 mb-6 font-mono text-xs sm:text-sm">
-                        <div className="text-muted-foreground uppercase leading-relaxed">1. MAKE SURE TO CONFIRM 3-5 TIMEFRAME IN AGREEMENT</div>
+                        <div className="text-muted-foreground uppercase leading-relaxed">1. MAKE SURE TO CONFIRM 3-5 TIMEFRAMES ARE IN AGREEMENT</div>
                         <div className="text-muted-foreground uppercase leading-relaxed">2. WAIT FOR A CLEAR BUY OR SELL SIGNAL</div>
                         <div className="text-muted-foreground uppercase leading-relaxed">3. WAIT FOR STRONG BUY OR STRONG SELL FOR ENTRY</div>
                         <div className="text-muted-foreground uppercase leading-relaxed">4. USE THE ZONES FOR STOP LOSS AND PULLBACK ENTRIES</div>
