@@ -1,13 +1,15 @@
 "use client";
 
 import { useState } from "react";
-import { Mail, Send, AlertCircle, Users, Loader2, ShieldAlert, FileText } from "lucide-react";
+import { Mail, Send, AlertCircle, Users, Loader2, ShieldAlert, FileText, Tag, Link2 } from "lucide-react";
 
 export default function BroadcastPage() {
   const [subject, setSubject] = useState("");
   const [content, setContent] = useState("");
   const [targetAudience, setTargetAudience] = useState<"all" | "active" | "abandoned">("all");
   const [selectedTemplate, setSelectedTemplate] = useState<"custom" | "abandoned_cart">("custom");
+  const [couponCode, setCouponCode] = useState("LONDON15");
+  const [buttonUrl, setButtonUrl] = useState("https://16londonalgo.com/#pricing");
   const [isLoading, setIsLoading] = useState(false);
   const [message, setMessage] = useState<{ type: "success" | "error"; text: string } | null>(null);
   
@@ -22,8 +24,10 @@ export default function BroadcastPage() {
     } else if (template === "abandoned_cart") {
       setSubject("Complete your 16London Algo setup (15% Off Code Inside)");
       setTargetAudience("abandoned"); // Auto-select checkout drop-offs
+      setCouponCode("LONDON15");
+      setButtonUrl("https://16londonalgo.com/#pricing");
       setContent(
-        `Hey there,<br/><br/>We noticed you started setting up your 16London Algo account but didn't complete your subscription.<br/><br/>Consistently profitable trading requires the right tools. To help you get started, we've created a special one-time discount code for you:<br/><br/><div style="background-color: #0c203b; border: 1px dashed #00D4FF; padding: 15px; border-radius: 8px; text-align: center; font-size: 20px; font-weight: bold; color: #00D4FF; margin: 20px 0;">LONDON15</div>Use this code at checkout to get 15% off your first month of any plan.<br/><br/><div style="text-align: center; margin: 25px 0;"><a href="https://16londonalgo.com/#pricing" style="background-color: #00D4FF; color: #0A1628; padding: 14px 28px; border-radius: 8px; text-decoration: none; font-weight: bold; display: inline-block;">Complete Your Checkout Now</a></div>If you have any questions, reply directly to this email.<br/><br/>Best regards,<br/>Kazi (Founder, 16London Algo)`
+        `Hey there,\n\nWe noticed you started setting up your 16London Algo account but didn't complete your subscription.\n\nConsistently profitable trading requires the right tools. To help you get started, we've created a special one-time discount code for you.\n\nUse this code at checkout to get 15% off your first month of any plan.\n\nIf you have any questions, reply directly to this email.\n\nBest regards,\nKazi (Founder, 16London Algo)`
       );
     }
   };
@@ -39,10 +43,23 @@ export default function BroadcastPage() {
     setShowConfirmModal(false);
 
     try {
+      const payload: any = { 
+        subject, 
+        content, 
+        isTest, 
+        targetAudience 
+      };
+
+      // Only send coupon variables if abandoned cart template is selected
+      if (selectedTemplate === "abandoned_cart") {
+        payload.couponCode = couponCode;
+        payload.buttonUrl = buttonUrl;
+      }
+
       const res = await fetch("/api/admin/broadcast", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ subject, content, isTest, targetAudience }),
+        body: JSON.stringify(payload),
       });
 
       const data = await res.json();
@@ -135,6 +152,42 @@ export default function BroadcastPage() {
           </div>
         </div>
 
+        {/* Dynamic Fields for Coupon Template */}
+        {selectedTemplate === "abandoned_cart" && (
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 p-4 rounded-xl bg-[#0A1628]/60 border border-[#00D4FF]/10 animate-in fade-in duration-300">
+            <div className="space-y-2">
+              <label htmlFor="coupon-code" className="text-xs font-semibold text-[#00D4FF] flex items-center gap-1.5">
+                <Tag className="w-3.5 h-3.5" />
+                Discount Coupon Code (Matches Stripe Coupon)
+              </label>
+              <input
+                id="coupon-code"
+                type="text"
+                value={couponCode}
+                onChange={(e) => setCouponCode(e.target.value)}
+                placeholder="LONDON15"
+                className="w-full bg-[#0A1628] border border-white/10 rounded-xl px-4 py-2 text-white focus:outline-none focus:border-[#00D4FF]/50 transition-colors text-sm"
+                disabled={isLoading}
+              />
+            </div>
+            <div className="space-y-2">
+              <label htmlFor="checkout-url" className="text-xs font-semibold text-[#00D4FF] flex items-center gap-1.5">
+                <Link2 className="w-3.5 h-3.5" />
+                Checkout Button URL
+              </label>
+              <input
+                id="checkout-url"
+                type="text"
+                value={buttonUrl}
+                onChange={(e) => setButtonUrl(e.target.value)}
+                placeholder="https://16londonalgo.com/#pricing"
+                className="w-full bg-[#0A1628] border border-white/10 rounded-xl px-4 py-2 text-white focus:outline-none focus:border-[#00D4FF]/50 transition-colors text-sm"
+                disabled={isLoading}
+              />
+            </div>
+          </div>
+        )}
+
         <div className="space-y-2">
           <label htmlFor="broadcast-subject" className="text-sm font-medium text-gray-400">Email Subject</label>
           <input
@@ -149,9 +202,9 @@ export default function BroadcastPage() {
         </div>
 
         <div className="space-y-2">
-          <label htmlFor="broadcast-content" className="text-sm font-medium text-gray-400">Message Content (HTML Allowed)</label>
+          <label htmlFor="broadcast-content" className="text-sm font-medium text-gray-400">Message Content</label>
           <div className="text-xs text-gray-500 mb-2">
-            You can write normal text, or use HTML tags like &lt;b&gt;, &lt;br&gt;, and &lt;a href="..."&gt; for advanced formatting.
+            Write your message normally below. {selectedTemplate === "abandoned_cart" ? "The system will automatically wrap this text, add the coupon box, and place a call-to-action button at the bottom." : "HTML tags like <b> or <br/> are allowed for advanced styling."}
           </div>
           <textarea
             id="broadcast-content"
@@ -159,7 +212,7 @@ export default function BroadcastPage() {
             onChange={(e) => setContent(e.target.value)}
             placeholder="Hello,&#10;&#10;We have just released a massive update..."
             rows={12}
-            className="w-full bg-[#0A1628] border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-[#00D4FF]/50 transition-colors font-mono text-sm resize-y"
+            className="w-full bg-[#0A1628] border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-[#00D4FF]/50 transition-colors font-sans text-sm resize-y"
             disabled={isLoading}
           />
         </div>

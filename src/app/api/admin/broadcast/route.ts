@@ -16,10 +16,31 @@ export async function POST(req: Request) {
     }
 
     const body = await req.json();
-    const { subject, content, isTest, targetAudience = "all" } = body;
+    const { subject, content, isTest, targetAudience = "all", couponCode, buttonUrl } = body;
 
     if (!subject || !content) {
       return NextResponse.json({ error: "Subject and content are required" }, { status: 400 });
+    }
+
+    // Convert newlines to HTML br tags if it is plain text (doesn't contain typical HTML structural elements)
+    let formattedContent = content;
+    if (!content.includes("<p>") && !content.includes("<br") && !content.includes("<div")) {
+      formattedContent = content.replace(/\n/g, '<br/>');
+    }
+
+    // If a coupon code is supplied, inject it dynamically along with the checkout button
+    if (couponCode) {
+      formattedContent = `
+        <div>${formattedContent}</div>
+        <div style="background-color: #0c203b; border: 1px dashed #00D4FF; padding: 18px; border-radius: 8px; text-align: center; font-size: 22px; font-weight: bold; color: #00D4FF; margin: 25px 0; font-family: monospace; letter-spacing: 2px; shadow: 0 4px 12px rgba(0,212,255,0.1);">
+          ${couponCode}
+        </div>
+        <div style="text-align: center; margin: 30px 0;">
+          <a href="${buttonUrl || 'https://16londonalgo.com/#pricing'}" style="background-color: #00D4FF; color: #0A1628; padding: 14px 28px; border-radius: 8px; text-decoration: none; font-weight: bold; display: inline-block; font-family: Arial, sans-serif; font-size: 15px;">
+            Complete Your Checkout Now
+          </a>
+        </div>
+      `;
     }
 
     // A nice HTML wrapper for the broadcast email
@@ -29,7 +50,7 @@ export async function POST(req: Request) {
           <h1 style="color: #00D4FF; margin: 0;">16London Algo</h1>
         </div>
         <div style="color: #E2E8F0; font-size: 16px; line-height: 1.6;">
-          ${content}
+          ${formattedContent}
         </div>
         <div style="text-align: center; margin-top: 40px; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.1); font-size: 12px; color: #64748B;">
           <p>You are receiving this email because you are registered at 16London Algo.</p>
