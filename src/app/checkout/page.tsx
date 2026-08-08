@@ -266,12 +266,15 @@ function CheckoutContent() {
                     <input
                       type="text"
                       name="name"
+                      id="checkout-name"
                       value={formData.name}
                       onChange={handleChange}
+                      aria-invalid={!!errors.name}
+                      aria-describedby={errors.name ? "name-error" : undefined}
                       className={`w-full bg-background border ${errors.name ? 'border-red-500' : 'border-foreground/20'} rounded-xl px-4 py-3 text-foreground focus:outline-none focus:border-[#00D4FF] focus:ring-1 focus:ring-[#00D4FF] transition-all`}
                       placeholder="John Doe"
                     />
-                    {errors.name && <p className="text-red-400 text-xs mt-1">{errors.name}</p>}
+                    {errors.name && <p id="name-error" className="text-red-400 text-sm mt-1" role="alert">{errors.name}</p>}
                   </div>
 
                   <div>
@@ -279,12 +282,15 @@ function CheckoutContent() {
                     <input
                       type="email"
                       name="email"
+                      id="checkout-email"
                       value={formData.email}
                       onChange={handleChange}
+                      aria-invalid={!!errors.email}
+                      aria-describedby={errors.email ? "email-error" : undefined}
                       className={`w-full bg-background border ${errors.email ? 'border-red-500' : 'border-foreground/20'} rounded-xl px-4 py-3 text-foreground focus:outline-none focus:border-[#00D4FF] focus:ring-1 focus:ring-[#00D4FF] transition-all`}
                       placeholder="john@example.com"
                     />
-                    {errors.email && <p className="text-red-400 text-xs mt-1">{errors.email}</p>}
+                    {errors.email && <p id="email-error" className="text-red-400 text-sm mt-1" role="alert">{errors.email}</p>}
                   </div>
 
                   <div>
@@ -292,12 +298,15 @@ function CheckoutContent() {
                     <input
                       type="password"
                       name="password"
+                      id="checkout-password"
                       value={formData.password}
                       onChange={handleChange}
+                      aria-invalid={!!errors.password}
+                      aria-describedby={errors.password ? "password-error" : undefined}
                       className={`w-full bg-background border ${errors.password ? 'border-red-500' : 'border-foreground/20'} rounded-xl px-4 py-3 text-foreground focus:outline-none focus:border-[#00D4FF] focus:ring-1 focus:ring-[#00D4FF] transition-all`}
                       placeholder="Min 8 characters"
                     />
-                    {errors.password && <p className="text-red-400 text-xs mt-1">{errors.password}</p>}
+                    {errors.password && <p id="password-error" className="text-red-400 text-sm mt-1" role="alert">{errors.password}</p>}
                   </div>
 
                   <div>
@@ -305,12 +314,15 @@ function CheckoutContent() {
                     <input
                       type="password"
                       name="confirmPassword"
+                      id="checkout-confirm-password"
                       value={formData.confirmPassword}
                       onChange={handleChange}
+                      aria-invalid={!!errors.confirmPassword}
+                      aria-describedby={errors.confirmPassword ? "confirm-password-error" : undefined}
                       className={`w-full bg-background border ${errors.confirmPassword ? 'border-red-500' : 'border-foreground/20'} rounded-xl px-4 py-3 text-foreground focus:outline-none focus:border-[#00D4FF] focus:ring-1 focus:ring-[#00D4FF] transition-all`}
                       placeholder="Must match password"
                     />
-                    {errors.confirmPassword && <p className="text-red-400 text-xs mt-1">{errors.confirmPassword}</p>}
+                    {errors.confirmPassword && <p id="confirm-password-error" className="text-red-400 text-sm mt-1" role="alert">{errors.confirmPassword}</p>}
                   </div>
 
                   <button

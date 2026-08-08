@@ -83,7 +83,7 @@ function LoginContent() {
           
           <div className="space-y-4 rounded-md shadow-sm">
             <div>
-              <label htmlFor="email" className="sr-only">Email address</label>
+              <label htmlFor="email" className="block text-sm font-medium text-foreground/80 mb-2">Email address</label>
               <input
                 id="email"
                 name="email"
@@ -91,13 +91,13 @@ function LoginContent() {
                 autoComplete="email"
                 required
                 className="appearance-none rounded-lg relative block w-full px-4 py-3 border border-foreground/10 bg-background text-foreground placeholder-muted-foreground focus:outline-none focus:ring-2 focus:ring-[#00D4FF] focus:border-transparent sm:text-sm"
-                placeholder="Email address"
+                placeholder="name@example.com"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
               />
             </div>
             <div>
-              <label htmlFor="password" className="sr-only">Password</label>
+              <label htmlFor="password" className="block text-sm font-medium text-foreground/80 mb-2">Password</label>
               <input
                 id="password"
                 name="password"
@@ -105,7 +105,7 @@ function LoginContent() {
                 autoComplete="current-password"
                 required
                 className="appearance-none rounded-lg relative block w-full px-4 py-3 border border-foreground/10 bg-background text-foreground placeholder-muted-foreground focus:outline-none focus:ring-2 focus:ring-[#00D4FF] focus:border-transparent sm:text-sm"
-                placeholder="Password"
+                placeholder="Your password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
               />

@@ -2,11 +2,24 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { Mail } from "lucide-react";
+import { Mail, CheckCircle } from "lucide-react";
 import { usePathname } from "next/navigation";
+import { useState } from "react";
 
 export function Footer() {
   const pathname = usePathname();
+  const [newsletterEmail, setNewsletterEmail] = useState("");
+  const [newsletterStatus, setNewsletterStatus] = useState<"idle" | "loading" | "success">("idle");
+
+  const handleNewsletter = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!newsletterEmail) return;
+    setNewsletterStatus("loading");
+    // In future: POST to /api/newsletter
+    await new Promise(r => setTimeout(r, 600));
+    setNewsletterStatus("success");
+  };
+
   if (pathname?.startsWith("/admin")) return null;
 
   return (
@@ -67,21 +80,36 @@ export function Footer() {
               <p className="text-muted-foreground text-sm mb-4 max-w-sm">
                 Get the latest market insights and algorithm updates straight to your inbox.
               </p>
-              <form className="flex items-center gap-2 max-w-md" onSubmit={(e) => e.preventDefault()}>
-                <div className="relative flex-1">
-                  <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
-                  <input 
-                    type="email" 
-                    name="email"
-                    id="newsletter-email"
-                    placeholder="Enter your email" 
-                    className="w-full bg-foreground/5 border border-foreground/10 rounded-lg py-2.5 pl-10 pr-4 text-sm text-foreground focus:outline-none focus:border-[#00D4FF] transition-colors"
-                  />
+              {newsletterStatus === "success" ? (
+                <div className="flex items-center gap-3 bg-green-500/10 border border-green-500/30 text-green-400 px-4 py-3 rounded-xl">
+                  <CheckCircle className="w-5 h-5 shrink-0" aria-hidden="true" />
+                  <p className="text-sm font-medium">You&apos;re subscribed! Check your inbox.</p>
                 </div>
-                <button className="bg-[#00D4FF] hover:bg-[#00B3D6] text-background font-bold py-2.5 px-6 rounded-lg text-sm transition-colors whitespace-nowrap">
-                  Subscribe
-                </button>
-              </form>
+              ) : (
+                <form className="flex items-center gap-2 max-w-md" onSubmit={handleNewsletter}>
+                  <div className="relative flex-1">
+                    <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" aria-hidden="true" />
+                    <label htmlFor="newsletter-email" className="sr-only">Email address</label>
+                    <input
+                      type="email"
+                      name="email"
+                      id="newsletter-email"
+                      value={newsletterEmail}
+                      onChange={(e) => setNewsletterEmail(e.target.value)}
+                      placeholder="Enter your email"
+                      required
+                      className="w-full bg-foreground/5 border border-foreground/10 rounded-lg py-2.5 pl-10 pr-4 text-sm text-foreground focus:outline-none focus:border-[#00D4FF] transition-colors"
+                    />
+                  </div>
+                  <button
+                    type="submit"
+                    disabled={newsletterStatus === "loading"}
+                    className="bg-[#00D4FF] hover:bg-[#00B3D6] text-[#0A1628] font-bold py-2.5 px-6 rounded-lg text-sm transition-colors whitespace-nowrap disabled:opacity-70"
+                  >
+                    {newsletterStatus === "loading" ? "..." : "Subscribe"}
+                  </button>
+                </form>
+              )}
             </div>
           </div>
 
