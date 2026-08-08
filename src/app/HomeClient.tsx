@@ -521,7 +521,7 @@ export default function HomeClient({ sanityData }: { sanityData?: any }) {
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeInUp} className="bg-card border border-[#00D4FF]/50 rounded-[3rem] p-12 lg:p-20 text-center shadow-[0_0_50px_rgba(0,212,255,0.1)] relative overflow-hidden">
             <div className="absolute inset-0 bg-gradient-to-r from-transparent via-[#00D4FF]/10 to-transparent"></div>
-            <h2 className="text-4xl lg:text-6xl font-display font-bold mb-6 relative z-10">Join 16London &amp; Co Today.</h2>
+            <h2 className="text-4xl lg:text-6xl font-display font-bold mb-6 relative z-10">Join 16London X Brands LLC Today.</h2>
             <p className="text-xl lg:text-2xl text-muted-foreground mb-10 max-w-2xl mx-auto relative z-10">Stop guessing. Start trading with an institutional edge.</p>
             <Link href="#pricing" className="inline-block bg-[#00D4FF] hover:bg-[#00B3D6] text-background px-10 py-5 rounded-full font-bold text-lg transition-transform hover:scale-105 shadow-[0_0_30px_rgba(0,212,255,0.5)] relative z-10">
               Choose Your Plan
