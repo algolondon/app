@@ -110,11 +110,13 @@ export default function AdminUsers() {
                     </td>
                     <td className="px-6 py-4">
                       <span className={`px-3 py-1 rounded-full text-xs font-medium border ${
-                        user.tier === 'tier2' 
+                        user.tier === 'tier3' 
+                          ? 'bg-yellow-500/10 text-yellow-400 border-yellow-500/20'
+                          : user.tier === 'tier2' 
                           ? 'bg-purple-500/10 text-purple-400 border-purple-500/20' 
                           : 'bg-blue-500/10 text-blue-400 border-blue-500/20'
                       }`}>
-                        {user.tier === 'tier2' ? 'London X' : 'Trend Algo'}
+                        {user.tier === 'tier3' ? 'Complete' : user.tier === 'tier2' ? 'London X' : 'Trend Algo'}
                       </span>
                     </td>
                     <td className="px-6 py-4">

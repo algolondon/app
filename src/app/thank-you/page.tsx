@@ -75,7 +75,7 @@ export default function ThankYouPage() {
             </div>
 
             <div className="flex justify-center">
-              <a href="#" className="bg-[#12223A] hover:bg-[#1A2D4C] border border-white/10 text-white font-bold px-8 py-4 rounded-xl flex items-center justify-center gap-2 transition-colors">
+              <a href="https://t.me/16londonalgo" target="_blank" rel="noopener noreferrer" className="bg-[#12223A] hover:bg-[#1A2D4C] border border-white/10 text-white font-bold px-8 py-4 rounded-xl flex items-center justify-center gap-2 transition-colors">
                 <Send className="w-5 h-5" /> Join our Telegram
               </a>
             </div>
