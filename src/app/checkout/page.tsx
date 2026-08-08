@@ -160,15 +160,17 @@ function CheckoutContent() {
       await fetch('/api/checkout/success', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email: registeredEmail })
+        body: JSON.stringify({ email: registeredEmail || formData.email })
       });
       
-      // Auto login user
-      await signIn('credentials', {
-        redirect: false,
-        email: formData.email,
-        password: formData.password
-      });
+      // Only attempt sign in for newly registered users (not existing logged-in users)
+      if (formData.email && formData.password) {
+        await signIn('credentials', {
+          redirect: false,
+          email: formData.email,
+          password: formData.password
+        });
+      }
 
       router.push('/thank-you');
     } catch (e) {
@@ -328,7 +330,7 @@ function CheckoutContent() {
                           const res = await fetch("/api/stripe/create-checkout-session", {
                             method: "POST",
                             headers: { "Content-Type": "application/json" },
-                            body: JSON.stringify({ email: formData.email, tier })
+                            body: JSON.stringify({ email: registeredEmail || formData.email, tier })
                           });
                           const data = await res.json();
                           if (data.url) {
