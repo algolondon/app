@@ -78,25 +78,29 @@ export default function HomeClient({ sanityData }: { sanityData?: any }) {
       <div className="fixed inset-0 z-0 opacity-20 pointer-events-none" style={{ backgroundImage: 'radial-gradient(#00D4FF 1px, transparent 1px)', backgroundSize: '40px 40px' }}></div>
 
       {/* MARQUEE TICKER BAR */}
-      <div className="bg-muted text-foreground border-b border-[#00D4FF]/20 text-[12px] uppercase tracking-wider font-semibold relative flex items-center z-50 h-10 overflow-hidden hidden sm:flex">
-        <div className="bg-muted px-4 h-full flex items-center border-r border-[#00D4FF]/20 absolute left-0 z-10 shrink-0 shadow-xl">
-          <span className="bg-red-500 text-white px-2 py-0.5 rounded text-[10px] mr-2">LIVE</span>
-          MANUAL TRADINGVIEW INVITES OPEN (24H ACCESS)
+      <div className="bg-muted text-foreground border-b border-[#00D4FF]/20 text-[11px] sm:text-[12px] uppercase tracking-wider font-semibold relative flex items-center z-50 h-10 overflow-hidden">
+        {/* Left label */}
+        <div className="bg-muted px-3 sm:px-4 h-full flex items-center border-r border-[#00D4FF]/20 shrink-0 z-10 gap-1.5">
+          <span className="bg-red-500 text-white px-1.5 py-0.5 rounded text-[9px] sm:text-[10px] leading-none">LIVE</span>
+          <span className="hidden sm:inline">MANUAL TRADINGVIEW INVITES OPEN (24H ACCESS)</span>
+          <span className="sm:hidden">LIVE SIGNALS</span>
         </div>
-        <div className="flex-1 overflow-hidden ml-[400px] mr-[100px]">
+        {/* Scrolling content */}
+        <div className="flex-1 overflow-hidden min-w-0">
           <div className="whitespace-nowrap inline-flex animate-marquee">
-            <span className="mx-8">🟢 EURUSD: STRONG BUY SIGNAL CONFIRMED</span>
-            <span className="mx-8">🟢 XAUUSD: BUY SIGNAL @ 2420.50 (+240 PIPS)</span>
-            <span className="mx-8">🟢 16LONDON TREND ALGO V1: INTRADAY EMA 87 BULLISH</span>
-            <span className="mx-8">🟢 GBPUSD: LONDON X BREAKOUT CONFIRMED</span>
+            <span className="mx-6 sm:mx-8">🟢 EURUSD: STRONG BUY SIGNAL CONFIRMED</span>
+            <span className="mx-6 sm:mx-8">🟢 XAUUSD: BUY SIGNAL @ 2420.50 (+240 PIPS)</span>
+            <span className="mx-6 sm:mx-8">🟢 16LONDON TREND ALGO V1: INTRADAY EMA 87 BULLISH</span>
+            <span className="mx-6 sm:mx-8">🟢 GBPUSD: LONDON X BREAKOUT CONFIRMED</span>
             {/* Duplicate for infinite loop */}
-            <span className="mx-8">🟢 EURUSD: STRONG BUY SIGNAL CONFIRMED</span>
-            <span className="mx-8">🟢 XAUUSD: BUY SIGNAL @ 2420.50 (+240 PIPS)</span>
-            <span className="mx-8">🟢 16LONDON TREND ALGO V1: INTRADAY EMA 87 BULLISH</span>
-            <span className="mx-8">🟢 GBPUSD: LONDON X BREAKOUT CONFIRMED</span>
+            <span className="mx-6 sm:mx-8">🟢 EURUSD: STRONG BUY SIGNAL CONFIRMED</span>
+            <span className="mx-6 sm:mx-8">🟢 XAUUSD: BUY SIGNAL @ 2420.50 (+240 PIPS)</span>
+            <span className="mx-6 sm:mx-8">🟢 16LONDON TREND ALGO V1: INTRADAY EMA 87 BULLISH</span>
+            <span className="mx-6 sm:mx-8">🟢 GBPUSD: LONDON X BREAKOUT CONFIRMED</span>
           </div>
         </div>
-        <div className="bg-muted px-4 h-full flex items-center absolute right-0 z-10 shrink-0 shadow-xl">
+        {/* Right label */}
+        <div className="bg-muted px-3 sm:px-4 h-full flex items-center border-l border-[#00D4FF]/20 shrink-0 z-10">
           ● MANUAL
         </div>
       </div>
@@ -417,7 +421,7 @@ export default function HomeClient({ sanityData }: { sanityData?: any }) {
                         <div className="w-3 h-3 rounded-full bg-yellow-500"></div>
                         <div className="w-3 h-3 rounded-full bg-green-500"></div>
                       </div>
-                      <div className="text-[#00D4FF] text-[10px] sm:text-xs font-mono tracking-widest uppercase truncate max-w-[200px] sm:max-w-none">16LONDON TREND ALGO V1 · PREVIEW & SETTINGS</div>
+                      <div className="text-[#00D4FF] text-xs font-mono tracking-widest uppercase truncate max-w-[160px] sm:max-w-none">16LONDON TREND ALGO V1 · PREVIEW & SETTINGS</div>
                       <Settings className="w-4 h-4 text-gray-500 shrink-0" />
                     </div>
 
@@ -441,7 +445,7 @@ export default function HomeClient({ sanityData }: { sanityData?: any }) {
                         <div className="text-muted-foreground uppercase leading-relaxed">4. USE THE ZONES FOR STOP LOSS AND PULLBACK ENTRIES</div>
                       </div>
 
-                      <div className="flex justify-between items-center bg-muted/50 p-4 rounded-lg border border-[#00D4FF]/10 text-[10px] sm:text-xs font-mono">
+                      <div className="flex justify-between items-center bg-muted/50 p-4 rounded-lg border border-[#00D4FF]/10 text-xs font-mono">
                         <div className="flex flex-col"><span className="text-gray-500">SWING TRADING</span><span className="text-[#00D4FF]">112</span></div>
                         <div className="flex flex-col"><span className="text-gray-500">INTRA DAY</span><span className="text-[#00D4FF]">87</span></div>
                         <div className="flex flex-col"><span className="text-gray-500">SCALP / INTRADAY</span><span className="text-[#00D4FF]">47</span></div>
@@ -468,7 +472,7 @@ export default function HomeClient({ sanityData }: { sanityData?: any }) {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 items-center">
             
             {/* Tier 1 */}
-            <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeInUp} transition={{ delay: 0.1 }} className="bg-card border border-[#00D4FF]/20 rounded-3xl p-8 hover:border-[#00D4FF]/50 transition-colors flex flex-col h-[600px]">
+            <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeInUp} transition={{ delay: 0.1 }} className="bg-card border border-[#00D4FF]/20 rounded-3xl p-8 hover:border-[#00D4FF]/50 transition-colors flex flex-col min-h-[520px]">
               <h3 className="text-2xl font-display font-bold text-muted-foreground mb-2">16London Trend Algo</h3>
               <div className="mb-8">
                 <span className="text-4xl font-display font-bold text-foreground">$59.99</span>
@@ -490,7 +494,7 @@ export default function HomeClient({ sanityData }: { sanityData?: any }) {
             </motion.div>
 
             {/* Tier 2 */}
-            <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeInUp} transition={{ delay: 0.2 }} className="bg-card border border-[#00D4FF]/20 rounded-3xl p-8 hover:border-[#00D4FF]/50 transition-colors flex flex-col h-[600px]">
+            <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeInUp} transition={{ delay: 0.2 }} className="bg-card border border-[#00D4FF]/20 rounded-3xl p-8 hover:border-[#00D4FF]/50 transition-colors flex flex-col min-h-[520px]">
               <h3 className="text-2xl font-display font-bold text-muted-foreground mb-2">Trend Algo + London X</h3>
               <div className="mb-8">
                 <span className="text-4xl font-display font-bold text-foreground">$89.99</span>
@@ -513,7 +517,7 @@ export default function HomeClient({ sanityData }: { sanityData?: any }) {
             </motion.div>
 
             {/* Tier 3 */}
-            <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeInUp} transition={{ delay: 0.3 }} className="bg-card border-2 border-[#00D4FF] rounded-3xl p-8 shadow-[0_0_30px_rgba(0,212,255,0.2)] transform md:-translate-y-4 flex flex-col h-[640px] relative">
+            <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeInUp} transition={{ delay: 0.3 }} className="bg-card border-2 border-[#00D4FF] rounded-3xl p-8 shadow-[0_0_30px_rgba(0,212,255,0.2)] transform md:-translate-y-4 flex flex-col min-h-[560px] relative">
               <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-[#00D4FF] text-background px-4 py-1 rounded-full text-sm font-bold uppercase tracking-wider whitespace-nowrap">BEST VALUE</div>
               <h3 className="text-2xl font-display font-bold text-[#00D4FF] mb-2">16London Complete System</h3>
               <div className="mb-8">

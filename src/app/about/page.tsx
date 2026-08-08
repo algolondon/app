@@ -23,7 +23,7 @@ const staggerContainer: any = {
 
 export default function AboutPage() {
   return (
-    <main className="flex flex-col min-h-screen selection:bg-primary selection:text-foreground relative bg-background">
+    <main className="flex flex-col min-h-screen selection:bg-primary selection:text-foreground relative bg-background overflow-x-hidden">
       {/* Background Grid Pattern */}
       <div className="fixed inset-0 z-0 opacity-20 pointer-events-none" style={{ backgroundImage: 'radial-gradient(#00D4FF 1px, transparent 1px)', backgroundSize: '40px 40px' }}></div>
       <div className="fixed inset-0 bg-[#00D4FF] blur-3xl opacity-10 rounded-full w-[800px] h-[800px] top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 pointer-events-none transform-gpu"></div>

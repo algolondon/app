@@ -358,10 +358,17 @@ function CheckoutContent() {
                 <div className="space-y-6">
                   
                   {/* PayPal Container */}
-                  <div className="bg-white p-4 rounded-xl">
+                  <div className="bg-white p-4 rounded-xl min-h-[120px]">
                     {!paypalConfig ? (
-                      <div className="flex justify-center py-6">
-                        <div className="w-8 h-8 border-4 border-[#00D4FF] border-t-transparent rounded-full animate-spin"></div>
+                      <div className="space-y-3 animate-pulse py-2">
+                        {/* Skeleton mimics PayPal button shape */}
+                        <div className="w-full h-[45px] bg-[#FFC439]/30 rounded-full" />
+                        <div className="flex items-center gap-2 justify-center py-1">
+                          <div className="h-px flex-1 bg-gray-200" />
+                          <div className="h-3 w-16 bg-gray-200 rounded" />
+                          <div className="h-px flex-1 bg-gray-200" />
+                        </div>
+                        <div className="w-full h-[45px] bg-gray-100 rounded-full" />
                       </div>
                     ) : (
                       <PayPalScriptProvider 

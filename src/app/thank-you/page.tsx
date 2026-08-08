@@ -7,7 +7,7 @@ import { Navbar } from "@/components/navbar";
 
 export default function ThankYouPage() {
   return (
-    <main className="min-h-screen flex flex-col bg-[#0A1628] text-white">
+    <main className="min-h-screen flex flex-col bg-[#0A1628] text-white overflow-x-hidden">
       <Navbar />
 
       <div className="flex-1 relative z-10 pt-32 pb-24 flex items-center justify-center">
@@ -21,7 +21,7 @@ export default function ThankYouPage() {
             transition={{ type: "spring", stiffness: 200, damping: 20 }}
             className="flex justify-center mb-8"
           >
-            <CheckCircle className="w-24 h-24 text-green-500" />
+            <CheckCircle className="w-24 h-24 text-green-500" aria-hidden="true" />
           </motion.div>
 
           <motion.h1 
@@ -45,19 +45,19 @@ export default function ThankYouPage() {
             <div className="bg-[#12223A] border border-white/10 rounded-2xl p-8 mb-8 text-left shadow-[0_0_30px_rgba(0,212,255,0.05)]">
               <div className="space-y-6">
                 <div className="flex items-center gap-4 text-green-400">
-                  <CheckCircle className="w-6 h-6 shrink-0" />
+                  <CheckCircle className="w-6 h-6 shrink-0" aria-hidden="true" />
                   <span className="font-semibold text-lg">Step 1: Account Created</span>
                 </div>
                 <div className="flex items-center gap-4 text-green-400">
-                  <CheckCircle className="w-6 h-6 shrink-0" />
+                  <CheckCircle className="w-6 h-6 shrink-0" aria-hidden="true" />
                   <span className="font-semibold text-lg">Step 2: Payment Verified Automatically</span>
                 </div>
                 <div className="flex items-center gap-4 text-green-400">
-                  <CheckCircle className="w-6 h-6 shrink-0" />
+                  <CheckCircle className="w-6 h-6 shrink-0" aria-hidden="true" />
                   <span className="font-semibold text-lg">Step 3: Account Activated Instantly</span>
                 </div>
                 <div className="flex items-center gap-4 text-gray-400">
-                  <ArrowRight className="w-6 h-6 shrink-0 text-[#00D4FF]" />
+                  <ArrowRight className="w-6 h-6 shrink-0 text-[#00D4FF]" aria-hidden="true" />
                   <span className="font-semibold text-lg text-white">Step 4: Start Trading!</span>
                 </div>
               </div>
@@ -76,7 +76,7 @@ export default function ThankYouPage() {
 
             <div className="flex justify-center">
               <a href="https://t.me/16londonalgo" target="_blank" rel="noopener noreferrer" className="bg-[#12223A] hover:bg-[#1A2D4C] border border-white/10 text-white font-bold px-8 py-4 rounded-xl flex items-center justify-center gap-2 transition-colors">
-                <Send className="w-5 h-5" /> Join our Telegram
+                <Send className="w-5 h-5" aria-hidden="true" /> Join our Telegram
               </a>
             </div>
           </motion.div>
