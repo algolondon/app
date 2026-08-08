@@ -22,14 +22,14 @@ export const metadata: Metadata = {
   title: "16London Algo — Institutional Trading Indicators",
   description: "Institutional grade trading algorithms built for serious traders. 8 years of live market experience distilled into proprietary TradingView tools plus complete masterclass.",
   keywords: ["trading indicators", "tradingview algorithms", "forex trading", "crypto trading", "16london", "trend algo", "london breakout strategy"],
-  authors: [{ name: "Kazi @ 16London & Co" }],
+  authors: [{ name: "Kazi @ 16London X Brands LLC" }],
   openGraph: {
     type: "website",
     locale: "en_US",
     url: "https://16londonalgo.com",
     title: "16London Algo — Institutional Trading Indicators",
     description: "Built for Legacy. Designed for Wealth. Institutional grade trading algorithms.",
-    siteName: "16London & Co",
+    siteName: "16London X Brands LLC",
     images: [
       {
         url: "https://16londonalgo.com/og-image.jpg",
@@ -78,7 +78,7 @@ const jsonLd = {
       "description": "Institutional grade trading indicator for TradingView.",
       "brand": {
         "@type": "Brand",
-        "name": "16London & Co"
+        "name": "16London X Brands LLC"
       },
       "offers": {
         "@type": "AggregateOffer",

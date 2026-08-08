@@ -39,7 +39,7 @@ export default function ThankYouPage() {
             transition={{ delay: 0.3 }}
           >
             <p className="text-xl text-gray-400 mb-12">
-              Thank you for subscribing to 16London & Co
+              Thank you for subscribing to 16London X Brands LLC
             </p>
 
             <div className="bg-[#12223A] border border-white/10 rounded-2xl p-8 mb-8 text-left shadow-[0_0_30px_rgba(0,212,255,0.05)]">

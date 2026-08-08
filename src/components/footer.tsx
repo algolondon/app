@@ -26,7 +26,7 @@ export function Footer() {
               <div className="relative h-[80px] w-auto flex items-center py-2">
                 <Image 
                   src="/images/new_assets/Trasparent Logo.png" 
-                  alt="16London & Co" 
+                  alt="16London X Brands LLC" 
                   width={320} 
                   height={80} 
                   className="h-full w-auto hidden sm:block object-contain" 

@@ -37,11 +37,11 @@ export async function POST(request: Request) {
     await resend.emails.send({
       from: 'support@16londonalgo.com',
       to: [email],
-      subject: "You're in! Welcome to 16London & Co 🎉",
+      subject: "You're in! Welcome to 16London X Brands LLC 🎉",
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; background-color: #0A1628; color: #ffffff; padding: 40px; border-radius: 10px;">
           <div style="text-align: center; margin-bottom: 30px;">
-            <h1 style="color: #00D4FF; margin: 0;">16LONDON & CO</h1>
+            <h1 style="color: #00D4FF; margin: 0;">16London X Brands LLC</h1>
           </div>
           
           <h2 style="font-size: 24px; margin-bottom: 20px;">Welcome to the elite circle, ${member.name}! 🎉</h2>

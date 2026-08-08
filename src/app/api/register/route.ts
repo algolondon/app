@@ -46,7 +46,7 @@ export async function POST(request: Request) {
         html: `
           <div style="font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; max-width: 600px; margin: 0 auto; background-color: #0A1628; color: #ffffff; padding: 40px; border-radius: 12px; border: 1px solid rgba(0, 212, 255, 0.2);">
             <div style="text-align: center; margin-bottom: 30px;">
-              <h1 style="color: #00D4FF; margin: 0; font-size: 28px; letter-spacing: 2px;">16LONDON & CO</h1>
+              <h1 style="color: #00D4FF; margin: 0; font-size: 28px; letter-spacing: 2px;">16London X Brands LLC</h1>
               <p style="color: #64748b; font-size: 14px; margin-top: 8px; text-transform: uppercase; letter-spacing: 1px;">Admin Notification</p>
             </div>
             

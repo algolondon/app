@@ -70,11 +70,11 @@ export async function POST(req: Request) {
             const userEmailRes = await resend.emails.send({
               from: 'support@16londonalgo.com',
               to: [user.email],
-              subject: 'Welcome to 16London & Co! 🎉',
+              subject: 'Welcome to 16London X Brands LLC! 🎉',
               html: `
                 <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; background-color: #0A1628; color: #ffffff; padding: 40px; border-radius: 10px;">
                   <div style="text-align: center; margin-bottom: 30px;">
-                    <h1 style="color: #00D4FF; margin: 0;">16LONDON & CO</h1>
+                    <h1 style="color: #00D4FF; margin: 0;">16London X Brands LLC</h1>
                   </div>
                   <h2 style="font-size: 24px; margin-bottom: 20px;">Welcome to the elite circle, ${user.name}! 🎉</h2>
                   <p style="color: #E2E8F0; font-size: 16px; line-height: 1.5; margin-bottom: 24px;">

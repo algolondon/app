@@ -97,7 +97,7 @@ export default async function MembersPortal() {
                 Welcome back, {user.name?.split(" ")[0] ?? "Member"}
               </h1>
               <p className="text-lg text-muted-foreground max-w-2xl">
-                Manage your 16London & Co subscription, access your proprietary tools, and dive into the course library.
+                Manage your 16London X Brands LLC subscription, access your proprietary tools, and dive into the course library.
               </p>
             </div>
             {/* Abstract shapes in the background of hero */}

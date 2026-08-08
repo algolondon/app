@@ -26,7 +26,7 @@ export async function POST(req: Request) {
     const emailHtml = `
       <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; background-color: #0A1628; color: #ffffff; padding: 40px; border-radius: 10px;">
         <div style="text-align: center; margin-bottom: 30px;">
-          <h1 style="color: #00D4FF; margin: 0;">16LONDON & CO</h1>
+          <h1 style="color: #00D4FF; margin: 0;">16London X Brands LLC</h1>
         </div>
         <div style="color: #E2E8F0; font-size: 16px; line-height: 1.6;">
           ${content.replace(/\n/g, '<br/>')}
