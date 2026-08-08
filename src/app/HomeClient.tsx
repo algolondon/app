@@ -184,34 +184,6 @@ export default function HomeClient({ sanityData }: { sanityData?: any }) {
                     priority
                   />
                 </div>
-                
-                <div className="relative bg-background/50 backdrop-blur-sm border border-[#00D4FF]/40 rounded-2xl shadow-[0_0_30px_rgba(0,212,255,0.1)] overflow-hidden">
-                  {/* Mac-style header */}
-                  <div className="bg-muted/50 px-4 py-3 border-b border-[#00D4FF]/20 flex items-center justify-between">
-                    <div className="flex gap-2">
-                      <div className="w-3 h-3 rounded-full bg-red-500"></div>
-                      <div className="w-3 h-3 rounded-full bg-yellow-500"></div>
-                      <div className="w-3 h-3 rounded-full bg-green-500"></div>
-                    </div>
-                    <div className="text-[#00D4FF] text-xs font-mono tracking-widest uppercase truncate max-w-[200px] sm:max-w-none">16LONDON TREND ALGO V1 · Rules &amp; Settings</div>
-                    <Settings className="w-4 h-4 text-gray-500" />
-                  </div>
-                  
-                  <div className="p-6">
-                    <div className="space-y-3 mb-6 font-mono text-xs sm:text-sm">
-                      <div className="text-muted-foreground">1. MAKE SURE TO CONFIRM 3-5 TIMEFRAME IN AGREEMENT</div>
-                      <div className="text-muted-foreground">2. WAIT FOR A CLEAR BUY OR SELL SIGNAL</div>
-                      <div className="text-muted-foreground">3. WAIT FOR STRONG BUY OR STRONG SELL FOR ENTRY</div>
-                      <div className="text-muted-foreground">4. USE THE ZONES FOR STOP LOSS AND PULLBACK ENTRIES</div>
-                    </div>
-
-                    <div className="flex justify-between items-center bg-muted/50 p-4 rounded-lg border border-[#00D4FF]/10 text-[10px] sm:text-xs font-mono">
-                      <div className="flex flex-col"><span className="text-gray-500">SWING TRADING</span><span className="text-[#00D4FF]">112</span></div>
-                      <div className="flex flex-col"><span className="text-gray-500">INTRA DAY</span><span className="text-[#00D4FF]">87</span></div>
-                      <div className="flex flex-col"><span className="text-gray-500">SCALP</span><span className="text-[#00D4FF]">INTRADAY</span></div>
-                    </div>
-                  </div>
-                </div>
               </div>
             </motion.div>
           </div>
