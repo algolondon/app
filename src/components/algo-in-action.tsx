@@ -166,7 +166,7 @@ export function AlgoInAction() {
               className="relative w-full max-w-5xl h-[85vh]"
               onClick={(e) => e.stopPropagation()}
             >
-              <MockupFrame title="16LONDON ALGO · TESTIMONIAL VIEW" className="w-full h-full">
+              <MockupFrame title="16LONDON ALGO - TESTIMONIAL VIEW" className="w-full h-full">
                 <div className="w-full h-full relative p-4">
                   <Image 
                     src={lightboxImage} 
