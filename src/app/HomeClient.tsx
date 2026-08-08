@@ -172,44 +172,15 @@ export default function HomeClient({ sanityData }: { sanityData?: any }) {
               transition={{ duration: 0.8, ease: "easeOut" as any, delay: 0.4 }}
             >
               <div className="absolute inset-0 bg-[#00D4FF] blur-3xl opacity-20 rounded-full transform-gpu"></div>
-              
-              <div className="relative bg-background border border-[#00D4FF]/40 rounded-2xl shadow-[0_0_50px_rgba(0,212,255,0.15)] overflow-hidden">
-                {/* Mac-style header */}
-                <div className="bg-muted px-4 py-3 border-b border-[#00D4FF]/20 flex items-center justify-between">
-                  <div className="flex gap-2">
-                    <div className="w-3 h-3 rounded-full bg-red-500"></div>
-                    <div className="w-3 h-3 rounded-full bg-yellow-500"></div>
-                    <div className="w-3 h-3 rounded-full bg-green-500"></div>
-                  </div>
-                  <div className="text-[#00D4FF] text-xs font-mono tracking-widest uppercase truncate max-w-[200px] sm:max-w-none">16LONDON TREND ALGO V1 · Rules &amp; Settings</div>
-                  <Settings className="w-4 h-4 text-gray-500" />
-                </div>
-                
-                <div className="p-6">
-                  <div className="space-y-3 mb-6 font-mono text-sm">
-                    <div className="text-muted-foreground">1. MAKE SURE TO CONFIRM 3-5 TIMEFRAME IN AGREEMENT</div>
-                    <div className="text-muted-foreground">2. WAIT FOR A CLEAR BUY OR SELL SIGNAL</div>
-                    <div className="text-muted-foreground">3. WAIT FOR STRONG BUY OR STRONG SELL FOR ENTRY</div>
-                    <div className="text-muted-foreground">4. USE THE ZONES FOR STOP LOSS AND PULLBACK ENTRIES</div>
-                  </div>
-
-                  <div className="flex justify-between items-center bg-muted p-4 rounded-lg border border-[#00D4FF]/10 mb-6 text-xs font-mono">
-                    <div className="flex flex-col"><span className="text-gray-500">SWING TRADING</span><span className="text-[#00D4FF]">112</span></div>
-                    <div className="flex flex-col"><span className="text-gray-500">INTRA DAY</span><span className="text-[#00D4FF]">87</span></div>
-                    <div className="flex flex-col"><span className="text-gray-500">SCALP</span><span className="text-[#00D4FF]">INTRADAY</span></div>
-                  </div>
-
-                  <MockupFrame title="16LONDON TREND ALGO V1 · CHART PREVIEW" className="w-full">
-                    <div className="relative w-full h-full">
-                      <Image src="/images/new_assets/Trend Algo Rules  Image.png" alt="Chart Preview" width={600} height={300} className="w-full opacity-80" />
-                    </div>
-                  </MockupFrame>
-
-                  <div className="text-center font-mono text-[10px] text-muted-foreground uppercase tracking-widest mt-4">
-                    MULTI TIME FRAME COMBINATION <br/>
-                    <span className="text-[#00D4FF]">BULLISH TREND • BEARISH TREND • STRONG BUY/SELL • STRUCTURE LEVELS</span>
-                  </div>
-                </div>
+              <div className="relative rounded-2xl shadow-[0_0_50px_rgba(0,212,255,0.15)] overflow-hidden border border-[#00D4FF]/20 group">
+                <Image 
+                  src="/images/cover.jpg" 
+                  alt="16London Trend Algo" 
+                  width={800} 
+                  height={600} 
+                  className="w-full h-auto object-cover transition-transform duration-700 group-hover:scale-105"
+                  priority
+                />
               </div>
             </motion.div>
           </div>

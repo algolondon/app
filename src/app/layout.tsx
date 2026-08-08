@@ -1,4 +1,4 @@
-﻿import type { Metadata, Viewport } from "next";
+import type { Metadata, Viewport } from "next";
 import { Poppins } from "next/font/google";
 import { Providers } from "@/components/providers";
 import { Footer } from "@/components/footer";
@@ -32,7 +32,7 @@ export const metadata: Metadata = {
     siteName: "16London X Brands LLC",
     images: [
       {
-        url: "https://16londonalgo.com/og-image.jpg",
+        url: "https://16londonalgo.com/images/cover.jpg",
         width: 1200,
         height: 630,
         alt: "16London Algo",
@@ -43,7 +43,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "16London Algo - Institutional Trading Indicators",
     description: "Built for Legacy. Designed for Wealth. Institutional grade trading algorithms.",
-    images: ["https://16londonalgo.com/og-image.jpg"],
+    images: ["https://16londonalgo.com/images/cover.jpg"],
   },
   robots: {
     index: true,

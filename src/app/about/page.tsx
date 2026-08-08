@@ -6,12 +6,12 @@ import { motion } from "framer-motion";
 import { Check, ArrowLeft } from "lucide-react";
 import { Navbar } from "@/components/navbar";
 
-const fadeInUp = {
+const fadeInUp: any = {
   hidden: { opacity: 0, y: 30 },
   visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } }
 };
 
-const staggerContainer = {
+const staggerContainer: any = {
   hidden: { opacity: 0 },
   visible: {
     opacity: 1,
