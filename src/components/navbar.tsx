@@ -137,7 +137,7 @@ export function Navbar() {
                       )}
                       <div className="h-px bg-foreground/10 my-1"></div>
                       <button
-                        onClick={() => { signOut({ callbackUrl: "/" }); setIsProfileMenuOpen(false); }}
+                        onClick={() => { signOut({ redirect: false }).then(() => { window.location.href = "/" }); setIsProfileMenuOpen(false); }}
                         className="block w-full text-left px-4 py-2 text-sm text-red-500 hover:bg-red-500/10 font-bold"
                       >
                         Logout
@@ -209,7 +209,7 @@ export function Navbar() {
                       Admin Panel
                     </Link>
                   )}
-                  <button onClick={() => { signOut({ callbackUrl: "/" }); setIsMobileMenuOpen(false); }} className="text-lg font-bold text-red-500 py-2 text-left">
+                  <button onClick={() => { signOut({ redirect: false }).then(() => { window.location.href = "/" }); setIsMobileMenuOpen(false); }} className="text-lg font-bold text-red-500 py-2 text-left">
                     Logout
                   </button>
                 </>

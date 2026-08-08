@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { LayoutDashboard, Users, Settings, LogOut, ShieldAlert, Video, Mail, Menu, X, ChevronLeft, ChevronRight, Database } from "lucide-react";
+import Image from "next/image";
 import { signOut } from "next-auth/react";
 import { useState } from "react";
 
@@ -25,7 +26,7 @@ export function Sidebar() {
       {/* Mobile Top Bar */}
       <div className="md:hidden fixed top-0 left-0 right-0 h-16 bg-[#0A1628] border-b border-white/5 z-50 flex items-center justify-between px-4">
         <Link href="/" className="flex items-center gap-2">
-          <ShieldAlert className="w-6 h-6 text-[#00D4FF]" />
+          <Image src="/logo.png" alt="16London" width={80} height={24} className="object-contain" />
           <span className="font-display font-bold text-lg text-white">Admin</span>
         </Link>
         <button 
@@ -55,7 +56,7 @@ export function Sidebar() {
         {/* Desktop Header & Toggle */}
         <div className={`p-4 hidden md:flex items-center ${isCollapsed ? 'justify-center flex-col gap-4' : 'justify-between'} border-b border-white/5`}>
           <Link href="/" className="flex items-center gap-2" title="Admin Panel">
-            <ShieldAlert className="w-8 h-8 text-[#00D4FF] shrink-0" />
+            <Image src="/logo.png" alt="16London" width={100} height={30} className="object-contain" />
             {!isCollapsed && <span className="font-display font-bold text-xl text-white whitespace-nowrap">Admin</span>}
           </Link>
           <button 
@@ -93,7 +94,7 @@ export function Sidebar() {
 
         <div className="p-4 border-t border-white/5">
           <button
-            onClick={() => signOut({ callbackUrl: "/" })}
+            onClick={() => signOut({ redirect: false }).then(() => { window.location.href = "/" })}
             title="Sign Out"
             className={`flex items-center gap-3 py-3 text-red-400 hover:bg-red-400/10 rounded-xl transition-colors ${isCollapsed ? 'justify-center w-full' : 'px-4 w-full'}`}
           >
