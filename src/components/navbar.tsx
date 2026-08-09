@@ -72,7 +72,7 @@ export function Navbar() {
             <Link href="/" className="shrink-0 flex items-center">
               <div className="relative h-[60px] sm:h-[80px] w-auto flex items-center py-1">
                 <Image
-                  src="/images/new_assets/Trasparent Logo.png"
+                  src="/images/new_assets/trasparent-logo.png"
                   alt="16London Algo"
                   width={220}
                   height={60}

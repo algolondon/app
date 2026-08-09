@@ -38,7 +38,7 @@ export function Footer() {
             <Link href="/" className="mb-6">
               <div className="relative h-[80px] w-auto flex items-center py-2">
                 <Image 
-                  src="/images/new_assets/Trasparent Logo.png" 
+                  src="/images/new_assets/trasparent-logo.png" 
                   alt="16London X Brands LLC" 
                   width={320} 
                   height={80} 

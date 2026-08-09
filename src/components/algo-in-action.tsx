@@ -15,10 +15,10 @@ const fadeInUp = {
 };
 
 const SLIDES = [
-  { image: "/images/new_assets/Tesitmonial Review 1.png" },
-  { image: "/images/new_assets/Testimonial Review 2.png" },
-  { image: "/images/new_assets/Test review 3.png" },
-  { image: "/images/new_assets/Testimonal 4.png" }
+  { image: "/images/new_assets/tesitmonial-review-1.png" },
+  { image: "/images/new_assets/testimonial-review-2.png" },
+  { image: "/images/new_assets/test-review-3.png" },
+  { image: "/images/new_assets/testimonal-4.png" }
 ];
 
 export function AlgoInAction({ sanityData }: { sanityData?: any }) {

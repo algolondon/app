@@ -8,6 +8,8 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 import { Loader2 } from "lucide-react";
 
+import { Navbar } from "@/components/navbar";
+
 function LoginContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -51,6 +53,8 @@ function LoginContent() {
   };
 
   return (
+    <>
+    <Navbar />
     <div className="min-h-screen flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8 relative bg-background overflow-x-hidden">
       {/* Background elements */}
       <div className="absolute inset-0 z-0 opacity-20 pointer-events-none" style={{ backgroundImage: 'radial-gradient(#00D4FF 1px, transparent 1px)', backgroundSize: '40px 40px' }}></div>
@@ -60,11 +64,11 @@ function LoginContent() {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
-        className="max-w-md w-full space-y-8 bg-card border border-[#00D4FF]/20 p-10 rounded-2xl shadow-[0_0_50px_rgba(0,212,255,0.1)] relative z-10"
+        className="max-w-md w-full space-y-8 bg-card border border-[#00D4FF]/20 p-10 rounded-2xl shadow-[0_0_50px_rgba(0,212,255,0.1)] relative z-10 -mt-16"
       >
         <div className="flex flex-col items-center">
           <Link href="/">
-            <Image src="/images/new_assets/Trasparent Logo.png" alt="16London X Brands LLC" width={280} height={80} className="h-12 w-auto mb-6 object-contain" />
+            <Image src="/images/new_assets/trasparent-logo.png" alt="16London X Brands LLC" width={340} height={100} className="h-20 w-auto mb-6 object-contain" />
           </Link>
           <h2 className="mt-2 text-center text-3xl font-display font-bold text-foreground">
             Member Login
