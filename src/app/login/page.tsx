@@ -138,6 +138,7 @@ function LoginContent() {
         </form>
       </motion.div>
     </div>
+    </>
   );
 }
 
