@@ -3,7 +3,7 @@ import { authOptions } from "@/lib/auth";
 import { redirect } from "next/navigation";
 import { Navbar } from "@/components/navbar";
 import Link from "next/link";
-import { PlaySquare, FileText, Send, ExternalLink, CheckCircle } from "lucide-react";
+import { PlaySquare, FileText, Send, ExternalLink, CheckCircle, BookOpen } from "lucide-react";
 import Image from "next/image";
 import { TVUsernameForm } from "@/components/TVUsernameForm";
 import { MotionDiv, fadeInUp, staggerContainer } from "@/components/motion-wrapper";
@@ -224,6 +224,17 @@ export default async function MembersPortal() {
                     </div>
                     <div className="absolute right-[-20%] bottom-[-20%] w-32 h-32 bg-[#00D4FF]/5 rounded-full blur-2xl group-hover:bg-[#00D4FF]/20 transition-colors"></div>
                   </a>
+                  
+                  <a href="https://t.me/+SG2RBuGDmPI5OTkx" target="_blank" rel="noopener noreferrer" className="group glass-panel rounded-xl p-6 hover:border-[#00D4FF]/50 transition-all duration-300 hover:shadow-lg hover:-translate-y-1 flex flex-col items-start gap-4 relative overflow-hidden sm:col-span-2 md:col-span-1">
+                    <div className="bg-[#00D4FF]/10 p-4 rounded-xl text-[#00D4FF] group-hover:bg-[#00D4FF] group-hover:text-background transition-colors relative z-10">
+                      <BookOpen className="w-7 h-7" />
+                    </div>
+                    <div className="relative z-10">
+                      <h3 className="font-bold text-lg">EBook Beginners Course</h3>
+                      <p className="text-sm text-muted-foreground mt-1">Access the EBook</p>
+                    </div>
+                    <div className="absolute right-[-20%] bottom-[-20%] w-32 h-32 bg-[#00D4FF]/5 rounded-full blur-2xl group-hover:bg-[#00D4FF]/20 transition-colors"></div>
+                  </a>
                 </div>
 
                 <div className="mt-8">
@@ -277,7 +288,7 @@ export default async function MembersPortal() {
                 </div>
 
                 <div className="space-y-3">
-                  <ManageSubscriptionButton stripeCustomerId={user.stripeCustomerId} />
+                  <ManageSubscriptionButton stripeCustomerId={user.stripeCustomerId} paypalSubscriptionId={user.paypalSubscriptionId} />
                 </div>
               </section>
 

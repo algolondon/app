@@ -66,7 +66,7 @@ export function Footer() {
                 </div>
                 <span className="font-medium text-sm">Follow us on TikTok</span>
               </a>
-              <a href="https://tradingview.com" target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 text-muted-foreground hover:text-[#00D4FF] transition-all duration-300">
+              <a href="https://www.tradingview.com/u/SixteenLondon/" target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 text-muted-foreground hover:text-[#00D4FF] transition-all duration-300">
                 <div className="w-10 h-10 rounded-full bg-foreground/5 flex items-center justify-center text-foreground group-hover:bg-[#00D4FF] group-hover:text-background transition-all duration-300">
                   <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 3H3v18h18V3zM3 13.5h7.5V21H3v-7.5zM13.5 13.5H21V21h-7.5v-7.5zM13.5 3H21v7.5h-7.5V3zM3 3h7.5v7.5H3V3z"/></svg>
                 </div>

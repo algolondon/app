@@ -274,7 +274,7 @@ export default function HomeClient({ sanityData }: { sanityData?: any }) {
               </div>
               <div className="w-full lg:w-1/2">
                 <MockupFrame title="LONDON X BREAKOUT">
-                  <ZoomableImage src="/images/new_assets/London X image 1.png" alt="LONDON X BREAKOUT" width={600} height={400} className="w-full" />
+                  <ZoomableImage src="/images/new_assets/london-x-image-1.png" alt="LONDON X BREAKOUT" width={600} height={400} className="w-full" />
                 </MockupFrame>
               </div>
             </motion.div>
@@ -287,7 +287,7 @@ export default function HomeClient({ sanityData }: { sanityData?: any }) {
               </div>
               <div className="w-full lg:w-1/2">
                 <MockupFrame title="16LONDON ATM SYSTEM">
-                  <ZoomableImage src="/images/new_assets/ATM System Image 1.png" alt="16LONDON ATM SYSTEM" width={600} height={400} className="w-full" />
+                  <ZoomableImage src="/images/new_assets/atm-system-image-1.png" alt="16LONDON ATM SYSTEM" width={600} height={400} className="w-full" />
                 </MockupFrame>
               </div>
             </motion.div>
