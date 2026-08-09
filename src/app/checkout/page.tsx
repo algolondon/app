@@ -197,16 +197,8 @@ function CheckoutContent() {
 
   const handlePayPalSuccess = async (subscriptionId?: string) => {
     try {
-      await fetch('/api/checkout/success', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ 
-          email: registeredEmail || formData.email,
-          subscriptionId
-        })
-      });
-      
-      // Only attempt sign in for newly registered users (not existing logged-in users)
+      // Activation is handled automatically by the PayPal webhook server-side.
+      // We just sign the user in and redirect to thank-you page.
       if (formData.email && formData.password) {
         await signIn('credentials', {
           redirect: false,
@@ -217,9 +209,11 @@ function CheckoutContent() {
 
       router.push('/thank-you');
     } catch (e) {
-      console.error("Failed to update status after payment", e);
+      console.error("Failed to redirect after payment", e);
+      router.push('/thank-you');
     }
   };
+
 
   return (
     <div className="min-h-screen bg-background text-foreground pt-24 pb-12 flex items-center justify-center">

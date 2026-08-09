@@ -80,10 +80,28 @@ export const authOptions: NextAuthOptions = {
     async session({ session, token }) {
       if (token && session.user) {
         session.user.id = token.id as string;
-        session.user.tier = token.tier as string;
-        session.user.tradingviewUsername = token.tradingviewUsername as string;
-        session.user.active = token.active as boolean;
         (session.user as any).role = token.role as string;
+
+        // Re-fetch fresh data from DB on every session check
+        // This prevents stale JWT from keeping cancelled users active
+        try {
+          await connectToDatabase();
+          const freshUser = await User.findById(token.id).select('active tier tradingviewUsername role').lean();
+          if (freshUser) {
+            session.user.active = freshUser.active;
+            session.user.tier = freshUser.tier;
+            session.user.tradingviewUsername = freshUser.tradingviewUsername || '';
+            (session.user as any).role = freshUser.role || 'user';
+          } else {
+            // User deleted from DB — invalidate session
+            session.user.active = false;
+          }
+        } catch (e) {
+          // If DB fails, fall back to token values
+          session.user.tier = token.tier as string;
+          session.user.tradingviewUsername = token.tradingviewUsername as string;
+          session.user.active = token.active as boolean;
+        }
       }
       return session;
     }

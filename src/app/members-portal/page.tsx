@@ -267,7 +267,7 @@ export default async function MembersPortal() {
                 </div>
 
                 <div className="space-y-3">
-                  <ManageSubscriptionButton stripeCustomerId={user.stripeCustomerId} paypalSubscriptionId={user.paypalSubscriptionId} />
+                  <ManageSubscriptionButton paypalSubscriptionId={user.paypalSubscriptionId} />
                 </div>
               </section>
 

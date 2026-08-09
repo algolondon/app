@@ -42,44 +42,46 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: "Invalid webhook payload structure" }, { status: 400 });
     }
 
-    // Verify Webhook Signature (Security Best Practice)
+    // Verify Webhook Signature — MANDATORY
     const webhookId = process.env.PAYPAL_WEBHOOK_ID;
-    if (webhookId) {
-      const accessToken = await getPayPalAccessToken();
-      if (accessToken) {
-        const baseURL = process.env.NODE_ENV === 'production' 
-          ? "https://api-m.paypal.com" 
-          : "https://api-m.sandbox.paypal.com";
-
-        const verifyResponse = await fetch(`${baseURL}/v1/notifications/verify-webhook-signature`, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            "Authorization": `Bearer ${accessToken}`,
-          },
-          body: JSON.stringify({
-            auth_algo: req.headers.get("paypal-auth-algo"),
-            cert_url: req.headers.get("paypal-cert-url"),
-            transmission_id: req.headers.get("paypal-transmission-id"),
-            transmission_sig: req.headers.get("paypal-transmission-sig"),
-            transmission_time: req.headers.get("paypal-transmission-time"),
-            webhook_id: webhookId,
-            webhook_event: payload,
-          }),
-        });
-
-        const verifyData = await verifyResponse.json();
-        if (verifyData.verification_status !== "SUCCESS") {
-          console.error(`[PayPal Webhook] Signature verification failed!`);
-          return NextResponse.json({ error: "Invalid signature" }, { status: 400 });
-        }
-        console.log(`[PayPal Webhook] Signature verified successfully.`);
-      } else {
-        console.warn(`[PayPal Webhook] Missing PayPal Client Credentials. Skipping signature verification.`);
-      }
-    } else {
-      console.warn(`[PayPal Webhook] PAYPAL_WEBHOOK_ID is not set. Skipping signature verification.`);
+    if (!webhookId) {
+      console.error(`[PayPal Webhook] PAYPAL_WEBHOOK_ID env var is not set. Rejecting request.`);
+      return NextResponse.json({ error: "Webhook verification not configured" }, { status: 500 });
     }
+
+    const accessToken = await getPayPalAccessToken();
+    if (!accessToken) {
+      console.error(`[PayPal Webhook] Could not get PayPal access token. Rejecting request.`);
+      return NextResponse.json({ error: "Webhook verification failed" }, { status: 500 });
+    }
+
+    const baseURL = process.env.NODE_ENV === 'production' 
+      ? "https://api-m.paypal.com" 
+      : "https://api-m.sandbox.paypal.com";
+
+    const verifyResponse = await fetch(`${baseURL}/v1/notifications/verify-webhook-signature`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${accessToken}`,
+      },
+      body: JSON.stringify({
+        auth_algo: req.headers.get("paypal-auth-algo"),
+        cert_url: req.headers.get("paypal-cert-url"),
+        transmission_id: req.headers.get("paypal-transmission-id"),
+        transmission_sig: req.headers.get("paypal-transmission-sig"),
+        transmission_time: req.headers.get("paypal-transmission-time"),
+        webhook_id: webhookId,
+        webhook_event: payload,
+      }),
+    });
+
+    const verifyData = await verifyResponse.json();
+    if (verifyData.verification_status !== "SUCCESS") {
+      console.error(`[PayPal Webhook] Signature verification failed!`, verifyData);
+      return NextResponse.json({ error: "Invalid signature" }, { status: 400 });
+    }
+    console.log(`[PayPal Webhook] Signature verified successfully.`);
 
     const subscriptionId = resource.id; // Starts with I-
     const email = resource.subscriber?.email_address;
@@ -109,7 +111,8 @@ export async function POST(req: Request) {
     ) {
       console.log(`[PayPal Webhook] Deactivating subscription ${subscriptionId} (Event: ${eventType}) for email: ${email}`);
       
-      const query = email ? { $or: [{ paypalSubscriptionId: subscriptionId }, { email }] } : { paypalSubscriptionId: subscriptionId };
+      // Use subscriptionId as primary key to avoid deactivating wrong user
+      const query = { paypalSubscriptionId: subscriptionId };
       const updatedUser = await User.findOneAndUpdate(
         query,
         { active: false, status: eventType.split(".").pop()?.toLowerCase() || "cancelled" },
