@@ -332,7 +332,7 @@ function CheckoutContent() {
                       aria-invalid={!!errors.email}
                       aria-describedby={errors.email ? "email-error" : undefined}
                       className={`w-full bg-background border ${errors.email ? 'border-red-500' : 'border-foreground/20'} rounded-xl px-4 py-3 text-foreground focus:outline-none focus:border-[#00D4FF] focus:ring-1 focus:ring-[#00D4FF] transition-all`}
-                      placeholder="john@example.com"
+                      placeholder="yourname@email.com"
                     />
                     {errors.email && <p id="email-error" className="text-red-400 text-sm mt-1" role="alert">{errors.email}</p>}
                   </div>

@@ -95,7 +95,7 @@ function LoginContent() {
                 autoComplete="email"
                 required
                 className="appearance-none rounded-lg relative block w-full px-4 py-3 border border-foreground/10 bg-background text-foreground placeholder-muted-foreground focus:outline-none focus:ring-2 focus:ring-[#00D4FF] focus:border-transparent sm:text-sm"
-                placeholder="name@example.com"
+                placeholder="yourname@email.com"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
               />

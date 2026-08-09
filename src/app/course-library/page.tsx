@@ -25,7 +25,7 @@ export default async function CourseLibrary() {
     courses = dbCourses.map(c => ({
       _id: c._id.toString(),
       videoTitle: c.title,
-      youtubeUrl: c.url
+      youtubeUrl: c.youtubeUrl || c.url
     }));
   } catch (error) {
     console.error("Failed to fetch courses from DB", error);
