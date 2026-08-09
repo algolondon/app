@@ -1,7 +1,8 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { PlayCircle, CheckCircle, CheckCircle2 } from "lucide-react";
+import { useRouter } from "next/navigation";
 
 interface Course {
   _id: string;
@@ -15,7 +16,56 @@ interface CoursePlayerProps {
 }
 
 export function CoursePlayer({ courses, completedModules }: CoursePlayerProps) {
+  const router = useRouter();
   const [activeCourseIndex, setActiveCourseIndex] = useState(0);
+  const [localCompletedModules, setLocalCompletedModules] = useState<string[]>(completedModules || []);
+
+  useEffect(() => {
+    if (completedModules) {
+      setLocalCompletedModules(completedModules);
+    }
+  }, [completedModules]);
+
+  const toggleModuleComplete = async (moduleId: string) => {
+    if (!moduleId) {
+      console.error("toggleModuleComplete called with empty moduleId");
+      return;
+    }
+    const isCompleted = localCompletedModules.includes(moduleId);
+    const newCompleted = !isCompleted;
+    
+    // Optimistic UI update
+    setLocalCompletedModules(prev => 
+      newCompleted ? [...prev, moduleId] : prev.filter(id => id !== moduleId)
+    );
+
+    try {
+      const res = await fetch('/api/course/progress', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ moduleId, completed: newCompleted })
+      });
+
+      if (!res.ok) {
+        const errData = await res.json().catch(() => ({}));
+        console.error("API error:", res.status, errData);
+        throw new Error(`API request failed: ${res.status}`);
+      }
+
+      const data = await res.json();
+      // Update state directly from server response — most reliable approach
+      if (data.completedModules) {
+        setLocalCompletedModules(data.completedModules.map((id: any) => id.toString()));
+      }
+      router.refresh();
+    } catch (e) {
+      console.error("Failed to update progress:", e);
+      // Revert optimistic update on failure
+      setLocalCompletedModules(prev => 
+        newCompleted ? prev.filter(id => id !== moduleId) : [...prev, moduleId]
+      );
+    }
+  };
 
   const activeCourse = courses[activeCourseIndex];
 
@@ -40,14 +90,14 @@ export function CoursePlayer({ courses, completedModules }: CoursePlayerProps) {
         <div className="p-6 border-b border-[#00D4FF]/10 sticky top-0 bg-[#050B14] z-10">
           <h2 className="text-xl font-bold text-white mb-2">Course Modules</h2>
           <p className="text-sm text-muted-foreground">
-            {completedModules.length} / {courses.length} completed
+            {localCompletedModules.length} / {courses.length} completed
           </p>
           
           {/* Progress Bar */}
           <div className="w-full h-2 bg-white/10 rounded-full mt-4 overflow-hidden">
              <div 
                className="h-full bg-[#00D4FF] rounded-full transition-all duration-500"
-               style={{ width: `${Math.max(5, (completedModules.length / courses.length) * 100)}%` }}
+               style={{ width: `${Math.max(5, (localCompletedModules.length / courses.length) * 100)}%` }}
              />
           </div>
         </div>
@@ -56,7 +106,7 @@ export function CoursePlayer({ courses, completedModules }: CoursePlayerProps) {
         <div className="flex-1 overflow-y-auto">
           {courses.map((course, idx) => {
             const isActive = activeCourseIndex === idx;
-            const isCompleted = completedModules.includes(course._id);
+            const isCompleted = localCompletedModules.includes(course._id);
             
             return (
               <button
@@ -134,9 +184,18 @@ export function CoursePlayer({ courses, completedModules }: CoursePlayerProps) {
           </p>
           
           <div className="mt-8 pt-8 border-t border-white/10 flex items-center gap-4">
-             <button className="flex items-center justify-center gap-2 bg-[#00D4FF] text-[#0A1628] px-6 py-3 rounded-[4px] font-bold hover:brightness-110 transition-colors">
+             <button 
+               type="button"
+               disabled={!activeCourse}
+               onClick={() => activeCourse && toggleModuleComplete(activeCourse._id)}
+               className={`flex items-center justify-center gap-2 px-6 py-3 rounded-[4px] font-bold transition-colors cursor-pointer z-10 relative ${
+                 localCompletedModules.includes(activeCourse?._id) 
+                   ? "bg-green-500/20 text-green-400 border border-green-500/30 hover:bg-green-500/30" 
+                   : "bg-[#00D4FF] text-[#0A1628] hover:brightness-110"
+               }`}
+             >
                <CheckCircle2 className="w-5 h-5" />
-               Mark as Complete
+               {localCompletedModules.includes(activeCourse?._id) ? "Completed" : "Mark as Complete"}
              </button>
              {activeCourseIndex < courses.length - 1 && (
                <button 

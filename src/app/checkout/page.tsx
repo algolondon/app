@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, Suspense, useEffect } from 'react';
-import { usePostHog } from 'posthog-js/react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { motion } from 'framer-motion';
 import { Navbar } from '@/components/navbar';
@@ -47,7 +46,6 @@ const tierDetails = {
 
 function CheckoutContent() {
   const router = useRouter();
-  const posthog = usePostHog();
   const searchParams = useSearchParams();
   const tier = searchParams.get('tier') || "1";
   
@@ -100,8 +98,8 @@ function CheckoutContent() {
   const promo = getPromoDetails();
 
   useEffect(() => {
-    posthog?.capture('checkout_started', { tier, planId, coupon });
-  }, [posthog, tier, planId, coupon]);
+    // Analytics removed
+  }, [tier, planId, coupon]);
 
   const [formData, setFormData] = useState({
     name: '',
@@ -185,7 +183,8 @@ function CheckoutContent() {
 
       setRegisteredEmail(formData.email);
       setIsRegistered(true);
-      posthog?.capture('account_created_before_payment', { email: formData.email, planId });
+      
+
     } catch (error: any) {
       if (error.message.includes("exists")) {
         setServerError("Account exists. Login instead.");
@@ -430,7 +429,7 @@ function CheckoutContent() {
                             });
                           }}
                           onApprove={async (data, actions) => {
-                            posthog?.capture('checkout_paypal_success', { planId, subscriptionId: data.subscriptionID, mode: paypalConfig.mode });
+                            // Analytics removed
                             await handlePayPalSuccess(data.subscriptionID || undefined);
                           }}
                           style={{ layout: "vertical", shape: "pill", color: "gold", label: "subscribe" }}

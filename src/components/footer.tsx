@@ -58,7 +58,7 @@ export function Footer() {
                 <div className="w-10 h-10 rounded-full bg-foreground/5 flex items-center justify-center text-foreground group-hover:bg-[#00D4FF] group-hover:text-background transition-all duration-300">
                   <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
                 </div>
-                <span className="font-medium text-sm">Free Telegram Group</span>
+                <span className="font-medium text-sm">Join Free Trading Community</span>
               </a>
               <a href="https://www.tiktok.com/@16londonalgo" target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 text-muted-foreground hover:text-[#00D4FF] transition-all duration-300">
                 <div className="w-10 h-10 rounded-full bg-foreground/5 flex items-center justify-center text-foreground group-hover:bg-[#00D4FF] group-hover:text-background transition-all duration-300">

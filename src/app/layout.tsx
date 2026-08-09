@@ -3,7 +3,6 @@ import { Poppins } from "next/font/google";
 import { Providers } from "@/components/providers";
 import { Footer } from "@/components/footer";
 import Script from "next/script";
-import { CSPostHogProvider } from "@/providers/PostHogProvider";
 import "./globals.css";
 
 const poppins = Poppins({
@@ -104,14 +103,12 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
-        <CSPostHogProvider>
-          <Providers>
-            <div className="flex-1 flex flex-col">
-              {children}
-            </div>
-            <Footer />
-          </Providers>
-        </CSPostHogProvider>
+        <Providers>
+          <div className="flex-1 flex flex-col">
+            {children}
+          </div>
+          <Footer />
+        </Providers>
       </body>
     </html>
   );

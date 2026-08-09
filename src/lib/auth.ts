@@ -17,7 +17,7 @@ export const authOptions: NextAuthOptions = {
           throw new Error("Missing email or password");
         }
 
-        if (process.env.MOCK_ENV === 'true') {
+        if (process.env.MOCK_ENV === 'true' && process.env.NODE_ENV !== 'production') {
           return {
             id: "mock-123",
             name: "Mock User",
@@ -45,8 +45,7 @@ export const authOptions: NextAuthOptions = {
           throw new Error("Invalid email or password");
         }
 
-        // Auto-assign admin if email matches
-        const userRole = (member.email === "support@16londonalgo.com" || member.role === "admin") ? "admin" : "user";
+        const userRole = member.role || "user";
 
         return {
           id: member._id.toString(),
@@ -89,5 +88,10 @@ export const authOptions: NextAuthOptions = {
       return session;
     }
   },
-  secret: process.env.NEXTAUTH_SECRET || "default_secret_for_development_only",
+  secret: (() => {
+    if (process.env.NODE_ENV === "production" && !process.env.NEXTAUTH_SECRET) {
+      throw new Error("NEXTAUTH_SECRET is not set in production. Security risk!");
+    }
+    return process.env.NEXTAUTH_SECRET || "default_secret_for_development_only";
+  })(),
 };

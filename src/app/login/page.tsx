@@ -68,7 +68,7 @@ function LoginContent() {
       >
         <div className="flex flex-col items-center">
           <Link href="/">
-            <Image src="/images/new_assets/trasparent-logo.png" alt="16London X Brands LLC" width={340} height={100} className="h-20 w-auto mb-6 object-contain" />
+            <Image src="/images/new_assets/trasparent-logo.png" alt="16London X Brands LLC" width={340} height={100} className="h-32 sm:h-40 w-auto mb-6 object-contain" />
           </Link>
           <h2 className="mt-2 text-center text-3xl font-display font-bold text-foreground">
             Member Login

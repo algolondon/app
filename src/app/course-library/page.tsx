@@ -7,8 +7,7 @@ import { User } from "@/models/User";
 import { Course } from "@/models/Course";
 import connectDB from "@/lib/db";
 
-export const revalidate = 60; // revalidate every 60s
-
+export const dynamic = 'force-dynamic';
 export default async function CourseLibrary() {
   const session = await getServerSession(authOptions);
 
@@ -37,7 +36,7 @@ export default async function CourseLibrary() {
     try {
       await connectDB();
       const dbUser = await User.findOne({ email: session.user.email }).lean();
-      completedModules = dbUser?.completedModules || [];
+      completedModules = (dbUser?.completedModules || []).map((id: any) => id.toString());
       if (!dbUser?.active && dbUser?.role !== 'admin') {
         const defaultTier = dbUser?.tier ? dbUser.tier.replace('tier', '') : '1';
         redirect(`/checkout?tier=${defaultTier}`);

@@ -30,17 +30,26 @@ export async function POST(req: Request) {
 
     if (completed) {
       // Add to array if not exists
-      if (!user.completedModules.includes(moduleId)) {
-        user.completedModules.push(moduleId);
-      }
+      await User.findOneAndUpdate(
+        { email: session.user.email },
+        { $addToSet: { completedModules: moduleId } },
+        { new: true }
+      );
     } else {
       // Remove from array
-      user.completedModules = user.completedModules.filter((id: string) => id !== moduleId);
+      await User.findOneAndUpdate(
+        { email: session.user.email },
+        { $pull: { completedModules: moduleId } },
+        { new: true }
+      );
     }
 
-    await user.save();
+    const updatedUser = await User.findOne({ email: session.user.email }).lean();
 
-    return NextResponse.json({ success: true, completedModules: user.completedModules });
+    return NextResponse.json({ 
+      success: true, 
+      completedModules: (updatedUser.completedModules || []).map((id: any) => id.toString())
+    });
   } catch (error: any) {
     console.error("Progress Error:", error);
     return NextResponse.json({ error: "Internal Server Error" }, { status: 500 });
