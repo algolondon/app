@@ -3,9 +3,8 @@ import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/lib/auth";
 import connectToDatabase from "@/lib/db";
 import { User } from "@/models/User";
-import { Resend } from "resend";
+import { sendEmail } from "@/lib/email";
 
-const resend = new Resend(process.env.RESEND_API_KEY || 're_placeholder');
 
 export async function POST(req: Request) {
   try {
@@ -39,8 +38,7 @@ export async function POST(req: Request) {
     // Send instant email notification to admin to alert them of the submission
     const adminEmail = process.env.ADMIN_EMAIL || "support@16londonalgo.com";
     try {
-      await resend.emails.send({
-        from: '16London Algo Alerts <support@16londonalgo.com>',
+      await sendEmail({
         to: adminEmail,
         subject: `[TV ACCESS REQUEST] @${username} submitted by ${updatedUser.name}`,
         html: `

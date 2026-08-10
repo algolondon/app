@@ -1,10 +1,9 @@
 import { NextResponse } from 'next/server';
 import bcrypt from 'bcryptjs';
-import { Resend } from 'resend';
+import { sendEmail } from '@/lib/email';
 import connectToDatabase from '@/lib/db';
 import { User } from '@/models/User';
 
-const resend = new Resend(process.env.RESEND_API_KEY || 're_placeholder_key_for_dev');
 
 export async function POST(request: Request) {
   try {
@@ -39,9 +38,8 @@ export async function POST(request: Request) {
     });
 
     try {
-      await resend.emails.send({
-        from: 'support@16londonalgo.com',
-        to: ['support@16londonalgo.com'],
+      await sendEmail({
+        to: 'support@16londonalgo.com',
         subject: `New Registration: ${name} — ${tierName}`,
         html: `
           <div style="font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; max-width: 600px; margin: 0 auto; background-color: #0A1628; color: #ffffff; padding: 40px; border-radius: 12px; border: 1px solid rgba(0, 212, 255, 0.2);">
@@ -84,7 +82,7 @@ export async function POST(request: Request) {
         `
       });
     } catch (e) {
-      console.error("Resend error:", e);
+      console.error("Email error:", e);
     }
 
     return NextResponse.json({ success: true, userId: newMember._id });

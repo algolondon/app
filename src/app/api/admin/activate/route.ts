@@ -1,9 +1,7 @@
 import { NextResponse } from 'next/server';
-import { Resend } from 'resend';
+import { sendEmail } from '@/lib/email';
 import connectDB from '@/lib/db';
 import { User } from '@/models/User';
-
-const resend = new Resend(process.env.RESEND_API_KEY);
 
 export async function POST(request: Request) {
   try {
@@ -35,9 +33,8 @@ export async function POST(request: Request) {
       'All Indicators + Course';
 
     try {
-      await resend.emails.send({
-        from: 'support@16londonalgo.com',
-        to: [email],
+      await sendEmail({
+        to: email,
         subject: "You're in! Welcome to 16London X Brands LLC 🎉",
         html: `
           <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; background-color: #0A1628; color: #ffffff; padding: 40px; border-radius: 10px;">

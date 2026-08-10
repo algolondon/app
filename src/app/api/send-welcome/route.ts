@@ -1,9 +1,7 @@
 import { NextResponse } from 'next/server';
-import { Resend } from 'resend';
+import { sendEmail } from '@/lib/email';
 import { getServerSession } from 'next-auth/next';
 import { authOptions } from '@/lib/auth';
-
-const resend = new Resend(process.env.RESEND_API_KEY || 're_placeholder_key_for_dev');
 
 export async function POST(request: Request) {
   try {
@@ -22,9 +20,8 @@ export async function POST(request: Request) {
     const tierName = tier === 'tier1' ? 'Trend Algo' : tier === 'tier2' ? 'Trend Algo + London X' : 'All Indicators + Course';
 
     // 1. Send Welcome Email to the User
-    await resend.emails.send({
-      from: 'support@16londonalgo.com',
-      to: [email],
+    await sendEmail({
+      to: email,
       subject: 'Welcome to 16London X Brands LLC! 🎉',
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; background-color: #0A1628; color: #ffffff; padding: 40px; border-radius: 10px;">
@@ -63,9 +60,8 @@ export async function POST(request: Request) {
     });
 
     // 2. Send Notification Email to Admin
-    await resend.emails.send({
-      from: 'support@16londonalgo.com',
-      to: ['support@16londonalgo.com'],
+    await sendEmail({
+      to: 'support@16londonalgo.com',
       subject: `New Member: ${name} subscribed to ${tierName}`,
       html: `
         <div style="font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; max-width: 600px; margin: 0 auto; background-color: #0A1628; color: #ffffff; padding: 40px; border-radius: 12px; border: 1px solid rgba(0, 212, 255, 0.2);">

@@ -1,9 +1,8 @@
 import { NextResponse } from "next/server";
 import { User } from "@/models/User";
 import connectDB from "@/lib/db";
-import { Resend } from "resend";
+import { sendEmail } from "@/lib/email";
 
-const resend = new Resend(process.env.RESEND_API_KEY || "mock_key");
 
 export async function GET(req: Request) {
   // Cron jobs typically use GET
@@ -28,9 +27,8 @@ export async function GET(req: Request) {
     const sentEmails = [];
 
     for (const user of abandonedUsers) {
-      if (process.env.RESEND_API_KEY) {
-        await resend.emails.send({
-          from: 'support@16londonalgo.com', // Replace with verified domain
+      if (process.env.SMTP_USER) {
+        await sendEmail({
           to: user.email,
           subject: "Complete your 16London Algo setup",
           html: `<p>Hi ${user.name},</p><p>We noticed you started setting up your 16London Algo account but didn't complete the payment. The markets are moving, and we'd love to have you on board.</p><p><a href="${process.env.NEXT_PUBLIC_APP_URL}/checkout">Click here to complete your checkout and get instant access.</a></p><p>Best,<br>Kazi</p>`,

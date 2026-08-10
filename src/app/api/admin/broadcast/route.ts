@@ -3,9 +3,8 @@ import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/lib/auth";
 import { User } from "@/models/User";
 import connectDB from "@/lib/db";
-import { Resend } from "resend";
+import { sendEmail } from "@/lib/email";
 
-const resend = new Resend(process.env.RESEND_API_KEY || 're_placeholder');
 
 export async function POST(req: Request) {
   try {
@@ -60,15 +59,14 @@ export async function POST(req: Request) {
 
     if (isTest) {
       const adminEmail = process.env.ADMIN_EMAIL || 'support@16londonalgo.com';
-      const response = await resend.emails.send({
-        from: 'support@16londonalgo.com',
-        to: [adminEmail],
+      const response = await sendEmail({
+        to: adminEmail,
         subject: `[TEST] ${subject}`,
         html: emailHtml,
       });
       
-      if (response.error) {
-         return NextResponse.json({ error: response.error.message }, { status: 400 });
+      if (!response.success) {
+         return NextResponse.json({ error: response.error }, { status: 400 });
       }
 
       return NextResponse.json({ success: true, count: 1 });
@@ -89,22 +87,29 @@ export async function POST(req: Request) {
         return NextResponse.json({ error: `No users found matching target audience: ${targetAudience}` }, { status: 404 });
       }
 
-      // We will send in batches using Resend's batch API to handle limits
-      const BATCH_SIZE = 100;
+      // We will send in batches using Nodemailer loop
+      const BATCH_SIZE = 50; // Use a slightly smaller batch size for SMTP
+      let sentCount = 0;
+      
       for (let i = 0; i < users.length; i += BATCH_SIZE) {
         const batch = users.slice(i, i + BATCH_SIZE);
         
-        const emailsPayload = batch.map(user => ({
-          from: 'support@16londonalgo.com',
-          to: [user.email],
-          subject: subject,
-          html: emailHtml
+        await Promise.all(batch.map(async (user) => {
+          try {
+            await sendEmail({
+              to: user.email,
+              subject: subject,
+              html: emailHtml
+            });
+            sentCount++;
+          } catch (err) {
+            console.error("Failed to send broadcast to", user.email, err);
+          }
         }));
-
-        const response = await resend.batch.send(emailsPayload);
         
-        if (response.error) {
-           return NextResponse.json({ error: `Resend API Error: ${response.error.message}` }, { status: 400 });
+        // Small delay between batches to avoid rate limits
+        if (i + BATCH_SIZE < users.length) {
+          await new Promise(resolve => setTimeout(resolve, 2000));
         }
       }
 
