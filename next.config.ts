@@ -9,7 +9,12 @@ const withPWA = withPWAInit({
 const nextConfig: NextConfig = {
   turbopack: {},
   images: {
-    unoptimized: true,
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'cdn.sanity.io',
+      },
+    ],
   },
 };
 
