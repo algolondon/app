@@ -158,7 +158,7 @@ export default function BroadcastPage() {
             <div className="space-y-2">
               <label htmlFor="coupon-code" className="text-xs font-semibold text-[#00D4FF] flex items-center gap-1.5">
                 <Tag className="w-3.5 h-3.5" />
-                Discount Coupon Code (Matches Stripe Coupon)
+                Discount Coupon Code
               </label>
               <input
                 id="coupon-code"

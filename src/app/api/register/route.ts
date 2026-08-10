@@ -71,14 +71,14 @@ export async function POST(request: Request) {
                 <tr>
                   <td style="padding: 15px 0 5px 0; color: #8ba1b8; width: 30%;">Status</td>
                   <td style="padding: 15px 0 5px 0; color: #F59E0B; font-weight: bold; display: flex; align-items: center; gap: 8px;">
-                    âŒ› Awaiting Payment Confirmation
+                    ⌛ Awaiting Payment Confirmation
                   </td>
                 </tr>
               </table>
             </div>
             
             <p style="color: #8ba1b8; font-size: 14px; text-align: center; margin-top: 30px;">
-              This user has registered but has not completed Stripe checkout yet. If they pay via PayPal/Crypto, you may need to activate them manually.
+              This user has registered but has not completed PayPal checkout yet. If they pay via Crypto, you may need to activate them manually.
             </p>
           </div>
         `

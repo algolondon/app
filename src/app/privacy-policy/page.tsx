@@ -27,7 +27,7 @@ export default async function PrivacyPolicy() {
   const fallbackSections = [
     {
       heading: "1. Information We Collect",
-      body: "<strong>16London X Brands LLC</strong> (\"we\", \"us\", or \"our\") respects your privacy and is committed to protecting it through our compliance with this policy. We collect information you provide directly to us when you register for an account, subscribe to our services, or communicate with us.<br/><br/>The types of information we may collect include your name, email address, password, payment information (processed securely via Stripe/PayPal), and any other information you choose to provide."
+      body: "<strong>16London X Brands LLC</strong> (\"we\", \"us\", or \"our\") respects your privacy and is committed to protecting it through our compliance with this policy. We collect information you provide directly to us when you register for an account, subscribe to our services, or communicate with us.<br/><br/>The types of information we may collect include your name, email address, password, payment information (processed securely via PayPal), and any other information you choose to provide."
     },
     {
       heading: "2. How We Use Your Information",
@@ -39,7 +39,7 @@ export default async function PrivacyPolicy() {
     },
     {
       heading: "4. Third-Party Services",
-      body: "We may employ third-party companies and individuals to facilitate our Service (e.g., PayPal/Stripe for payment processing). These third parties have access to your Personal Data only to perform these tasks on our behalf and are obligated not to disclose or use it for any other purpose."
+      body: "We may employ third-party companies and individuals to facilitate our Service (e.g., PayPal for payment processing). These third parties have access to your Personal Data only to perform these tasks on our behalf and are obligated not to disclose or use it for any other purpose."
     },
     {
       heading: "5. Contact Us",
