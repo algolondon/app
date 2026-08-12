@@ -6,7 +6,8 @@ import { Plus, Edit2, Trash2, Video, Check, X } from "lucide-react";
 interface Course {
   _id: string;
   title: string;
-  url: string;
+  url?: string;
+  youtubeUrl?: string;
   order: number;
   isActive: boolean;
 }
@@ -89,7 +90,7 @@ export default function AdminCourses() {
     setIsAdding(false);
     setEditingId(course._id);
     setTitle(course.title);
-    setUrl(course.url);
+    setUrl(course.url || course.youtubeUrl || "");
     setOrder(course.order.toString());
   };
 
@@ -203,8 +204,8 @@ export default function AdminCourses() {
                       <div className="font-medium text-white">{course.title}</div>
                     </td>
                     <td className="p-4">
-                      <a href={course.url} target="_blank" rel="noopener noreferrer" className="text-[#00D4FF] hover:underline text-sm truncate max-w-[200px] block">
-                        {course.url}
+                      <a href={course.url || course.youtubeUrl} target="_blank" rel="noopener noreferrer" className="text-[#00D4FF] hover:underline text-sm truncate max-w-[200px] block">
+                        {course.url || course.youtubeUrl}
                       </a>
                     </td>
                     <td className="p-4">

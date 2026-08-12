@@ -30,7 +30,7 @@ export default async function CourseLibrary() {
     courses = (dbCourses || []).map((c: any) => ({
       _id: c._id.toString(),
       videoTitle: c.title,
-      youtubeUrl: c.youtubeUrl || c.url
+      youtubeUrl: c.url || c.youtubeUrl
     }));
 
     if (process.env.MOCK_ENV !== 'true' && dbUser) {

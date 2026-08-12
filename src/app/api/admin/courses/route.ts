@@ -7,7 +7,7 @@ import { Course } from '@/models/Course';
 export async function GET() {
   try {
     await connectToDatabase();
-    const courses = await Course.find().sort({ order: 1, createdAt: 1 });
+    const courses = await Course.find().sort({ order: 1, createdAt: 1 }).lean();
     return NextResponse.json(courses);
   } catch (error) {
     return NextResponse.json({ error: 'Failed to fetch courses' }, { status: 500 });
