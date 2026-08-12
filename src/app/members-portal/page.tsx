@@ -22,6 +22,11 @@ export default async function MembersPortal() {
   const { user: sessionUser } = session;
 
   let user: any = null;
+  let totalCourses = 0;
+  let settingsObj: Record<string, string> = {};
+  let shouldRedirect = false;
+  let redirectUrl = "";
+
   if (process.env.MOCK_ENV === 'true') {
     user = {
       _id: "mock-123",
@@ -33,42 +38,59 @@ export default async function MembersPortal() {
       active: true,
       role: (sessionUser as any).role || "user"
     };
+    try {
+      const Course = (await import("@/models/Course")).Course;
+      const Setting = (await import("@/models/Setting")).Setting;
+      const [coursesCount, settings] = await Promise.all([
+        Course.countDocuments({ isActive: true }),
+        Setting.find().lean() as Promise<any[]>
+      ]);
+      totalCourses = coursesCount;
+      settingsObj = settings.reduce((acc, curr) => {
+        acc[curr.key] = curr.value;
+        return acc;
+      }, {} as Record<string, string>);
+    } catch (e) {
+      console.error(e);
+    }
   } else {
     try {
       await connectDB();
-      user = await User.findOne({ email: sessionUser.email }).lean();
+      const Course = (await import("@/models/Course")).Course;
+      const Setting = (await import("@/models/Setting")).Setting;
+      
+      const [fetchedUser, coursesCount, settings] = await Promise.all([
+        User.findOne({ email: sessionUser.email }).lean(),
+        Course.countDocuments({ isActive: true }),
+        Setting.find().lean() as Promise<any[]>
+      ]);
+      
+      user = fetchedUser;
+      totalCourses = coursesCount;
+      settingsObj = settings.reduce((acc, curr) => {
+        acc[curr.key] = curr.value;
+        return acc;
+      }, {} as Record<string, string>);
     } catch (e) {
       console.error(e);
     }
   }
 
   if (!user && process.env.MOCK_ENV !== 'true') {
-    redirect("/login");
+    shouldRedirect = true;
+    redirectUrl = "/login";
   } else if (!user) {
     user = { _id: "mock-fallback", completedModules: [], tier: "tier1", active: true };
   }
 
-  if (!user.active && user.role !== 'admin') {
+  if (user && !user.active && user.role !== 'admin') {
     const defaultTier = user.tier ? user.tier.replace('tier', '') : '1';
-    redirect(`/checkout?tier=${defaultTier}`);
+    shouldRedirect = true;
+    redirectUrl = `/checkout?tier=${defaultTier}`;
   }
 
-  let totalCourses = 0;
-  let settingsObj: Record<string, string> = {};
-  
-  try {
-    await connectDB();
-    const Course = (await import("@/models/Course")).Course;
-    totalCourses = await Course.countDocuments({ isActive: true });
-    
-    const Setting = (await import("@/models/Setting")).Setting;
-    const settings = await Setting.find().lean() as any[];
-    settingsObj = settings.reduce((acc, curr) => {
-      acc[curr.key] = curr.value;
-      return acc;
-    }, {} as Record<string, string>);
-  } catch (error) {
-    console.error("Failed to fetch data", error);
+  if (shouldRedirect) {
+    redirect(redirectUrl);
   }
 
   // Fallback if no courses

@@ -16,41 +16,46 @@ export default async function CourseLibrary() {
   }
 
   let courses: { _id: string, videoTitle: string, youtubeUrl: string }[] = [];
+  let completedModules: string[] = [];
+  let shouldRedirect = false;
+  let redirectUrl = "";
 
   try {
     await connectDB();
-    const dbCourses = await Course.find({ isActive: true }).sort({ order: 1, createdAt: 1 }).lean();
+    const [dbCourses, dbUser] = await Promise.all([
+      Course.find({ isActive: true }).sort({ order: 1, createdAt: 1 }).lean(),
+      process.env.MOCK_ENV !== 'true' ? User.findOne({ email: session.user.email }).lean() : Promise.resolve(null)
+    ]);
     
-    courses = dbCourses.map(c => ({
+    courses = (dbCourses || []).map((c: any) => ({
       _id: c._id.toString(),
       videoTitle: c.title,
       youtubeUrl: c.youtubeUrl || c.url
     }));
+
+    if (process.env.MOCK_ENV !== 'true' && dbUser) {
+      completedModules = (dbUser.completedModules || []).map((id: any) => id.toString());
+      if (!dbUser.active && dbUser.role !== 'admin') {
+        const defaultTier = dbUser.tier ? dbUser.tier.replace('tier', '') : '1';
+        shouldRedirect = true;
+        redirectUrl = `/checkout?tier=${defaultTier}`;
+      }
+    }
   } catch (error) {
-    console.error("Failed to fetch courses from DB", error);
+    console.error("Failed to fetch data from DB", error);
   }
 
-  let completedModules: string[] = [];
-  
-  if (process.env.MOCK_ENV !== 'true') {
-    try {
-      await connectDB();
-      const dbUser = await User.findOne({ email: session.user.email }).lean();
-      completedModules = (dbUser?.completedModules || []).map((id: any) => id.toString());
-      if (!dbUser?.active && dbUser?.role !== 'admin') {
-        const defaultTier = dbUser?.tier ? dbUser.tier.replace('tier', '') : '1';
-        redirect(`/checkout?tier=${defaultTier}`);
-      }
-    } catch (e) {
-      console.error("Failed to fetch user progress:", e);
-    }
-  } else {
-    // In mock env, allow mock user to access
+  if (process.env.MOCK_ENV === 'true') {
     const mockUser = session.user as any;
     if (!mockUser.active && mockUser.role !== 'admin') {
       const defaultTier = mockUser.tier ? mockUser.tier.replace('tier', '') : '1';
-      redirect(`/checkout?tier=${defaultTier}`);
+      shouldRedirect = true;
+      redirectUrl = `/checkout?tier=${defaultTier}`;
     }
+  }
+
+  if (shouldRedirect) {
+    redirect(redirectUrl);
   }
 
   return (
