@@ -9,6 +9,7 @@ const UserSchema = new mongoose.Schema({
   active: { type: Boolean, default: false },
   status: { type: String, default: "pending_payment" },
   paypalSubscriptionId: { type: String, default: null },
+  subscriptionEndDate: { type: Date, default: null },
   completedModules: { type: [String], default: [] },
   abandonedEmailSent: { type: Boolean, default: false },
   role: { type: String, default: "user" },

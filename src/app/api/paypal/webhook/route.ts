@@ -104,25 +104,45 @@ export async function POST(req: Request) {
         console.warn(`[PayPal Webhook] User not found for activation matching ${email} / ${subscriptionId}`);
       }
     } 
+    else if (eventType === "BILLING.SUBSCRIPTION.CANCELLED") {
+      console.log(`[PayPal Webhook] Subscription cancelled ${subscriptionId} for email: ${email}`);
+      
+      const nextBillingTime = resource.billing_info?.next_billing_time;
+      const query = { paypalSubscriptionId: subscriptionId };
+      
+      const updatedUser = await User.findOneAndUpdate(
+        query,
+        { 
+          status: "cancelled",
+          // Do not set active: false here so they can use the remaining time
+          subscriptionEndDate: nextBillingTime ? new Date(nextBillingTime) : null
+        },
+        { new: true }
+      );
+
+      if (updatedUser) {
+        console.log(`[PayPal Webhook] Successfully marked user as cancelled: ${updatedUser.email}`);
+      } else {
+        console.warn(`[PayPal Webhook] User not found for cancellation matching ${subscriptionId}`);
+      }
+    }
     else if (
-      eventType === "BILLING.SUBSCRIPTION.CANCELLED" || 
       eventType === "BILLING.SUBSCRIPTION.EXPIRED" ||
       eventType === "BILLING.SUBSCRIPTION.SUSPENDED"
     ) {
       console.log(`[PayPal Webhook] Deactivating subscription ${subscriptionId} (Event: ${eventType}) for email: ${email}`);
       
-      // Use subscriptionId as primary key to avoid deactivating wrong user
       const query = { paypalSubscriptionId: subscriptionId };
       const updatedUser = await User.findOneAndUpdate(
         query,
-        { active: false, status: eventType.split(".").pop()?.toLowerCase() || "cancelled" },
+        { active: false, status: eventType.split(".").pop()?.toLowerCase() || "expired" },
         { new: true }
       );
 
       if (updatedUser) {
         console.log(`[PayPal Webhook] Successfully deactivated user: ${updatedUser.email}`);
       } else {
-        console.warn(`[PayPal Webhook] User not found for cancellation matching ${email} / ${subscriptionId}`);
+        console.warn(`[PayPal Webhook] User not found for deactivation matching ${subscriptionId}`);
       }
     }
 

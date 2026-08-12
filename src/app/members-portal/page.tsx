@@ -83,6 +83,21 @@ export default async function MembersPortal() {
     user = { _id: "mock-fallback", completedModules: [], tier: "tier1", active: true };
   }
 
+  // Enforce cancellation expiry dynamically
+  if (user && user.status === 'cancelled' && user.subscriptionEndDate) {
+    if (new Date() > new Date(user.subscriptionEndDate)) {
+      user.active = false;
+      user.status = 'expired';
+      if (process.env.MOCK_ENV !== 'true') {
+        try {
+          await connectDB();
+          const User = (await import("@/models/User")).User;
+          await User.updateOne({ _id: user._id }, { active: false, status: 'expired' });
+        } catch(e) { console.error(e); }
+      }
+    }
+  }
+
   if (user && !user.active && user.role !== 'admin') {
     const defaultTier = user.tier ? user.tier.replace('tier', '') : '1';
     shouldRedirect = true;
@@ -146,9 +161,16 @@ export default async function MembersPortal() {
               <div>
                 <p className="text-xs text-muted-foreground uppercase tracking-wider mb-1">Status</p>
                 <div className="flex items-center gap-2">
-                  <div className={`w-2 h-2 rounded-full ${user.active ? 'bg-green-500' : 'bg-red-500'}`}></div>
-                  <p className="text-xl font-bold">{user.active ? 'Active' : 'Inactive'}</p>
+                  <div className={`w-2 h-2 rounded-full ${user.status === 'cancelled' ? 'bg-yellow-500' : user.active ? 'bg-green-500' : 'bg-red-500'}`}></div>
+                  <p className="text-xl font-bold">
+                    {user.status === 'cancelled' ? 'Cancelled' : user.active ? 'Active' : 'Inactive'}
+                  </p>
                 </div>
+                {user.status === 'cancelled' && user.subscriptionEndDate && (
+                  <p className="text-xs text-yellow-500/80 mt-1 font-medium">
+                    Access until {new Date(user.subscriptionEndDate).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' })}
+                  </p>
+                )}
               </div>
             </div>
             <div className="bg-card border border-foreground/10 rounded-xl p-5 flex items-center justify-between">
