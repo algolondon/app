@@ -11,6 +11,7 @@ import { ManageSubscriptionButton } from "@/components/manage-subscription-butto
 import connectDB from "@/lib/db";
 import { User } from "@/models/User";
 import { client } from "@/sanity/client";
+import { SupportEmailButton } from "@/components/support-email-button";
 
 export default async function MembersPortal() {
   const session = await getServerSession(authOptions);
@@ -322,9 +323,7 @@ export default async function MembersPortal() {
                 </div>
                 <h2 className="font-bold mb-2">Need Help?</h2>
                 <p className="text-sm text-muted-foreground mb-6 leading-relaxed">Have an issue with your indicators, billing, or access?</p>
-                <a href="mailto:support@16londonalgo.com" className="inline-block bg-[#00D4FF]/10 text-[#00D4FF] hover:bg-[#00D4FF]/20 px-6 py-2 rounded-full text-sm font-bold transition-colors">
-                  support@16londonalgo.com
-                </a>
+                <SupportEmailButton email="support@16londonalgo.com" />
               </section>
               
             </div>
