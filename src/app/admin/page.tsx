@@ -1,34 +1,41 @@
-"use client";
-
-import { useEffect, useState } from "react";
 import { Users, UserCheck, TrendingUp, DollarSign } from "lucide-react";
+import connectToDatabase from "@/lib/db";
+import { User } from "@/models/User";
 
-export default function AdminDashboard() {
-  const [stats, setStats] = useState({
+export const dynamic = 'force-dynamic';
+
+export default async function AdminDashboard() {
+  let stats = {
     totalUsers: 0,
     activeSubscribers: 0,
     tier1Count: 0,
     tier2Count: 0,
     tier3Count: 0,
-  });
-  const [loading, setLoading] = useState(true);
+  };
 
-  useEffect(() => {
-    async function fetchStats() {
-      try {
-        const res = await fetch("/api/admin/stats");
-        if (res.ok) {
-          const data = await res.json();
-          setStats(data);
-        }
-      } catch (error) {
-        console.error("Failed to fetch stats", error);
-      } finally {
-        setLoading(false);
-      }
+  try {
+    if (process.env.MOCK_ENV === 'true') {
+      stats = { 
+        totalUsers: 145, 
+        activeSubscribers: 120, 
+        tier1Count: 50, 
+        tier2Count: 70,
+        tier3Count: 25
+      };
+    } else {
+      await connectToDatabase();
+      const [totalUsers, activeSubscribers, tier1Count, tier2Count, tier3Count] = await Promise.all([
+        User.countDocuments(),
+        User.countDocuments({ active: true }),
+        User.countDocuments({ active: true, tier: "tier1" }),
+        User.countDocuments({ active: true, tier: "tier2" }),
+        User.countDocuments({ active: true, tier: "tier3" })
+      ]);
+      stats = { totalUsers, activeSubscribers, tier1Count, tier2Count, tier3Count };
     }
-    fetchStats();
-  }, []);
+  } catch (error) {
+    console.error("Failed to fetch admin stats", error);
+  }
 
   const estimatedRevenue = (stats.tier1Count * 59.99) + (stats.tier2Count * 89.99) + (stats.tier3Count * 119.99);
 
@@ -39,44 +46,36 @@ export default function AdminDashboard() {
         <p className="text-gray-400">Welcome back, Admin. Here's what's happening today.</p>
       </div>
 
-      {loading ? (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 animate-pulse">
-          {[1, 2, 3, 4].map((i) => (
-            <div key={i} className="bg-[#12223A] h-32 rounded-2xl border border-white/5"></div>
-          ))}
-        </div>
-      ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          <StatCard 
-            title="Total Users" 
-            value={stats.totalUsers.toString()} 
-            icon={Users} 
-            color="text-blue-400"
-            bg="bg-blue-400/10"
-          />
-          <StatCard 
-            title="Active Subscribers" 
-            value={stats.activeSubscribers.toString()} 
-            icon={UserCheck} 
-            color="text-green-400"
-            bg="bg-green-400/10"
-          />
-          <StatCard 
-            title="Tier 2 (London X)" 
-            value={stats.tier2Count.toString()} 
-            icon={TrendingUp} 
-            color="text-purple-400"
-            bg="bg-purple-400/10"
-          />
-          <StatCard 
-            title="Est. Monthly Revenue" 
-            value={`$${estimatedRevenue.toLocaleString('en-US', { minimumFractionDigits: 0, maximumFractionDigits: 0 })}`} 
-            icon={DollarSign} 
-            color="text-yellow-400"
-            bg="bg-yellow-400/10"
-          />
-        </div>
-      )}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <StatCard 
+          title="Total Users" 
+          value={stats.totalUsers.toString()} 
+          icon={Users} 
+          color="text-blue-400"
+          bg="bg-blue-400/10"
+        />
+        <StatCard 
+          title="Active Subscribers" 
+          value={stats.activeSubscribers.toString()} 
+          icon={UserCheck} 
+          color="text-green-400"
+          bg="bg-green-400/10"
+        />
+        <StatCard 
+          title="Tier 2 (London X)" 
+          value={stats.tier2Count.toString()} 
+          icon={TrendingUp} 
+          color="text-purple-400"
+          bg="bg-purple-400/10"
+        />
+        <StatCard 
+          title="Est. Monthly Revenue" 
+          value={`$${estimatedRevenue.toLocaleString('en-US', { minimumFractionDigits: 0, maximumFractionDigits: 0 })}`} 
+          icon={DollarSign} 
+          color="text-yellow-400"
+          bg="bg-yellow-400/10"
+        />
+      </div>
 
       {/* PostHog External Link */}
       <div className="bg-[#12223A] border border-white/5 rounded-2xl p-6 flex flex-col items-center justify-center min-h-[300px]">

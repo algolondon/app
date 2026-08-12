@@ -14,4 +14,7 @@ const UserSchema = new mongoose.Schema({
   role: { type: String, default: "user" },
 }, { timestamps: true });
 
+UserSchema.index({ active: 1, tier: 1 });
+UserSchema.index({ role: 1 });
+
 export const User = mongoose.models.User || mongoose.model("User", UserSchema);
