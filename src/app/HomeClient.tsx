@@ -18,7 +18,7 @@ import {
   Menu,
   Settings
 } from "lucide-react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useSession } from "next-auth/react";
 import { SocialProof } from "@/components/social-proof";
 import { AlgoInAction } from "@/components/algo-in-action";
@@ -45,6 +45,52 @@ const staggerContainer = {
 export default function HomeClient({ sanityData }: { sanityData?: any }) {
   const { data: session } = useSession();
   const [openFaq, setOpenFaq] = useState<number | null>(null);
+  const [data, setData] = useState(sanityData || {});
+
+  useEffect(() => {
+    if (sanityData) {
+      setData(sanityData);
+    }
+  }, [sanityData]);
+
+  useEffect(() => {
+    const handleMessage = (e: MessageEvent) => {
+      if (e.data?.type === "UPDATE_CONTENT" && e.data?.content) {
+        const c = e.data.content;
+        setData((prev: any) => ({
+          ...prev,
+          tagline: c.tagline,
+          marqueeText: c.marqueeText,
+          heroTitle: c.heroTitle,
+          heroTitleGradient: c.heroTitleGradient,
+          heroSubtitle: c.heroSubtitle,
+          yearsTrading: c.heroYearsTrading,
+          revenue: c.heroRevenue,
+          numberOfAlgos: c.heroNumberOfAlgos,
+          trendAlgoTitle: c.trendAlgoTitle,
+          trendAlgoDesc: c.trendAlgoDesc,
+          trendAlgoBadge: c.trendAlgoBadge,
+          londonXTitle: c.londonXTitle,
+          londonXDesc: c.londonXDesc,
+          atmSystemTitle: c.atmSystemTitle,
+          atmSystemDesc: c.atmSystemDesc,
+          rules: c.rules,
+          founderName: c.founderName,
+          founderTitle: c.founderTitle,
+          founderBio: c.founderBio,
+          tier1Price: c.tier1Price,
+          tier2Price: c.tier2Price,
+          tier3Price: c.tier3Price,
+          faqs: c.faqs ? c.faqs.map((f: any) => ({ question: f.q, answer: f.a })) : prev?.faqs,
+          ctaTitle: c.ctaTitle,
+          ctaSubtitle: c.ctaSubtitle,
+        }));
+      }
+    };
+
+    window.addEventListener("message", handleMessage);
+    return () => window.removeEventListener("message", handleMessage);
+  }, []);
 
   const defaultFaqs = [
     {
@@ -69,8 +115,8 @@ export default function HomeClient({ sanityData }: { sanityData?: any }) {
     }
   ];
 
-  const faqs = sanityData?.faqs?.length 
-    ? sanityData.faqs.map((f: any) => ({ q: f.question, a: f.answer })) 
+  const faqs = data?.faqs?.length 
+    ? data.faqs.map((f: any) => ({ q: f.question, a: f.answer })) 
     : defaultFaqs;
 
   return (
@@ -122,14 +168,14 @@ export default function HomeClient({ sanityData }: { sanityData?: any }) {
               variants={staggerContainer}
             >
               <motion.div variants={fadeInUp} className="text-[#00D4FF] text-xs font-bold mb-6 border border-[#00D4FF] px-4 py-1.5 rounded-full flex items-center gap-2 bg-[#00D4FF]/5">
-                ● {sanityData?.tagline || "8 YEAR PROVEN TRADING SYSTEMS"}
+                ● {data?.tagline || "8 YEAR PROVEN TRADING SYSTEMS"}
               </motion.div>
-              <motion.h1 variants={fadeInUp} className="text-5xl lg:text-7xl font-bold leading-tight tracking-tight mb-6 font-display">
-                {sanityData?.heroTitle || "Built for Legacy."}<br/>
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#00D4FF] to-[#1B6FD8]">{sanityData?.heroTitleGradient || "Designed for Wealth."}</span>
+              <motion.h1 variants={fadeInUp} className="text-4xl sm:text-5xl lg:text-7xl font-bold leading-tight tracking-tight mb-6 font-display break-words">
+                {data?.heroTitle || "Built for Legacy."}<br/>
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#00D4FF] to-[#1B6FD8]">{data?.heroTitleGradient || "Designed for Wealth."}</span>
               </motion.h1>
               <motion.p variants={fadeInUp} className="text-lg text-muted-foreground max-w-xl mb-10 leading-relaxed">
-                {sanityData?.heroSubtitle || "Institutional grade trading algorithms built for serious traders. 8 years of live market experience distilled into proprietary TradingView tools plus complete masterclass."}
+                {data?.heroSubtitle || "Institutional grade trading algorithms built for serious traders. 8 years of live market experience distilled into proprietary TradingView tools plus complete masterclass."}
               </motion.p>
               
               <motion.div variants={fadeInUp} className="flex flex-col sm:flex-row gap-4 mb-8 w-full sm:w-auto">
@@ -480,7 +526,7 @@ export default function HomeClient({ sanityData }: { sanityData?: any }) {
             <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeInUp} transition={{ delay: 0.1 }} className="bg-card border border-[#00D4FF]/20 rounded-3xl p-8 hover:border-[#00D4FF]/50 transition-colors flex flex-col min-h-[520px]">
               <h3 className="text-2xl font-display font-bold text-muted-foreground mb-2">16London Trend Algo</h3>
               <div className="mb-8">
-                <span className="text-4xl font-display font-bold text-foreground">${sanityData?.tier1Price || "59.99"}</span>
+                <span className="text-4xl font-display font-bold text-foreground">${data?.tier1Price || "59.99"}</span>
                 <span className="text-gray-500">/mo</span>
               </div>
               <ul className="space-y-4 mb-8 flex-grow">
@@ -502,7 +548,7 @@ export default function HomeClient({ sanityData }: { sanityData?: any }) {
             <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeInUp} transition={{ delay: 0.2 }} className="bg-card border border-[#00D4FF]/20 rounded-3xl p-8 hover:border-[#00D4FF]/50 transition-colors flex flex-col min-h-[520px]">
               <h3 className="text-2xl font-display font-bold text-muted-foreground mb-2">Trend Algo + London X</h3>
               <div className="mb-8">
-                <span className="text-4xl font-display font-bold text-foreground">${sanityData?.tier2Price || "89.99"}</span>
+                <span className="text-4xl font-display font-bold text-foreground">${data?.tier2Price || "89.99"}</span>
                 <span className="text-gray-500">/mo</span>
               </div>
               <ul className="space-y-4 mb-8 flex-grow">
@@ -526,7 +572,7 @@ export default function HomeClient({ sanityData }: { sanityData?: any }) {
               <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-[#00D4FF] text-background px-4 py-1 rounded-full text-sm font-bold uppercase tracking-wider whitespace-nowrap">BEST VALUE</div>
               <h3 className="text-2xl font-display font-bold text-[#00D4FF] mb-2">16London Complete System</h3>
               <div className="mb-8">
-                <span className="text-5xl font-display font-bold text-foreground">${sanityData?.tier3Price || "119.99"}</span>
+                <span className="text-5xl font-display font-bold text-foreground">${data?.tier3Price || "119.99"}</span>
                 <span className="text-muted-foreground">/mo</span>
               </div>
               <ul className="space-y-4 mb-8 flex-grow">

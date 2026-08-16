@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import { 
   Save, 
   Check, 
@@ -25,7 +25,6 @@ import {
   Undo2,
   BookOpen
 } from "lucide-react";
-import HomeClient from "@/app/HomeClient";
 
 export interface SiteContentData {
   marqueeText: string;
@@ -79,6 +78,20 @@ export function LiveVisualCustomizer({ initialContent }: Props) {
   const [activeAccordion, setActiveAccordion] = useState<string>("hero");
   const [isSaving, setIsSaving] = useState(false);
   const [toastMessage, setToastMessage] = useState<string | null>(null);
+  const iframeRef = useRef<HTMLIFrameElement>(null);
+
+  // Broadcast real-time edits to iframe
+  useEffect(() => {
+    if (iframeRef.current?.contentWindow) {
+      iframeRef.current.contentWindow.postMessage({ type: "UPDATE_CONTENT", content }, "*");
+    }
+  }, [content]);
+
+  const handleIframeLoad = () => {
+    if (iframeRef.current?.contentWindow) {
+      iframeRef.current.contentWindow.postMessage({ type: "UPDATE_CONTENT", content }, "*");
+    }
+  };
 
   const showToast = (msg: string) => {
     setToastMessage(msg);
@@ -599,19 +612,14 @@ export function LiveVisualCustomizer({ initialContent }: Props) {
               </div>
             </div>
 
-            {/* Live Reactive Home Component Render */}
-            <div className="flex-1 bg-background text-foreground overflow-y-auto max-h-[calc(100vh-12rem)]">
-              <HomeClient 
-                sanityData={{
-                  tagline: content.tagline,
-                  heroTitle: content.heroTitle,
-                  heroTitleGradient: content.heroTitleGradient,
-                  heroSubtitle: content.heroSubtitle,
-                  yearsTrading: content.heroYearsTrading,
-                  revenue: content.heroRevenue,
-                  numberOfAlgos: content.heroNumberOfAlgos,
-                  faqs: content.faqs.map(f => ({ question: f.q, answer: f.a }))
-                }}
+            {/* Live Reactive Iframe Preview */}
+            <div className="flex-1 bg-background text-foreground overflow-hidden h-[calc(100vh-14rem)] w-full">
+              <iframe 
+                ref={iframeRef}
+                src="/?preview=customizer"
+                onLoad={handleIframeLoad}
+                title="Live Site Preview"
+                className="w-full h-full border-0 bg-[#050B14]"
               />
             </div>
           </div>
