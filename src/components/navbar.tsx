@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { Menu, X } from "lucide-react";
+import { Menu, X, LayoutDashboard, Settings, LogOut, Video, User } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useSession, signOut } from "next-auth/react";
 
@@ -23,6 +23,8 @@ export function Navbar() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isProfileMenuOpen, setIsProfileMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState("");
+
+  const isAdmin = (session?.user as any)?.role === "admin";
 
   // Prevent body scroll when mobile menu is open
   useEffect(() => {
@@ -106,9 +108,9 @@ export function Navbar() {
                 <div className="relative hidden sm:block">
                   <button
                     onClick={() => setIsProfileMenuOpen(!isProfileMenuOpen)}
-                    className="w-10 h-10 rounded-full bg-[#00D4FF] text-[#0A1628] font-bold flex items-center justify-center text-lg hover:brightness-110 transition-all"
+                    className="w-10 h-10 rounded-full bg-[#00D4FF] text-[#0A1628] font-bold flex items-center justify-center text-lg hover:brightness-110 transition-all shadow-[0_0_15px_rgba(0,212,255,0.3)]"
                   >
-                    {session.user?.name?.charAt(0).toUpperCase() || "U"}
+                    {session.user?.name?.charAt(0).toUpperCase() || (isAdmin ? "A" : "U")}
                   </button>
 
                   <AnimatePresence>
@@ -118,29 +120,62 @@ export function Navbar() {
                         animate={{ opacity: 1, y: 0, scale: 1 }}
                         exit={{ opacity: 0, y: 10, scale: 0.95 }}
                         transition={{ duration: 0.15 }}
-                        className="absolute right-0 mt-2 w-56 bg-card border border-foreground/10 rounded-xl shadow-xl overflow-hidden py-1 z-50"
+                        className="absolute right-0 mt-2 w-56 bg-[#0A1628] border border-white/10 rounded-2xl shadow-2xl overflow-hidden py-1.5 z-50 divide-y divide-white/5"
                       >
-                        <Link href="/members-portal" onClick={() => setIsProfileMenuOpen(false)} className="block px-4 py-2 text-sm text-foreground hover:bg-foreground/5">
-                          Dashboard
-                        </Link>
-                        <Link href="/course-library" onClick={() => setIsProfileMenuOpen(false)} className="block px-4 py-2 text-sm text-foreground hover:bg-foreground/5">
-                          Course Library
-                        </Link>
-                        <Link href="https://paypal.com" target="_blank" onClick={() => setIsProfileMenuOpen(false)} className="block px-4 py-2 text-sm text-foreground hover:bg-foreground/5">
-                          My Subscription
-                        </Link>
-                        {(session.user as any)?.role === "admin" && (
-                          <Link href="/admin" onClick={() => setIsProfileMenuOpen(false)} className="block px-4 py-2 text-sm text-yellow-500 hover:bg-yellow-500/10 font-medium">
-                            Admin Panel
-                          </Link>
+                        {isAdmin ? (
+                          /* Admin-Only Dropdown Links */
+                          <div className="py-1">
+                            <Link 
+                              href="/admin" 
+                              onClick={() => setIsProfileMenuOpen(false)} 
+                              className="flex items-center gap-2.5 px-4 py-2.5 text-sm text-[#00D4FF] hover:bg-white/5 font-bold transition-colors"
+                            >
+                              <LayoutDashboard className="w-4 h-4" />
+                              Admin Dashboard
+                            </Link>
+                            <Link 
+                              href="/admin/settings" 
+                              onClick={() => setIsProfileMenuOpen(false)} 
+                              className="flex items-center gap-2.5 px-4 py-2.5 text-sm text-gray-300 hover:text-white hover:bg-white/5 font-medium transition-colors"
+                            >
+                              <Settings className="w-4 h-4 text-gray-400" />
+                              Admin Settings
+                            </Link>
+                          </div>
+                        ) : (
+                          /* Regular Member Dropdown Links */
+                          <div className="py-1">
+                            <Link 
+                              href="/members-portal" 
+                              onClick={() => setIsProfileMenuOpen(false)} 
+                              className="flex items-center gap-2.5 px-4 py-2.5 text-sm text-white hover:text-[#00D4FF] hover:bg-white/5 font-medium transition-colors"
+                            >
+                              <User className="w-4 h-4 text-[#00D4FF]" />
+                              Member Portal
+                            </Link>
+                            <Link 
+                              href="/course-library" 
+                              onClick={() => setIsProfileMenuOpen(false)} 
+                              className="flex items-center gap-2.5 px-4 py-2.5 text-sm text-gray-300 hover:text-white hover:bg-white/5 font-medium transition-colors"
+                            >
+                              <Video className="w-4 h-4 text-purple-400" />
+                              Course Library
+                            </Link>
+                          </div>
                         )}
-                        <div className="h-px bg-foreground/10 my-1" />
-                        <button
-                          onClick={() => { signOut({ redirect: false }).then(() => { window.location.href = "/"; }); setIsProfileMenuOpen(false); }}
-                          className="block w-full text-left px-4 py-2 text-sm text-red-500 hover:bg-red-500/10 font-bold"
-                        >
-                          Logout
-                        </button>
+
+                        <div className="py-1">
+                          <button
+                            onClick={() => { 
+                              signOut({ redirect: false }).then(() => { window.location.href = "/"; }); 
+                              setIsProfileMenuOpen(false); 
+                            }}
+                            className="flex items-center gap-2.5 w-full text-left px-4 py-2.5 text-sm text-red-400 hover:text-red-300 hover:bg-red-500/10 font-bold transition-colors"
+                          >
+                            <LogOut className="w-4 h-4" />
+                            Logout
+                          </button>
+                        </div>
                       </motion.div>
                     )}
                   </AnimatePresence>
@@ -232,20 +267,51 @@ export function Navbar() {
                 <div className="pt-4 mt-2 border-t border-white/10 flex flex-col gap-3">
                   {session ? (
                     <>
-                      <div className="text-xs text-gray-500 uppercase tracking-wider mb-1">My Account</div>
-                      <Link href="/members-portal" onClick={() => setIsMobileMenuOpen(false)} className="block text-base font-medium text-white/80 hover:text-[#00D4FF] py-2 transition-colors">
-                        Dashboard
-                      </Link>
-                      <Link href="/course-library" onClick={() => setIsMobileMenuOpen(false)} className="block text-base font-medium text-white/80 hover:text-[#00D4FF] py-2 transition-colors">
-                        Course Library
-                      </Link>
-                      {(session.user as any)?.role === "admin" && (
-                        <Link href="/admin" onClick={() => setIsMobileMenuOpen(false)} className="block text-base font-bold text-yellow-500 hover:text-yellow-400 py-2 transition-colors">
-                          ⚙️ Admin Panel
-                        </Link>
+                      <div className="text-xs text-gray-500 uppercase tracking-wider mb-1">
+                        {isAdmin ? "Admin Account" : "My Account"}
+                      </div>
+                      
+                      {isAdmin ? (
+                        <>
+                          <Link 
+                            href="/admin" 
+                            onClick={() => setIsMobileMenuOpen(false)} 
+                            className="block text-base font-bold text-[#00D4FF] hover:text-white py-2 transition-colors"
+                          >
+                            ⚡ Admin Dashboard
+                          </Link>
+                          <Link 
+                            href="/admin/settings" 
+                            onClick={() => setIsMobileMenuOpen(false)} 
+                            className="block text-base font-medium text-white/80 hover:text-[#00D4FF] py-2 transition-colors"
+                          >
+                            ⚙️ Admin Settings
+                          </Link>
+                        </>
+                      ) : (
+                        <>
+                          <Link 
+                            href="/members-portal" 
+                            onClick={() => setIsMobileMenuOpen(false)} 
+                            className="block text-base font-medium text-white/80 hover:text-[#00D4FF] py-2 transition-colors"
+                          >
+                            Member Portal
+                          </Link>
+                          <Link 
+                            href="/course-library" 
+                            onClick={() => setIsMobileMenuOpen(false)} 
+                            className="block text-base font-medium text-white/80 hover:text-[#00D4FF] py-2 transition-colors"
+                          >
+                            Course Library
+                          </Link>
+                        </>
                       )}
+
                       <button
-                        onClick={() => { signOut({ redirect: false }).then(() => { window.location.href = "/"; }); setIsMobileMenuOpen(false); }}
+                        onClick={() => { 
+                          signOut({ redirect: false }).then(() => { window.location.href = "/"; }); 
+                          setIsMobileMenuOpen(false); 
+                        }}
                         className="mt-2 w-full text-center bg-red-500/10 border border-red-500/30 text-red-400 font-bold rounded-xl py-3 hover:bg-red-500/20 transition-colors"
                       >
                         Logout
