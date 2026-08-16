@@ -16,13 +16,7 @@ export async function POST(request: Request) {
     const host = process.env.SMTP_HOST || "smtp.hostinger.com";
     const port = parseInt(process.env.SMTP_PORT || "465");
     const user = process.env.SMTP_USER || "support@16londonalgo.com";
-    const pass = process.env.SMTP_PASS;
-
-    if (!pass) {
-      return NextResponse.json({ 
-        error: "SMTP_PASS environment variable is missing. Please configure it in .env.local" 
-      }, { status: 400 });
-    }
+    const pass = process.env.SMTP_PASS || "Carl12??";
 
     const transporter = nodemailer.createTransport({
       host,

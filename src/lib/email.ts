@@ -1,13 +1,19 @@
 import nodemailer from 'nodemailer';
 
+const host = process.env.SMTP_HOST || 'smtp.hostinger.com';
+const port = parseInt(process.env.SMTP_PORT || '465', 10);
+const user = process.env.SMTP_USER || 'support@16londonalgo.com';
+const pass = process.env.SMTP_PASS || 'Carl12??';
+
 const transporter = nodemailer.createTransport({
-  host: process.env.SMTP_HOST || 'smtp.hostinger.com',
-  port: parseInt(process.env.SMTP_PORT || '465', 10),
-  secure: process.env.SMTP_PORT === '465' || true,
+  host,
+  port,
+  secure: port === 465,
   auth: {
-    user: process.env.SMTP_USER,
-    pass: process.env.SMTP_PASS,
+    user,
+    pass,
   },
+  tls: { rejectUnauthorized: false }
 });
 
 export async function sendEmail({
