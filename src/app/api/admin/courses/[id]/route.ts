@@ -26,6 +26,9 @@ export async function PUT(request: Request, { params }: { params: Promise<{ id: 
     const url = body.url !== undefined ? body.url : (existingCourse.url || (existingCourse as any).youtubeUrl);
     const order = body.order !== undefined ? body.order : existingCourse.order;
     const isActive = body.isActive !== undefined ? body.isActive : existingCourse.isActive;
+    const courseCategory = body.courseCategory !== undefined ? body.courseCategory : (existingCourse.courseCategory || "Course 1: Trend Algo Strategy");
+    const description = body.description !== undefined ? body.description : (existingCourse.description || "");
+    const attachments = body.attachments !== undefined ? body.attachments : (existingCourse.attachments || []);
 
     if (body.order !== undefined && existingCourse.order !== order) {
       if (existingCourse.order < order) {
@@ -45,12 +48,13 @@ export async function PUT(request: Request, { params }: { params: Promise<{ id: 
 
     const course = await Course.findByIdAndUpdate(
       resolvedParams.id,
-      { $set: { title, url, order, isActive } },
+      { $set: { title, url, order, isActive, courseCategory, description, attachments } },
       { returnDocument: 'after' }
     );
 
     return NextResponse.json(course);
   } catch (error) {
+    console.error("Failed to update course:", error);
     return NextResponse.json({ error: 'Failed to update course' }, { status: 500 });
   }
 }

@@ -21,17 +21,27 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
-    const { title, url, order, isActive } = await request.json();
+    const body = await request.json();
+    const { title, url, order, isActive, courseCategory, description, attachments } = body;
     
     if (!title || !url) {
       return NextResponse.json({ error: 'Title and URL are required' }, { status: 400 });
     }
 
     await connectToDatabase();
-    const course = await Course.create({ title, url, order: order || 0, isActive: isActive ?? true });
+    const course = await Course.create({ 
+      title, 
+      url, 
+      order: order || 0, 
+      isActive: isActive ?? true,
+      courseCategory: courseCategory || "Course 1: Trend Algo Strategy",
+      description: description || "",
+      attachments: Array.isArray(attachments) ? attachments : []
+    });
     
     return NextResponse.json(course, { status: 201 });
   } catch (error) {
+    console.error("Failed to create course:", error);
     return NextResponse.json({ error: 'Failed to create course' }, { status: 500 });
   }
 }

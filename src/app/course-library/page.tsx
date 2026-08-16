@@ -8,6 +8,7 @@ import { Course } from "@/models/Course";
 import connectDB from "@/lib/db";
 
 export const dynamic = 'force-dynamic';
+
 export default async function CourseLibrary() {
   const session = await getServerSession(authOptions);
 
@@ -15,7 +16,15 @@ export default async function CourseLibrary() {
     redirect("/login");
   }
 
-  let courses: { _id: string, videoTitle: string, youtubeUrl: string }[] = [];
+  let courses: {
+    _id: string;
+    videoTitle: string;
+    youtubeUrl: string;
+    courseCategory?: string;
+    description?: string;
+    attachments?: { title: string; url: string; type?: string }[];
+  }[] = [];
+  
   let completedModules: string[] = [];
   let shouldRedirect = false;
   let redirectUrl = "";
@@ -30,7 +39,14 @@ export default async function CourseLibrary() {
     courses = (dbCourses || []).map((c: any) => ({
       _id: c._id.toString(),
       videoTitle: c.title,
-      youtubeUrl: c.url || c.youtubeUrl
+      youtubeUrl: c.url || c.youtubeUrl,
+      courseCategory: c.courseCategory || "Course 1: Trend Algo Strategy",
+      description: c.description || "",
+      attachments: (c.attachments || []).map((a: any) => ({
+        title: a.title,
+        url: a.url,
+        type: a.type || "pdf"
+      }))
     }));
 
     if (process.env.MOCK_ENV !== 'true' && dbUser) {
@@ -59,10 +75,10 @@ export default async function CourseLibrary() {
   }
 
   return (
-    <main className="min-h-screen flex flex-col bg-background text-foreground">
+    <main className="min-h-screen flex flex-col bg-[#050B14] text-white">
       <Navbar />
-      <div className="flex-1 mt-[64px]">
-         <CoursePlayer courses={courses} completedModules={completedModules} />
+      <div className="flex-1 mt-[72px]">
+        <CoursePlayer courses={courses} completedModules={completedModules} />
       </div>
     </main>
   );

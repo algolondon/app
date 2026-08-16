@@ -10,10 +10,39 @@ export default async function AdminCoursesPage() {
   try {
     if (process.env.MOCK_ENV === 'true') {
       courses = [
-        { _id: "1", title: "Module 1: Strategy Introduction", url: "https://youtu.be/OjKrub9Hl_Y", youtubeUrl: "https://youtu.be/OjKrub9Hl_Y", order: 1, isActive: true },
-        { _id: "2", title: "Module 2: Market Structure", url: "https://youtu.be/2R3GSTRh_k8", youtubeUrl: "https://youtu.be/2R3GSTRh_k8", order: 2, isActive: true },
-        { _id: "3", title: "Module 3: Order Blocks & Liquidity", url: "https://youtu.be/u-P_jS7z2..", youtubeUrl: "https://youtu.be/u-P_jS7z2..", order: 3, isActive: true },
-        { _id: "4", title: "Module 4: Risk Management", url: "https://youtu.be/s4tMVKiQ..", youtubeUrl: "https://youtu.be/s4tMVKiQ..", order: 4, isActive: true },
+        { 
+          _id: "1", 
+          title: "Module 1: Strategy Introduction", 
+          url: "https://youtu.be/OjKrub9Hl_Y", 
+          youtubeUrl: "https://youtu.be/OjKrub9Hl_Y", 
+          courseCategory: "Course 1: Trend Algo Strategy",
+          description: "Core strategy introduction and algorithmic mindset.",
+          attachments: [{ title: "Trend Strategy Cheat Sheet PDF", url: "https://16londonalgo.com", type: "pdf" }],
+          order: 1, 
+          isActive: true 
+        },
+        { 
+          _id: "2", 
+          title: "Module 2: Market Structure", 
+          url: "https://youtu.be/2R3GSTRh_k8", 
+          youtubeUrl: "https://youtu.be/2R3GSTRh_k8", 
+          courseCategory: "Course 1: Trend Algo Strategy",
+          description: "Identifying trend direction and multi-timeframe alignment.",
+          attachments: [],
+          order: 2, 
+          isActive: true 
+        },
+        { 
+          _id: "3", 
+          title: "Module 1: London Breakout Mechanics", 
+          url: "https://youtu.be/u-P_jS7z2..", 
+          youtubeUrl: "https://youtu.be/u-P_jS7z2..", 
+          courseCategory: "Course 2: London X Breakout",
+          description: "Executing London open momentum trades with precision.",
+          attachments: [{ title: "London Session Range Table", url: "https://16londonalgo.com", type: "pdf" }],
+          order: 3, 
+          isActive: true 
+        },
       ];
     } else {
       await connectToDatabase();
@@ -24,6 +53,13 @@ export default async function AdminCoursesPage() {
         title: c.title || "",
         url: c.url || c.youtubeUrl || "",
         youtubeUrl: c.youtubeUrl || c.url || "",
+        courseCategory: c.courseCategory || "Course 1: Trend Algo Strategy",
+        description: c.description || "",
+        attachments: (c.attachments || []).map((a: any) => ({
+          title: a.title,
+          url: a.url,
+          type: a.type || "pdf"
+        })),
         order: typeof c.order === "number" ? c.order : 0,
         isActive: c.isActive !== false,
         createdAt: c.createdAt ? new Date(c.createdAt).toISOString() : null,
