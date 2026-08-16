@@ -11,7 +11,7 @@ export async function PUT(request: Request, { params }: { params: Promise<{ id: 
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
-    const { title, url, order, isActive } = await request.json();
+    const body = await request.json();
     const resolvedParams = await params;
     
     await connectToDatabase();
@@ -22,7 +22,12 @@ export async function PUT(request: Request, { params }: { params: Promise<{ id: 
       return NextResponse.json({ error: 'Course not found' }, { status: 404 });
     }
 
-    if (order !== undefined && existingCourse.order !== order) {
+    const title = body.title !== undefined ? body.title : existingCourse.title;
+    const url = body.url !== undefined ? body.url : (existingCourse.url || (existingCourse as any).youtubeUrl);
+    const order = body.order !== undefined ? body.order : existingCourse.order;
+    const isActive = body.isActive !== undefined ? body.isActive : existingCourse.isActive;
+
+    if (body.order !== undefined && existingCourse.order !== order) {
       if (existingCourse.order < order) {
         // Shifting down: push intermediate courses up
         await Course.updateMany(
@@ -40,8 +45,8 @@ export async function PUT(request: Request, { params }: { params: Promise<{ id: 
 
     const course = await Course.findByIdAndUpdate(
       resolvedParams.id,
-      { title, url, order, isActive },
-      { returnDocument: 'after' } // updated to avoid deprecation warning
+      { $set: { title, url, order, isActive } },
+      { returnDocument: 'after' }
     );
 
     return NextResponse.json(course);
