@@ -81,7 +81,7 @@ export default function HomeClient({ sanityData }: { sanityData?: any }) {
           tier1Price: c.tier1Price,
           tier2Price: c.tier2Price,
           tier3Price: c.tier3Price,
-          faqs: c.faqs ? c.faqs.map((f: any) => ({ question: f.q, answer: f.a })) : prev?.faqs,
+          faqs: c.faqs ? c.faqs.map((f: any) => ({ q: f.q || f.question, a: f.a || f.answer, question: f.q || f.question, answer: f.a || f.answer })) : prev?.faqs,
           ctaTitle: c.ctaTitle,
           ctaSubtitle: c.ctaSubtitle,
         }));
@@ -116,7 +116,7 @@ export default function HomeClient({ sanityData }: { sanityData?: any }) {
   ];
 
   const faqs = data?.faqs?.length 
-    ? data.faqs.map((f: any) => ({ q: f.question, a: f.answer })) 
+    ? data.faqs.map((f: any) => ({ q: f.question || f.q, a: f.answer || f.a })) 
     : defaultFaqs;
 
   return (

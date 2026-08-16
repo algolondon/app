@@ -3,7 +3,8 @@ import HomeClient from './HomeClient'
 import connectToDatabase from '@/lib/db'
 import { SiteContent } from '@/models/SiteContent'
 
-export const revalidate = 60
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
 
 export default async function Page() {
   let customContent: any = null;
@@ -40,10 +41,10 @@ export default async function Page() {
   // Merge MongoDB customizer content as top priority
   const mergedData = {
     tagline: customContent?.tagline || sanityData?.tagline,
+    marqueeText: customContent?.marqueeText,
     heroTitle: customContent?.heroTitle || sanityData?.heroTitle,
     heroTitleGradient: customContent?.heroTitleGradient || sanityData?.heroTitleGradient,
     heroSubtitle: customContent?.heroSubtitle,
-    marqueeText: customContent?.marqueeText,
     yearsTrading: customContent?.heroYearsTrading || sanityData?.yearsTrading,
     revenue: customContent?.heroRevenue || sanityData?.revenue,
     numberOfAlgos: customContent?.heroNumberOfAlgos || sanityData?.numberOfAlgos,
@@ -54,8 +55,11 @@ export default async function Page() {
     tier2Price: customContent?.tier2Price,
     tier3Price: customContent?.tier3Price,
     faqs: customContent?.faqs?.length 
-      ? customContent.faqs.map((f: any) => ({ question: f.q, answer: f.a })) 
-      : sanityData?.faqs
+      ? customContent.faqs.map((f: any) => ({ question: f.q || f.question, answer: f.a || f.answer, q: f.q || f.question, a: f.a || f.answer })) 
+      : sanityData?.faqs,
+    ctaTitle: customContent?.ctaTitle,
+    ctaSubtitle: customContent?.ctaSubtitle,
+    ctaButtonText: customContent?.ctaButtonText,
   };
 
   return <HomeClient sanityData={mergedData} />

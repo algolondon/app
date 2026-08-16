@@ -3,6 +3,9 @@ import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/lib/auth";
 import connectToDatabase from "@/lib/db";
 import { SiteContent } from "@/models/SiteContent";
+import { revalidatePath } from "next/cache";
+
+export const dynamic = 'force-dynamic';
 
 export async function GET() {
   try {
@@ -34,6 +37,10 @@ export async function POST(request: Request) {
       { $set: body },
       { upsert: true, new: true, setDefaultsOnInsert: true }
     );
+
+    // Instant cache purge for live homepage
+    revalidatePath("/");
+    revalidatePath("/admin/customizer");
 
     return NextResponse.json({ success: true, content: updated });
   } catch (error) {
