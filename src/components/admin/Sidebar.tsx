@@ -61,9 +61,9 @@ export function Sidebar() {
 
       {/* Sidebar Content */}
       <aside className={`
-        bg-[#0A1628]/95 backdrop-blur-2xl border-r border-white/5 h-screen flex flex-col z-50 transition-all duration-300 ease-in-out
+        bg-[#0A1628]/95 backdrop-blur-2xl border-r border-white/5 h-full flex flex-col z-50 transition-all duration-300 ease-in-out
         fixed left-0 top-0 ${isOpen ? 'translate-x-0' : '-translate-x-full'} 
-        md:sticky md:translate-x-0 shrink-0
+        md:static md:translate-x-0 shrink-0
         ${isCollapsed ? 'w-64 md:w-20' : 'w-64'}
       `}>
         
