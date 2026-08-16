@@ -1,31 +1,62 @@
 import { client } from '@/sanity/client'
 import HomeClient from './HomeClient'
+import connectToDatabase from '@/lib/db'
+import { SiteContent } from '@/models/SiteContent'
 
 export const revalidate = 60
 
 export default async function Page() {
-  const query = `
-    *[_type == "homePage"][0] {
-      heroTitle,
-      heroTitleGradient,
-      tagline,
-      testimonialsLabel,
-      testimonialsTitle,
-      testimonialsSubtitle,
-      rulesImage { asset->{url} },
-      yearsTrading,
-      revenue,
-      numberOfAlgos,
-      faqs
-    }
-  `
-  
-  let sanityData = null
+  let customContent: any = null;
+  let sanityData: any = null;
+
   try {
-    sanityData = await client.fetch(query)
-  } catch (error) {
-    console.error("Failed to fetch sanity data", error)
+    await connectToDatabase();
+    customContent = await SiteContent.findOne().lean();
+  } catch (err) {
+    console.error("Failed to fetch custom site content:", err);
   }
 
-  return <HomeClient sanityData={sanityData} />
+  try {
+    const query = `
+      *[_type == "homePage"][0] {
+        heroTitle,
+        heroTitleGradient,
+        tagline,
+        testimonialsLabel,
+        testimonialsTitle,
+        testimonialsSubtitle,
+        rulesImage { asset->{url} },
+        yearsTrading,
+        revenue,
+        numberOfAlgos,
+        faqs
+      }
+    `;
+    sanityData = await client.fetch(query);
+  } catch (error) {
+    // Sanity fallback
+  }
+
+  // Merge MongoDB customizer content as top priority
+  const mergedData = {
+    tagline: customContent?.tagline || sanityData?.tagline,
+    heroTitle: customContent?.heroTitle || sanityData?.heroTitle,
+    heroTitleGradient: customContent?.heroTitleGradient || sanityData?.heroTitleGradient,
+    heroSubtitle: customContent?.heroSubtitle,
+    marqueeText: customContent?.marqueeText,
+    yearsTrading: customContent?.heroYearsTrading || sanityData?.yearsTrading,
+    revenue: customContent?.heroRevenue || sanityData?.revenue,
+    numberOfAlgos: customContent?.heroNumberOfAlgos || sanityData?.numberOfAlgos,
+    rulesImage: sanityData?.rulesImage,
+    rules: customContent?.rules,
+    founderBio: customContent?.founderBio,
+    tier1Price: customContent?.tier1Price,
+    tier2Price: customContent?.tier2Price,
+    tier3Price: customContent?.tier3Price,
+    faqs: customContent?.faqs?.length 
+      ? customContent.faqs.map((f: any) => ({ question: f.q, answer: f.a })) 
+      : sanityData?.faqs
+  };
+
+  return <HomeClient sanityData={mergedData} />
 }

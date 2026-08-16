@@ -129,7 +129,7 @@ export default function HomeClient({ sanityData }: { sanityData?: any }) {
                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#00D4FF] to-[#1B6FD8]">{sanityData?.heroTitleGradient || "Designed for Wealth."}</span>
               </motion.h1>
               <motion.p variants={fadeInUp} className="text-lg text-muted-foreground max-w-xl mb-10 leading-relaxed">
-                Institutional grade trading algorithms built for serious traders. 8 years of live market experience distilled into proprietary TradingView tools plus complete masterclass.
+                {sanityData?.heroSubtitle || "Institutional grade trading algorithms built for serious traders. 8 years of live market experience distilled into proprietary TradingView tools plus complete masterclass."}
               </motion.p>
               
               <motion.div variants={fadeInUp} className="flex flex-col sm:flex-row gap-4 mb-8 w-full sm:w-auto">
@@ -369,12 +369,12 @@ export default function HomeClient({ sanityData }: { sanityData?: any }) {
               <motion.p variants={fadeInUp} className="text-xl text-[#00D4FF] mb-12 font-medium">Never Break Them.</motion.p>
               
               <div className="space-y-6 mb-16">
-                {[
+                {(sanityData?.rules?.length ? sanityData.rules : [
                   "Only trade in the direction of the Trend Algo",
                   "Wait for multi-timeframe confirmation",
                   "Never risk more than 1% per trade",
                   "No trades during high-impact news events"
-                ].map((rule, i) => (
+                ]).map((rule: string, i: number) => (
                   <motion.div key={i} variants={fadeInUp} className="flex items-start gap-4">
                     <span className="text-3xl font-display font-bold text-[#00D4FF] mt-1">{i + 1}.</span>
                     <span className="text-xl text-muted-foreground">{rule}</span>
@@ -387,9 +387,13 @@ export default function HomeClient({ sanityData }: { sanityData?: any }) {
                 <h4 className="text-lg text-[#00D4FF] font-medium mb-6">Founder of 16London Trend Algo</h4>
                 
                 <p className="text-muted-foreground leading-relaxed mb-8">
-                  I&apos;m Kaziyel, born and raised in Miami, Florida. After 8+ years in the trenches of the financial markets, I realized that consistency doesn&apos;t come from flashy indicators—it comes from structure, discipline, and a proven process. 
-                  <br/><br/>
-                  I built the 16London Trend Algo to remove the guesswork and help you trade with absolute confidence.
+                  {sanityData?.founderBio || (
+                    <>
+                      I&apos;m Kaziyel, born and raised in Miami, Florida. After 8+ years in the trenches of the financial markets, I realized that consistency doesn&apos;t come from flashy indicators—it comes from structure, discipline, and a proven process. 
+                      <br/><br/>
+                      I built the 16London Trend Algo to remove the guesswork and help you trade with absolute confidence.
+                    </>
+                  )}
                 </p>
 
                 <Link href="/about" className="inline-flex items-center gap-2 bg-card border border-[#00D4FF]/30 hover:border-[#00D4FF] text-foreground px-6 py-3 rounded-lg font-bold transition-all hover:bg-[#00D4FF]/5">
@@ -476,7 +480,7 @@ export default function HomeClient({ sanityData }: { sanityData?: any }) {
             <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeInUp} transition={{ delay: 0.1 }} className="bg-card border border-[#00D4FF]/20 rounded-3xl p-8 hover:border-[#00D4FF]/50 transition-colors flex flex-col min-h-[520px]">
               <h3 className="text-2xl font-display font-bold text-muted-foreground mb-2">16London Trend Algo</h3>
               <div className="mb-8">
-                <span className="text-4xl font-display font-bold text-foreground">$59.99</span>
+                <span className="text-4xl font-display font-bold text-foreground">${sanityData?.tier1Price || "59.99"}</span>
                 <span className="text-gray-500">/mo</span>
               </div>
               <ul className="space-y-4 mb-8 flex-grow">
@@ -498,7 +502,7 @@ export default function HomeClient({ sanityData }: { sanityData?: any }) {
             <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeInUp} transition={{ delay: 0.2 }} className="bg-card border border-[#00D4FF]/20 rounded-3xl p-8 hover:border-[#00D4FF]/50 transition-colors flex flex-col min-h-[520px]">
               <h3 className="text-2xl font-display font-bold text-muted-foreground mb-2">Trend Algo + London X</h3>
               <div className="mb-8">
-                <span className="text-4xl font-display font-bold text-foreground">$89.99</span>
+                <span className="text-4xl font-display font-bold text-foreground">${sanityData?.tier2Price || "89.99"}</span>
                 <span className="text-gray-500">/mo</span>
               </div>
               <ul className="space-y-4 mb-8 flex-grow">
@@ -522,7 +526,7 @@ export default function HomeClient({ sanityData }: { sanityData?: any }) {
               <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-[#00D4FF] text-background px-4 py-1 rounded-full text-sm font-bold uppercase tracking-wider whitespace-nowrap">BEST VALUE</div>
               <h3 className="text-2xl font-display font-bold text-[#00D4FF] mb-2">16London Complete System</h3>
               <div className="mb-8">
-                <span className="text-5xl font-display font-bold text-foreground">$119.99</span>
+                <span className="text-5xl font-display font-bold text-foreground">${sanityData?.tier3Price || "119.99"}</span>
                 <span className="text-muted-foreground">/mo</span>
               </div>
               <ul className="space-y-4 mb-8 flex-grow">
