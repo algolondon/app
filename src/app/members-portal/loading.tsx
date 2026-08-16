@@ -1,56 +1,40 @@
 export default function MembersPortalLoading() {
   return (
-    <div className="min-h-screen bg-background text-foreground">
-      {/* Shimmer header bar */}
-      <div className="h-[72px] bg-card border-b border-foreground/10 animate-pulse" />
+    <div className="min-h-screen bg-[#050B14] text-white animate-pulse">
+      {/* Header bar placeholder */}
+      <div className="h-20 bg-[#0A1628]/80 border-b border-white/5" />
 
-      <div className="max-w-7xl mx-auto px-6 lg:px-8 py-12">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-10 pb-24 space-y-8">
         {/* Welcome banner skeleton */}
-        <div className="bg-card rounded-3xl p-8 mb-8 border border-foreground/10 animate-pulse">
-          <div className="h-5 w-40 bg-foreground/10 rounded mb-3" />
-          <div className="h-8 w-72 bg-foreground/10 rounded mb-2" />
-          <div className="h-4 w-48 bg-foreground/10 rounded" />
+        <div className="bg-[#12223A]/80 rounded-3xl p-8 border border-white/10 h-48 flex flex-col justify-center space-y-3">
+          <div className="h-4 w-32 bg-white/10 rounded-full" />
+          <div className="h-8 w-72 bg-white/20 rounded-xl" />
+          <div className="h-4 w-96 bg-white/5 rounded-lg" />
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          {/* Left column */}
-          <div className="lg:col-span-2 space-y-8">
-            {/* TV username section */}
-            <div className="bg-card rounded-2xl p-6 border border-foreground/10 animate-pulse space-y-4">
-              <div className="h-4 w-32 bg-foreground/10 rounded" />
-              <div className="h-10 bg-foreground/10 rounded-lg" />
-            </div>
-
-            {/* Quick access grid */}
-            <div>
-              <div className="h-6 w-28 bg-foreground/10 rounded mb-6 animate-pulse" />
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                {[...Array(3)].map((_, i) => (
-                  <div key={i} className="bg-card rounded-xl p-6 border border-foreground/10 animate-pulse h-28" />
-                ))}
+        {/* 3 Metric cards */}
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+          {[1, 2, 3].map((i) => (
+            <div key={i} className="bg-[#12223A]/70 rounded-3xl p-6 border border-white/10 h-32 flex flex-col justify-between">
+              <div className="w-10 h-10 rounded-2xl bg-white/10" />
+              <div className="space-y-1">
+                <div className="h-3 w-20 bg-white/10 rounded" />
+                <div className="h-6 w-32 bg-white/20 rounded" />
               </div>
             </div>
+          ))}
+        </div>
 
-            {/* Progress bar */}
-            <div className="bg-card rounded-xl p-6 border border-foreground/10 animate-pulse space-y-3">
-              <div className="h-4 w-24 bg-foreground/10 rounded" />
-              <div className="w-full h-3 bg-foreground/10 rounded-full" />
-              <div className="h-4 w-32 bg-foreground/10 rounded" />
-            </div>
+        {/* Main Grid */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
+          <div className="lg:col-span-8 space-y-8">
+            <div className="bg-[#12223A]/70 rounded-3xl p-8 border border-white/10 h-64" />
+            <div className="bg-[#12223A]/70 rounded-3xl p-8 border border-white/10 h-56" />
           </div>
 
-          {/* Right sidebar */}
-          <div className="space-y-6">
-            <div className="bg-card rounded-2xl p-6 border border-foreground/10 animate-pulse space-y-4">
-              <div className="h-4 w-28 bg-foreground/10 rounded" />
-              <div className="h-8 w-48 bg-foreground/10 rounded" />
-              <div className="h-10 bg-foreground/10 rounded-xl" />
-            </div>
-            <div className="bg-card rounded-2xl p-6 border border-foreground/10 animate-pulse space-y-3 text-center">
-              <div className="w-12 h-12 rounded-full bg-foreground/10 mx-auto" />
-              <div className="h-5 w-24 bg-foreground/10 rounded mx-auto" />
-              <div className="h-8 w-40 bg-foreground/10 rounded-full mx-auto" />
-            </div>
+          <div className="lg:col-span-4 space-y-6">
+            <div className="bg-[#12223A]/70 rounded-3xl p-6 border border-white/10 h-56" />
+            <div className="bg-[#12223A]/70 rounded-3xl p-6 border border-white/10 h-48" />
           </div>
         </div>
       </div>
