@@ -582,15 +582,15 @@ export function LiveVisualCustomizer({ initialContent }: Props) {
         </div>
 
         {/* ── RIGHT PANEL: LIVE REACTIVE PREVIEW (60% width) ── */}
-        <div className="flex-1 bg-[#050B14] p-4 md:p-6 overflow-y-auto flex flex-col items-center justify-start relative">
+        <div className="flex-1 bg-[#050B14] p-4 md:p-6 overflow-hidden flex flex-col items-center justify-center relative h-full">
           
-          {/* Simulated Browser Frame */}
+          {/* Simulated Browser / Phone Frame */}
           <div 
             className={`
-              transition-all duration-300 bg-[#050B14] border border-white/15 rounded-3xl shadow-[0_20px_70px_rgba(0,0,0,0.8)] overflow-hidden flex flex-col
+              transition-all duration-300 bg-[#050B14] border border-white/15 rounded-3xl shadow-[0_20px_70px_rgba(0,0,0,0.8)] overflow-hidden flex flex-col h-full
               ${deviceMode === "desktop" ? "w-full" : ""}
               ${deviceMode === "tablet" ? "w-[768px] max-w-full" : ""}
-              ${deviceMode === "mobile" ? "w-[375px] max-w-full" : ""}
+              ${deviceMode === "mobile" ? "w-[390px] max-w-full" : ""}
             `}
           >
             {/* Browser Top Bar */}
@@ -601,10 +601,10 @@ export function LiveVisualCustomizer({ initialContent }: Props) {
                 <div className="w-2.5 h-2.5 rounded-full bg-green-500/80"></div>
               </div>
 
-              <div className="bg-[#12223A] px-6 py-1 rounded-full border border-white/5 text-[11px] font-mono text-gray-400 flex items-center gap-2">
+              <div className="bg-[#12223A] px-4 sm:px-6 py-1 rounded-full border border-white/5 text-[11px] font-mono text-gray-400 flex items-center gap-2">
                 <span className="text-emerald-400">🔒</span>
-                <span>https://16londonalgo.com</span>
-                <span className="text-[10px] text-[#00D4FF] font-sans font-bold">● Live Preview</span>
+                <span className="truncate max-w-[120px] sm:max-w-none">https://16londonalgo.com</span>
+                <span className="text-[10px] text-[#00D4FF] font-sans font-bold hidden sm:inline">● Live Preview</span>
               </div>
 
               <div className="text-[11px] text-gray-500 font-mono">
@@ -613,7 +613,7 @@ export function LiveVisualCustomizer({ initialContent }: Props) {
             </div>
 
             {/* Live Reactive Iframe Preview */}
-            <div className="flex-1 bg-background text-foreground overflow-hidden h-[calc(100vh-14rem)] w-full">
+            <div className="flex-1 bg-background text-foreground overflow-hidden w-full h-full min-h-[500px]">
               <iframe 
                 ref={iframeRef}
                 src="/?preview=customizer"
