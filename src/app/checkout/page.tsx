@@ -197,8 +197,22 @@ function CheckoutContent() {
 
   const handlePayPalSuccess = async (subscriptionId?: string) => {
     try {
-      // Activation is handled automatically by the PayPal webhook server-side.
-      // We just sign the user in and redirect to thank-you page.
+      const emailToActivate = registeredEmail || formData.email;
+
+      // 1. Immediately activate account in database
+      if (emailToActivate) {
+        await fetch('/api/checkout/success', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            email: emailToActivate,
+            subscriptionId: subscriptionId || null,
+            tier: tier
+          })
+        });
+      }
+
+      // 2. Sign in user to create active session
       if (formData.email && formData.password) {
         await signIn('credentials', {
           redirect: false,
@@ -209,7 +223,7 @@ function CheckoutContent() {
 
       router.push('/thank-you');
     } catch (e) {
-      console.error("Failed to redirect after payment", e);
+      console.error("Failed to process payment success", e);
       router.push('/thank-you');
     }
   };
