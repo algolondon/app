@@ -50,7 +50,7 @@ export async function POST(request: Request) {
             
             <div style="background-color: #050E1A; border-left: 4px solid #00D4FF; padding: 25px; border-radius: 8px; margin-bottom: 30px;">
               <h2 style="margin-top: 0; color: #ffffff; font-size: 20px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 15px; margin-bottom: 20px;">
-                ðŸš¨ New Registration Alert
+                🚨 New Registration Alert
               </h2>
               
               <table style="width: 100%; border-collapse: collapse;">
