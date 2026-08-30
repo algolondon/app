@@ -47,3 +47,5 @@ reqs.*
 docx2txt.py
 fix.py
 __pycache__/
+scripts/
+
