@@ -1,17 +1,29 @@
 {
   "name": "16 London Algo",
-  "short_name": "16LA",
-  "description": "Premium trading community and algorithm.",
+  "short_name": "16London",
+  "description": "Institutional grade trading algorithms and masterclass.",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#050B14",
   "theme_color": "#050B14",
   "icons": [
     {
-      "src": "/logo.svg",
-      "sizes": "192x192 512x512",
-      "type": "image/svg+xml",
+      "src": "/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
       "purpose": "any maskable"
+    },
+    {
+      "src": "/icon.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/apple-icon.png",
+      "sizes": "180x180",
+      "type": "image/png",
+      "purpose": "any"
     }
   ]
 }
